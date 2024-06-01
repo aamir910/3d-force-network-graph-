@@ -1,41 +1,82 @@
 import React, { useRef, useEffect, useState } from 'react';
 import ForceGraph3D from 'react-force-graph-3d';
-
-const generateGraphData = (numNodes) => {
-    const nodes = Array.from({ length: numNodes }, (_, i) => ({ id: `Node ${i}`, group: Math.floor(Math.random() * 10) }));
-    const links = Array.from({ length: numNodes }, () => ({
-        source: `Node ${Math.floor(Math.random() * numNodes)}`,
-        target: `Node ${Math.floor(Math.random() * numNodes)}`,
-        distance: Math.floor(Math.random() * 200) + 50,
-    }));
-
-    return { nodes, links };
-};
+import Papa from 'papaparse';
 
 const ForceGraph3DComponent = () => {
     const fgRef = useRef();
     const [graphData, setGraphData] = useState({ nodes: [], links: [] });
+    const [highlightNodes, setHighlightNodes] = useState(new Set());
+    const [highlightLinks, setHighlightLinks] = useState(new Set());
 
     useEffect(() => {
-        setGraphData(generateGraphData(500)); // Change 500 to the desired number of nodes
+        // Function to process CSV data
+        const processCSV = (data) => {
+            const nodesMap = {};
+            const links = data.slice(3000, 3500).map(row => {
+                const { Entity_1, Entity_2, Entity_Type_1, Entity_Type_2, Edge_Type } = row;
+                
+                if (!nodesMap[Entity_1]) {
+                    nodesMap[Entity_1] = { id: Entity_1, group: Entity_Type_1 };
+                }
+                if (!nodesMap[Entity_2]) {
+                    nodesMap[Entity_2] = { id: Entity_2, group: Entity_Type_2 };
+                }
+
+                return { source: Entity_1, target: Entity_2, type: Edge_Type };
+            });
+
+            const nodes = Object.values(nodesMap);
+            setGraphData({ nodes, links });
+        };
+
+        // Fetch and parse the CSV file
+        Papa.parse('/Edges.csv', {
+            download: true,
+            header: true,
+            complete: (result) => {
+                processCSV(result.data);
+            },
+            error: (error) => {
+                console.error("Error reading CSV file:", error);
+            }
+        });
     }, []);
 
     useEffect(() => {
         const fg = fgRef.current;
         if (fg) {
-            fg.d3Force('link').distance(link => link.distance);
+            fg.d3Force('link').distance(link => 100); // You can customize the distance
         }
     }, [graphData]);
 
+    const handleNodeHover = node => {
+        const nodeId = node ? node.id : null;
+        setHighlightNodes(node ? new Set([nodeId]) : new Set());
+    };
+
+    const handleLinkHover = link => {
+        const linkId = link ? `${link.source}-${link.target}` : null;
+        setHighlightLinks(link ? new Set([linkId]) : new Set());
+    };
+
+    const getNodeColor = node => highlightNodes.has(node.id) ? 'red' : 'blue';
+    const getLinkColor = link => link.type === 'E BOM' ? 'black' : highlightLinks.has(`${link.source}-${link.target}`) ? 'red' : 'black';
+
     return (
-        <ForceGraph3D
-            ref={fgRef}
-            graphData={graphData}
-            nodeLabel="id"
-            nodeAutoColorBy="group"
-            backgroundColor="#ffffff" // Set background color to white
-            linkColor={() => '#000000'} // Set link color to black
-        />
+        <>
+            <ForceGraph3D
+                ref={fgRef}
+                graphData={graphData}
+                nodeLabel={node => `${node.id} (${node.group})`}
+                nodeAutoColorBy="group"
+                backgroundColor="#ffffff"
+                linkColor={getLinkColor}
+                nodeColor={getNodeColor}
+                linkWidth={2}
+                onNodeHover={handleNodeHover}
+                onLinkHover={handleLinkHover}
+            />
+        </>
     );
 };
 
