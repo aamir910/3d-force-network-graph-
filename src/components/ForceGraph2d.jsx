@@ -63,18 +63,51 @@ const ForceGraph2DComponent = () => {
     const getLinkColor = link => link.type === 'E BOM' ? 'yellow' : highlightLinks.has(`${link.source}-${link.target}`) ? 'red' : 'black';
 
     return (
-        <ForceGraph2D
-            ref={fgRef}
-            graphData={graphData}
-            nodeLabel={node => `${node.id} (${node.group})`}
-            nodeAutoColorBy="group"
-            backgroundColor="#ffffff"
-            linkColor={getLinkColor}
-            nodeColor={getNodeColor}
-            linkWidth={2}
-            onNodeHover={handleNodeHover}
-            onLinkHover={handleLinkHover}
-        />
+        <>
+        <style>{`
+          .container {
+            display: flex;
+            flex-direction: row;
+            align-items: center; /* Align items horizontally at the center */
+          }
+      
+          .graph-container {
+            margin-bottom: 20px; /* Add some margin between the graph and the div */
+          }
+          .legend{
+            border :2px solid black ;
+            border-radius: 15px;
+            margin: 4px ;
+            right:0;
+          }
+        `}</style>
+      
+        <div className="container">
+          <div className="graph-container">
+            <ForceGraph2D 
+              ref={fgRef}
+              graphData={graphData}
+              nodeLabel={node => `${node.id} (${node.group})`}
+              nodeAutoColorBy="group"
+              backgroundColor="#ffffff"
+              linkColor={getLinkColor}
+              nodeColor={getNodeColor}
+              linkWidth={2}
+              onNodeHover={handleNodeHover}
+              onLinkHover={handleLinkHover}
+              width={900} // Set your desired width here
+              height={500} // Set your desired height here
+            />
+          </div>
+      
+          <div className='legend'>
+            <ul> 
+              <li>part number</li>
+            </ul>
+          </div>
+        </div>
+      </>
+      
     );
 };
 

@@ -15,7 +15,10 @@ const App = () => {
             {/* <h1>3D Graph</h1>
             <ForceGraph3DComponent /> */}
             <h1>2D Graph</h1>
+
+    <div >
             <ForceGraph2DComponent />
+            </div>
         </div>
             </main>
         </div>
