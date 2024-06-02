@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { ForceGraph2D } from 'react-force-graph';
 import Papa from 'papaparse';
-
+import './styles.css'
 const ForceGraph2DComponent = () => {
     const fgRef = useRef();
     const [graphData, setGraphData] = useState({ nodes: [], links: [] });
@@ -12,7 +12,7 @@ const ForceGraph2DComponent = () => {
         // Function to process CSV data
         const processCSV = (data) => {
             const nodesMap = {};
-            const links = data.slice(0, 500).map(row => {
+            const links = data.slice(0, 5000).map(row => {
                 const { Entity_1, Entity_2, Entity_Type_1, Entity_Type_2, Edge_Type } = row;
                 
                 if (!nodesMap[Entity_1]) {
@@ -24,13 +24,14 @@ const ForceGraph2DComponent = () => {
 
                 return { source: Entity_1, target: Entity_2, type: Edge_Type };
             });
-
+            const uniqueLinkTypes = [...new Set(links.map(link => link.type))];
+            console.log('Unique link types:', uniqueLinkTypes);
             const nodes = Object.values(nodesMap);
             setGraphData({ nodes, links });
         };
 
         // Fetch and parse the CSV file
-        Papa.parse('/Edges.csv', {
+        Papa.parse('/Edges_orderd_data.csv', {
             download: true,
             header: true,
             complete: (result) => {
@@ -60,43 +61,45 @@ const ForceGraph2DComponent = () => {
     };
 
     const getNodeColor = node => highlightNodes.has(node.id) ? 'red' : 'blue';
-    const getLinkColor = link => link.type === 'E BOM' ? 'yellow' : highlightLinks.has(`${link.source}-${link.target}`) ? 'red' : 'black';
-
+    const getLinkColor = link => {
+        switch (link.type) {
+            case 'E BOM':
+                return 'brown';
+            case 'E Order customer':
+                return highlightLinks.has(`${link.source}-${link.target}`) ? 'purple' : 'brown';
+            case 'E part number supply order':
+                return 'lightyellow';
+            case 'E part number sell order':
+                return 'lightpurple';
+            case 'E order supply':
+                return 'yellow';
+            default:
+                return highlightLinks.has(`${link.source}-${link.target}`) ? 'red' : 'black';
+        }
+    };
+    
     return (
         <>
-        <style>{`
-          .container {
-            display: flex;
-            flex-direction: row;
-            align-items: center; /* Align items horizontally at the center */
-          }
-      
-          .graph-container {
-            margin-bottom: 20px; /* Add some margin between the graph and the div */
-          }
-          .legend{
-            border :2px solid black ;
-            border-radius: 15px;
-            margin: 4px ;
-            right:0;
-          }
-        `}</style>
+       
       
         <div className="container">
           <div className="graph-container">
             <ForceGraph2D 
               ref={fgRef}
+              nodeRelSize={15} 
               graphData={graphData}
               nodeLabel={node => `${node.id} (${node.group})`}
               nodeAutoColorBy="group"
-              backgroundColor="#ffffff"
+              backgroundColor="black"
               linkColor={getLinkColor}
               nodeColor={getNodeColor}
               linkWidth={2}
+              
               onNodeHover={handleNodeHover}
-              onLinkHover={handleLinkHover}
+            //   onLinkHover={handleLinkHover}
               width={900} // Set your desired width here
               height={500} // Set your desired height here
+              
             />
           </div>
       
