@@ -43,7 +43,8 @@ const ForceGraph2DComponent = () => {
                 console.error("Error reading CSV file:", error);
             }
         });
-    }, []);
+    }, []);    
+    // edit
 
     useEffect(() => {
         const fg = fgRef.current;
