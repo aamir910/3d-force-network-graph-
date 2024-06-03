@@ -46,4 +46,11 @@
     margin-right: 5px;
 }
 
+.scene-nav-info, .scene-tooltip {
+  position: absolute;
+  display: none !important; 
+  pointer-events: none;
+  user-select: none;
+} 
+
 /* legend css  */

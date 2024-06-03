@@ -33,7 +33,7 @@ const ForceGraph2DComponent = () => {
         };
 
         // Fetch and parse the CSV file
-        Papa.parse('/Edges_orderd_data.csv', {
+        Papa.parse('/src/Edges_orderd_data.csv', {
             download: true,
             header: true,
             complete: (result) => {
@@ -188,8 +188,8 @@ const ForceGraph2DComponent = () => {
                     linkWidth={3}
                     onNodeHover={handleNodeHover}
                     // onLinkHover={handleLinkHover}
-                    width={1200} // Set your desired width here
-                    height={500} // Set your desired height here
+                    width={1350} // Set your desired width here
+                    height={600} // Set your desired height here
                     enableZoomInteraction={true} // Enable zoom on wheel scroll
                     nodeThreeObject={getNodeShape}
                 />
