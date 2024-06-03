@@ -33,7 +33,7 @@ const ForceGraph2DComponent = () => {
         };
 
         // Fetch and parse the CSV file
-        Papa.parse('/src/Edges_orderd_data.csv', {
+        Papa.parse('/Edges_orderd_data.csv', {
             download: true,
             header: true,
             complete: (result) => {
