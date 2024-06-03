@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import './styles.css';
 
 const ForceGraph2DComponent = () => {
+    console.log('check')
     const fgRef = useRef();
     const [graphData, setGraphData] = useState({ nodes: [], links: [] });
     const [highlightNodes, setHighlightNodes] = useState(new Set());
