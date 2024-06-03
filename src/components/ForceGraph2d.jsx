@@ -33,13 +33,14 @@ const ForceGraph2DComponent = () => {
         };
 
         // Fetch and parse the CSV file
-        Papa.parse('/Edges_orderd_data.csv', {
+        Papa.parse('https://3d-force-network-graph.vercel.app/Edges_orderd_data.csv', {
             download: true,
             header: true,
             complete: (result) => {
                 processCSV(result.data);
             },
             error: (error) => {
+
                 console.error("Error reading CSV file:", error);
             }
         });
