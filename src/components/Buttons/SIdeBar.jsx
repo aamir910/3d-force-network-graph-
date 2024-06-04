@@ -9,7 +9,7 @@ function Sidebar() {
             <button><Link to="/upload">UPLOAD DATA</Link></button>
             <button><Link to="/visualize">VISUALIZE</Link></button>
         </div>
-    );
+    );   
 }
 
 export default Sidebar;
