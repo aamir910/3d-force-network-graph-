@@ -5,7 +5,6 @@ import * as THREE from 'three';
 import './styles.css';
 
 const ForceGraph2DComponent = () => {
-    console.log('check')
     const fgRef = useRef();
     const [graphData, setGraphData] = useState({ nodes: [], links: [] });
     const [highlightNodes, setHighlightNodes] = useState(new Set());
@@ -14,6 +13,8 @@ const ForceGraph2DComponent = () => {
     useEffect(() => {
         // Function to process CSV data
         const processCSV = (data) => {
+            let data2 = data.slice(0, 50) 
+            console.log(data2 ,'here is the data ')
             const nodesMap = {};
             const links = data.slice(0, 200).map(row => {
                 const { Entity_1, Entity_2, Entity_Type_1, Entity_Type_2, Edge_Type } = row;
@@ -34,7 +35,7 @@ const ForceGraph2DComponent = () => {
         };
 
         // Fetch and parse the CSV file
-        Papa.parse('https://3d-force-network-graph.vercel.app/Edges_orderd_data.csv', {
+        Papa.parse('/Edges_orderd_data.csv', {
             download: true,
             header: true,
             complete: (result) => {
