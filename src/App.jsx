@@ -1,28 +1,39 @@
 // src/App.jsx
-import React from 'react';
-import ForceGraph3DComponent from './components/ForceGraph3D';
-
-import ForceGraph2DComponent from './components/ForceGraph2d';
-
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ForceGraph3DComponent from "./components/ForceGraph3D";
+import ForceGraph2DComponent from "./components/ForceGraph2d";
+import Sidebar from "./components/Buttons/SIdeBar";
+import MainContent from "./components/Maincontent/Maincontent";
+import './App.css'
 const App = () => {
-    return (
-        <div className="App">
-            <header className="App-header">
-                {/* <h1>3D Force Graph with React</h1> */}
-            </header>
-            <main>
-            <div>
-            {/* <h1>3D Graph</h1>
-            <ForceGraph3DComponent /> */}
-            {/* <h1>2D Graph</h1> */}
+  return (
+    <Router>
+      <div className="App">
+        <Sidebar className="App-header">
 
-    <div >
-            <ForceGraph2DComponent />
+             <Sidebar/>
+        </Sidebar>
+
+        <main>
+          <div>
+            <div>
+              <Routes>
+                <Route path="/visualize" element={<ForceGraph2DComponent />} />
+                <Route path="/upload" element={<MainContent/>} />
+
+                
+
+                {/* Add more routes as needed */}
+              </Routes>
+
+              {/* <ForceGraph2DComponent /> */}
             </div>
-        </div>
-            </main>
-        </div>
-    );
+          </div>
+        </main>
+      </div>
+    </Router>
+  );
 };
 
 export default App;

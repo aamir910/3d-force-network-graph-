@@ -192,7 +192,7 @@ const ForceGraph2DComponent = () => {
                     linkWidth={3}
                     onNodeHover={handleNodeHover}
                     // onLinkHover={handleLinkHover}
-                    width={1350} // Set your desired width here
+                    width={1050} // Set your desired width here
                     height={600} // Set your desired height here
                     enableZoomInteraction={true} // Enable zoom on wheel scroll
                     nodeThreeObject={getNodeShape}
