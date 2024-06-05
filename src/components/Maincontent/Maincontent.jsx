@@ -66,7 +66,11 @@ const MainContent = () => {
     loadAllCSVs();
   }, []);
 
+  let rowCount = 0;
+  let linkcount = 0
   const getEntityName = (filePath) => {
+  rowCount++ ;
+
     const fileName = filePath.split("/").pop();
     switch (fileName) {
       case "N_CUSTOMER.csv":
@@ -85,6 +89,7 @@ const MainContent = () => {
   };
 
   const getLinkName = (filePath) => {
+    linkcount++
     const fileName = filePath.split("/").pop();
     switch (fileName) {
       case "E_BOM.csv":
@@ -101,7 +106,7 @@ const MainContent = () => {
         return "";
     }
   };
-
+ 
   return (
     <div className="main">
       <div className="row">
@@ -115,12 +120,14 @@ const MainContent = () => {
                     <tr>
                       <th>row</th>
                       <th>NAME</th>
+                      <th>COUNT</th>
                       <th>ATTRIBUTE</th>
                       <th>type</th>
                     </tr>
                   </thead>
                   <tbody>
                     {Object.entries(entityHeaders).map(
+                       
                       ([filePath, headers], index) =>
                         headers.map((header, headerIndex) => (
                           <tr key={`${index}-${headerIndex}`}>
@@ -128,8 +135,9 @@ const MainContent = () => {
                               <input type="checkbox" />
                             </td>
                             <td>{getEntityName(filePath)}</td>
+                            <td>{rowCount}</td>
                             <td>{header}</td>
-                            <td>coming</td>
+                            <td>CHR</td>
                           </tr>
                         ))
                     )}
@@ -149,6 +157,7 @@ const MainContent = () => {
                     <tr>
                       <th>row</th>
                       <th>NAME</th>
+                      <th>COUNT</th>
                       <th>ATTRIBUTE</th>
                       <th>type</th>
                     </tr>
@@ -162,8 +171,11 @@ const MainContent = () => {
                               <input type="checkbox" />
                             </td>
                             <td>{getLinkName(filePath)}</td>
+                            <td>{linkcount}</td>
+                          
                             <td>{header}</td>
-                            <td>coming</td>
+
+                            <td>CHR</td>
                           </tr>
                         ))
                     )}
