@@ -118,10 +118,10 @@ const MainContent = () => {
                                 {Object.entries(entityHeaders).map(([filePath, headers], index) => (
                                     headers.map((header, headerIndex) => (
                                         <tr key={`${index}-${headerIndex}`}>
-                                         
-                                                <td>{getEntityName(filePath)}</td>
+                                            
+                                                <td> <input type="checkbox" name="" id="" />{getEntityName(filePath)}</td>
                                           
-                                            <td>{header}</td>
+                                            <td> <input type="checkbox" name="" id="" />{header}</td>
                                         </tr>
                                     ))
                                 ))}
@@ -144,9 +144,9 @@ const MainContent = () => {
                                     headers.map((header, headerIndex) => (
                                         <tr key={`${index}-${headerIndex}`}>
                                            
-                                                <td >{getLinkName(filePath)}</td>
+                                                <td><input type="checkbox" name="" id="" />{getLinkName(filePath)}</td>
                                            
-                                            <td>{header}</td>
+                                            <td><input type="checkbox" name="" id="" />{header}</td>
                                         </tr>
                                     ))
                                 ))}
