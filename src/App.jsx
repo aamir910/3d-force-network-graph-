@@ -23,6 +23,8 @@ const App = () => {
           <div>
             <div>
               <Routes>
+                
+              <Route path="/" element={<ForceGraph2DComponent />} />
                 <Route path="/visualize" element={<ForceGraph2DComponent />} />
                 <Route path="/CONFIGURATION" element={<MainContent/>} />
 
