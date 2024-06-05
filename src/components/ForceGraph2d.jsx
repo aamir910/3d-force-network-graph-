@@ -191,7 +191,7 @@ const ForceGraph2DComponent = () => {
                             nodeColor={getNodeColor}
                             linkWidth={3}
                             // width={1500}
-                            height={600}
+                            // height={600}
                             enableZoomInteraction={true}
                             nodeThreeObject={getNodeShape}
                             onNodeHover={handleNodeHover}
