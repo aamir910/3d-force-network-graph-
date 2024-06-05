@@ -9,12 +9,12 @@
     justify-content: space-between;
 }
 
-.table-section {
+.table-section1 {
     flex: 1;
     margin-right: 20px;
 }
 
-.table-section:last-child {
+.table-section1:last-child {
     margin-right: 0;
 }
 
@@ -45,20 +45,23 @@
 
 h3 {
     background-color: orange; /* Entity header color */
-    text-align: center;
+    text-align: start;
     padding: 5px;
     color: white;
     margin: 0;
 }
+.link_color{
+    background-color: yellow;
+}
 
-.table-section:nth-child(2) h3 {
+.table-section1:nth-child(2) h3 {
     background-color: yellow; /* Link header color */
     color: black;
 }
 
-/* .table-section:nth-child(2) .table th {
+.table-section1:nth-child(2) .table th {
     background-color: yellow;
-} */
+}
 
 .table td:first-child {
     background-color: #f9f9f9; /* Added background for NAME column */

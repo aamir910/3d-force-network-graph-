@@ -107,7 +107,7 @@ const MainContent = () => {
       <div className="row">
         <div className="col-6">
           <div className="table-container">
-            <div className="table-section">
+            <div className="table-section1">
               <h3>ENTITY</h3>
               <div className="table-wrapper">
                 <table className="table">
@@ -141,8 +141,8 @@ const MainContent = () => {
         </div>
         <div className="col-6">
           <div className="table-container">
-            <div className="table-section">
-              <h3>LINK</h3>
+            <div className="table-section1">
+              <h3 className="link_color">LINK</h3>
               <div className="table-wrapper">
                 <table className="table">
                   <thead>

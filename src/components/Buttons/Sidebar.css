@@ -3,7 +3,7 @@
     padding: 20px;
     padding-top: 100px;
     background-color: #f0f0f0;
-    height: 83vh;
+    height: 90vh;
     /* margin-top: 45px; */
 }
 
@@ -12,19 +12,19 @@
     margin: 10px 0;
     padding: 10px;
     width: 100%;
-    background: #007bff;
-    color: white;
+    background: #b6dde8;
+    color: black;
     border: none;
     text-align: left;
 }
 
 .sidebar button a {
-    color: white;
+    color: black;
     text-decoration: none;
     display: block;
     width: 100%;
 }
 
 .sidebar button:hover {
-    background-color: #0056b3;
+    background-color: #4bacc6;
 }

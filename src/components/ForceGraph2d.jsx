@@ -201,8 +201,10 @@ const ForceGraph2DComponent = () => {
                     className="tooltip2"
                     style={{
                         position: 'absolute',
-                        top: tooltip.y+120,
-                        left: tooltip.x+200,
+                        // top: tooltip.y+120,
+                        // left: tooltip.x+200,
+                        top: tooltip.y,
+                        left: tooltip.x,
                         backgroundColor: 'black',
                         padding: '5px',
                         border: '1px solid black',
