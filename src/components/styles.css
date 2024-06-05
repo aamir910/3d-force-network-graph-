@@ -6,7 +6,8 @@
   }
 
   .graph-container {
-    margin-bottom: 20px; /* Add some margin between the graph and the div */
+    /* margin-bottom: 20px; Add some margin between the graph and the div */
+    margin-top: 40px;
   }
   .legend{
     border :2px solid black ;

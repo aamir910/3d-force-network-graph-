@@ -1,10 +1,12 @@
 .App {
   display: flex;
+
 }
 
 .App-header {
   width: 250px; /* Adjust this width as needed */
   background-color: #f0f0f0; /* Adjust the background color as needed */
+  
 }
 
 main {

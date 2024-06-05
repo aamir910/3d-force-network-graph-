@@ -1,0 +1,32 @@
+/* .navbar {
+    width: 100%;
+    background-color: #f0f0f0;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: start;
+    justify-content: start;
+}
+
+.navbar-logo img {
+    height: 40px;
+} */
+.navbar {
+    width: 100%;
+    background-color: #f0f0f0;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    position: fixed;
+    top: 0;
+    /* z-index: 1000; */
+    transition: top 0.3s;
+    overflow: hidden; /* Prevent horizontal scrolling */
+}
+
+.navbar-logo img {
+    max-height: 40px; /* Limit the height of the logo */
+    max-width: 100%; /* Ensure the logo doesn't exceed the navbar width */
+}

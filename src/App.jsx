@@ -6,10 +6,14 @@ import ForceGraph2DComponent from "./components/ForceGraph2d";
 import Sidebar from "./components/Buttons/SIdeBar";
 import MainContent from "./components/Maincontent/Maincontent";
 import './App.css'
+import Navbar from "./components/NavBar/NavBar";
 const App = () => {
   return (
     <Router>
+<Navbar/>
       <div className="App">
+
+
         <Sidebar className="App-header">
 
              <Sidebar/>

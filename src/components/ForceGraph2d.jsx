@@ -7,18 +7,15 @@ import './styles.css';
 const ForceGraph2DComponent = () => {
     const fgRef = useRef();
     const [graphData, setGraphData] = useState({ nodes: [], links: [] });
-    const [highlightNodes, setHighlightNodes] = useState(new Set());
-    const [highlightLinks, setHighlightLinks] = useState(new Set());
+    const [tooltip, setTooltip] = useState({ visible: false, x: 0, y: 0, content: '' });
 
     useEffect(() => {
         // Function to process CSV data
         const processCSV = (data) => {
-            let data2 = data.slice(0, 50) 
-            console.log(data2 ,'here is the data ')
             const nodesMap = {};
             const links = data.slice(0, 200).map(row => {
                 const { Entity_1, Entity_2, Entity_Type_1, Entity_Type_2, Edge_Type } = row;
-                
+
                 if (!nodesMap[Entity_1]) {
                     nodesMap[Entity_1] = { id: Entity_1, group: Entity_Type_1 };
                 }
@@ -28,8 +25,7 @@ const ForceGraph2DComponent = () => {
 
                 return { source: Entity_1, target: Entity_2, type: Edge_Type };
             });
-            const uniqueLinkTypes = [...new Set(links.map(link => link.type))];
-            console.log('Unique link types:', uniqueLinkTypes);
+
             const nodes = Object.values(nodesMap);
             setGraphData({ nodes, links });
         };
@@ -42,12 +38,10 @@ const ForceGraph2DComponent = () => {
                 processCSV(result.data);
             },
             error: (error) => {
-
                 console.error("Error reading CSV file:", error);
             }
         });
-    }, []);    
-    // edit
+    }, []);
 
     useEffect(() => {
         const fg = fgRef.current;
@@ -56,39 +50,29 @@ const ForceGraph2DComponent = () => {
         }
     }, [graphData]);
 
-    const handleNodeHover = node => {
-        const nodeId = node ? node.id : null;
-        setHighlightNodes(node ? new Set([nodeId]) : new Set());
-    };
-
-    const handleLinkHover = link => {
-        const linkId = link ? `${link.source}-${link.target}` : null;
-        setHighlightLinks(link ? new Set([linkId]) : new Set());
-    };
-
     const getNodeColor = node => {
         switch (node.group) {
             case 'Customer':
-                return highlightNodes.has(node.id) ? 'red' : 'blue'; // You can customize colors here
+                return 'blue';
             case 'Part number':
-                return highlightNodes.has(node.id) ? 'orange' : 'green'; // Example colors
+                return 'green';
             case 'Purchase order':
-                return highlightNodes.has(node.id) ? 'purple' : 'yellow'; // Example colors
+                return 'yellow';
             case 'Sell order':
-                return highlightNodes.has(node.id) ? 'cyan' : 'pink'; // Example colors
+                return 'pink';
             case 'Supply':
-                return highlightNodes.has(node.id) ? 'brown' : 'teal'; // Example colors
+                return 'teal';
             default:
-                return 'gray'; // Default color
+                return 'gray';
         }
     };
-    
+
     const getLinkColor = link => {
         switch (link.type) {
             case 'E BOM':
                 return 'darkbrown';
             case 'E Order customer':
-                return highlightLinks.has(`${link.source}-${link.target}`) ? 'darkpurple' : 'darkbrown';
+                return 'darkpurple';
             case 'E part number supply order':
                 return 'darkgoldenrod';
             case 'E part number sell order':
@@ -96,7 +80,7 @@ const ForceGraph2DComponent = () => {
             case 'E order supply':
                 return 'darkyellow';
             default:
-                return highlightLinks.has(`${link.source}-${link.target}`) ? 'darkred' : 'black';
+                return 'black';
         }
     };
 
@@ -104,7 +88,7 @@ const ForceGraph2DComponent = () => {
         switch (node.group) {
             case 'Customer':
                 return new THREE.Mesh(
-                    new THREE.SphereGeometry(5), 
+                    new THREE.SphereGeometry(5),
                     new THREE.MeshBasicMaterial({ color: getNodeColor(node) })
                 );
             case 'Part number':
@@ -124,7 +108,7 @@ const ForceGraph2DComponent = () => {
                 );
             case 'Supply':
                 return new THREE.Mesh(
-                    new THREE.CylinderGeometry(5, 5, 5, 40), // Changed to cylinder to represent oval
+                    new THREE.CylinderGeometry(5, 5, 5, 40),
                     new THREE.MeshBasicMaterial({ color: getNodeColor(node) })
                 );
             default:
@@ -135,71 +119,102 @@ const ForceGraph2DComponent = () => {
         }
     };
 
- const renderLegend = () => (
-    <div className="legend">
-        <ul>
-            <h4>Nodes</h4>
-            <li>
-                <svg width="16" height="16">
-                    <circle cx="8" cy="8" r="8" fill="blue" />
-                </svg> Customer
-            </li>
-            <li>
-                <svg width="16" height="16">
-                    <polygon points="8,0 0,16 16,16" fill="green" />
-                </svg> Part number
-            </li>
-            <li>
-                <svg width="16" height="16">
-                    <rect width="16" height="16" fill="yellow" />
-                </svg> Purchase order
-            </li>
-            <li>
-                <svg width="16" height="16">
-                    <rect width="16" height="8" fill="pink" />
-                </svg> Sell order
-            </li>
-            <li>
-                <svg width="16" height="16">
-                    <ellipse cx="8" cy="8" rx="8" ry="5" fill="teal" />
-                </svg> Supply
-            </li>
-        </ul>
-        <h4>Links</h4>
-        <ul>
-            <li style={{ color: 'darkbrown' }}>E BOM</li>
-            <li style={{ color: 'darkpurple' }}>E Order customer</li>
-            <li style={{ color: 'darkgoldenrod' }}>E part number supply order</li>
-            <li style={{ color: 'darkmagenta' }}>E part number sell order</li>
-            <li style={{ color: 'darkyellow' }}>E order supply</li>
-            <li style={{ color: 'darkred' }}>Other</li>
-        </ul>
-    </div>
-);
+    const renderLegend = () => (
+        <div className="legend">
+            <ul>
+                <h4>Nodes</h4>
+                <li>
+                    <svg width="16" height="16">
+                        <circle cx="8" cy="8" r="8" fill="blue" />
+                    </svg> Customer
+                </li>
+                <li>
+                    <svg width="16" height="16">
+                        <polygon points="8,0 0,16 16,16" fill="green" />
+                    </svg> Part number
+                </li>
+                <li>
+                    <svg width="16" height="16">
+                        <rect width="16" height="16" fill="yellow" />
+                    </svg> Purchase order
+                </li>
+                <li>
+                    <svg width="16" height="8" fill="pink">
+                        <rect width="16" height="8" fill="pink" />
+                    </svg> Sell order
+                </li>
+                <li>
+                    <svg width="16" height="16">
+                        <ellipse cx="8" cy="8" rx="8" ry="5" fill="teal" />
+                    </svg> Supply
+                </li>
+            </ul>
+            <h4>Links</h4>
+            <ul>
+                <li style={{ color: 'darkbrown' }}>E BOM</li>
+                <li style={{ color: 'darkpurple' }}>E Order customer</li>
+                <li style={{ color: 'darkgoldenrod' }}>E part number supply order</li>
+                <li style={{ color: 'darkmagenta' }}>E part number sell order</li>
+                <li style={{ color: 'darkyellow' }}>E order supply</li>
+                <li style={{ color: 'darkred' }}>Other</li>
+            </ul>
+        </div>
+    );
+
+    const handleNodeHover = node => {
+        if (node) {
+            console.log(node)
+            const { x, y, z } = node;
+            const canvas = fgRef.current.renderer().domElement;
+            const vector = new THREE.Vector3(x, y, z).project(fgRef.current.camera());
+            const tooltipX = (vector.x * 0.5 + 0.5) * canvas.width;
+            const tooltipY = (-(vector.y * 0.5) + 0.5) * canvas.height;
+            setTooltip({ visible: true, x: tooltipX, y: tooltipY, content: `${node.id}(${node.group}) ` });
+        } else {
+            setTooltip({ visible: false, x: 0, y: 0, content: '' });
+        }
+    };
 
     return (
         <div className="container">
             <div className="graph-container">
                 <ForceGraph3D 
                     ref={fgRef}
-                    nodeRelSize={8} 
+                    nodeRelSize={8}
                     graphData={graphData}
-                    nodeLabel={node => `${node.id} (${node.group})`}
+                    nodeLabel={node => `${node.id}`}
                     nodeAutoColorBy="group"
-                    backgroundColor="WHITE"
+                    backgroundColor="white"
                     linkColor={getLinkColor}
                     nodeColor={getNodeColor}
                     linkWidth={3}
-                    onNodeHover={handleNodeHover}
-                    // onLinkHover={handleLinkHover}
-                    width={1050} // Set your desired width here
-                    height={600} // Set your desired height here
-                    enableZoomInteraction={true} // Enable zoom on wheel scroll
+                    width={1050}
+                    height={600}
+                    enableZoomInteraction={true}
                     nodeThreeObject={getNodeShape}
+                    onNodeHover={handleNodeHover}
                 />
             </div>
-      
             {renderLegend()}
+            
+            {tooltip.visible && (
+                <div
+                    className="tooltip"
+                    style={{
+                        position: 'absolute',
+                        top: tooltip.y,
+                        left: tooltip.x,
+                        backgroundColor: 'black',
+                        padding: '5px',
+                        border: '1px solid black',
+                        borderRadius: '3px',
+                        pointerEvents: 'none',
+                        color: 'white',
+                    }}
+                >
+                    {tooltip.content}
+                </div>
+            )}
         </div>
     );
 };
