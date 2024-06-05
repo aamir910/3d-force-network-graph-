@@ -66,8 +66,8 @@ const MainContent = () => {
     loadAllCSVs();
   }, []);
 
-  let rowCount = 0;
-  let linkcount = 0
+  let rowCount = 1;
+  let linkcount = 1;
   const getEntityName = (filePath) => {
   rowCount++ ;
 
