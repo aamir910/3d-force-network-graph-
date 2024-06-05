@@ -21,7 +21,7 @@
 .table-wrapper {
     /* min-width: 550px; */
     overflow-y: auto;
-    max-height: 400px; /* Adjust as needed */
+    max-height: 70vh; /* Adjust as needed */
     position: relative;
 }
 
