@@ -25,7 +25,7 @@ const App = () => {
               <Routes>
                 
               <Route path="/" element={<MainContent />} />
-                <Route path="/visualize" element={<ForceGraph2DComponent />} />
+                {/* <Route path="/visualize" element={<ForceGraph2DComponent />} /> */}
                 <Route path="/CONFIGURATION" element={<MainContent/>} />
 
                 
