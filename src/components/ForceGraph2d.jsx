@@ -175,7 +175,7 @@ const ForceGraph2DComponent = () => {
     };
 
     return (
-        <div className="container">
+        <div className="">
             <div className="graph-container">
                 <ForceGraph3D 
                     ref={fgRef}
