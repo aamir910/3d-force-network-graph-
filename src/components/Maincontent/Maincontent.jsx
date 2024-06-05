@@ -105,7 +105,7 @@ const MainContent = () => {
     return (
         <div className="main">
             <div className="row">
-                <div className="col-lg-6">
+                <div className="col-6">
                     <div className="table-container">
                         <div className="table-section">
                             <h3>ENTITY</h3>
@@ -132,7 +132,7 @@ const MainContent = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-lg-6">
+                <div className="col-6">
                     <div className="table-container">
                         <div className="table-section">
                             <h3>LINK</h3>

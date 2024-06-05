@@ -19,7 +19,7 @@
 }
 
 .table-wrapper {
-    min-width: 550px;
+    /* min-width: 550px; */
     overflow-y: auto;
     max-height: 400px; /* Adjust as needed */
     position: relative;
