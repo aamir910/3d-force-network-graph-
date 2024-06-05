@@ -3,6 +3,7 @@ import { ForceGraph3D } from 'react-force-graph';
 import Papa from 'papaparse';
 import * as THREE from 'three';
 import './styles.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ForceGraph2DComponent = () => {
     const fgRef = useRef();
@@ -175,26 +176,32 @@ const ForceGraph2DComponent = () => {
     };
 
     return (
-        <div className="">
-            <div className="graph-container">
-                <ForceGraph3D 
-                    ref={fgRef}
-                    nodeRelSize={8}
-                    graphData={graphData}
-                    nodeLabel={node => `${node.id}`}
-                    nodeAutoColorBy="group"
-                    backgroundColor="white"
-                    linkColor={getLinkColor}
-                    nodeColor={getNodeColor}
-                    linkWidth={3}
-                    width={1050}
-                    height={600}
-                    enableZoomInteraction={true}
-                    nodeThreeObject={getNodeShape}
-                    onNodeHover={handleNodeHover}
-                />
+        <div className="container1 ">
+            <div className="row graph_legend" >
+                <div className="col-8">
+                    <div className="graph-container">
+                        <ForceGraph3D 
+                            ref={fgRef}
+                            nodeRelSize={8}
+                            graphData={graphData}
+                            nodeLabel={node => `${node.id}`}
+                            nodeAutoColorBy="group"
+                            backgroundColor="white"
+                            linkColor={getLinkColor}
+                            nodeColor={getNodeColor}
+                            linkWidth={3}
+                            // width={1500}
+                            height={600}
+                            enableZoomInteraction={true}
+                            nodeThreeObject={getNodeShape}
+                            onNodeHover={handleNodeHover}
+                        />
+                    </div>
+                </div>
+                <div className="col-2" style={{zIndex :999 ,marginTop:'45px'}}>
+                    {renderLegend()}
+                </div>
             </div>
-            {renderLegend()}
             
             {tooltip.visible && (
                 <div
