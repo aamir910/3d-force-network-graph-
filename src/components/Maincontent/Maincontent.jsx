@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Papa from "papaparse";
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import "./MainContent.css";
+import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 
 const csvFiles = [
   "/EDGES/E_BOM.csv",

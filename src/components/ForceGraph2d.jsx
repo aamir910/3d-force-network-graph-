@@ -163,7 +163,6 @@ const ForceGraph2DComponent = () => {
 
     const handleNodeHover = node => {
         if (node) {
-            console.log(node)
             const { x, y, z } = node;
             const canvas = fgRef.current.renderer().domElement;
             const vector = new THREE.Vector3(x, y, z).project(fgRef.current.camera());
@@ -199,11 +198,11 @@ const ForceGraph2DComponent = () => {
             
             {tooltip.visible && (
                 <div
-                    className="tooltip"
+                    className="tooltip2"
                     style={{
                         position: 'absolute',
-                        top: tooltip.y,
-                        left: tooltip.x,
+                        top: tooltip.y+120,
+                        left: tooltip.x+200,
                         backgroundColor: 'black',
                         padding: '5px',
                         border: '1px solid black',
