@@ -176,10 +176,10 @@ const ForceGraph2DComponent = () => {
     };
 
     return (
-        <div className="container1 ">
-            <div className="row graph_legend" >
+        <div className="container1 container-fluid">
+            <div className="row">
                 <div className="col-8">
-                    <div className="graph-container">
+                    <div className="graph-container" style={{ width: '100%', height: '600px' }}>
                         <ForceGraph3D 
                             ref={fgRef}
                             nodeRelSize={8}
@@ -190,15 +190,13 @@ const ForceGraph2DComponent = () => {
                             linkColor={getLinkColor}
                             nodeColor={getNodeColor}
                             linkWidth={3}
-                            // width={1500}
-                            // height={600}
                             enableZoomInteraction={true}
                             nodeThreeObject={getNodeShape}
                             onNodeHover={handleNodeHover}
                         />
                     </div>
                 </div>
-                <div className="col-2" style={{zIndex :999 ,marginTop:'45px'}}>
+                <div className="col-2">
                     {renderLegend()}
                 </div>
             </div>
@@ -208,8 +206,6 @@ const ForceGraph2DComponent = () => {
                     className="tooltip2"
                     style={{
                         position: 'absolute',
-                        // top: tooltip.y+120,
-                        // left: tooltip.x+200,
                         top: tooltip.y,
                         left: tooltip.x,
                         backgroundColor: 'black',
