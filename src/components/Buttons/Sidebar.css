@@ -1,7 +1,7 @@
 .sidebar {
     width: 200px;
     padding: 20px;
-    padding-top: 100px;
+    padding-top: 30px;
     background-color: #f0f0f0;
     height: 90vh;
     /* margin-top: 45px; */
@@ -28,3 +28,7 @@
 .sidebar button:hover {
     background-color: #4bacc6;
 }
+.sidebar button:focus {
+    background-color: #4bacc6;
+}
+
