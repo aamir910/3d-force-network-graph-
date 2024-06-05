@@ -5,10 +5,23 @@
 
 .table-container {
     display: flex;
+    justify-content: space-between;
 }
 
 .table-section {
+    flex: 1;
     margin-right: 20px;
+}
+
+.table-section:last-child {
+    margin-right: 0;
+}
+
+.table-wrapper {
+    min-width: 550px;
+    overflow-y: auto;
+    max-height: 400px; /* Adjust as needed */
+    position: relative;
 }
 
 .table {
@@ -19,8 +32,33 @@
 .table th, .table td {
     border: 1px solid #ddd;
     padding: 8px;
+    text-align: left;
 }
 
 .table th {
     background-color: #f2f2f2;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+h3 {
+    background-color: orange; /* Entity header color */
+    text-align: center;
+    padding: 5px;
+    color: white;
+    margin: 0;
+}
+
+.table-section:nth-child(2) h3 {
+    background-color: yellow; /* Link header color */
+    color: black;
+}
+
+/* .table-section:nth-child(2) .table th {
+    background-color: yellow;
+} */
+
+.table td:first-child {
+    background-color: #f9f9f9; /* Added background for NAME column */
 }

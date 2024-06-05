@@ -87,15 +87,15 @@ const MainContent = () => {
         const fileName = filePath.split('/').pop();
         switch (fileName) {
             case 'E_BOM.csv':
-                return 'E_BOM';
+                return 'BOM';
             case 'E_ORDERCUST.csv':
-                return 'E_ORDERCUST';
+                return 'ORDERCUST';
             case 'E_ORDERSUPP.csv':
-                return 'E_ORDERSUPP';
+                return 'ORDERSUPP';
             case 'E_PNSELLORD.csv':
-                return 'E_PNSELLORD';
+                return 'PNSELLORD';
             case 'E_PNSUPPORD.csv':
-                return 'E_PNSUPPORD';
+                return 'PNSUPPORD';
             default:
                 return '';
         }
@@ -106,49 +106,53 @@ const MainContent = () => {
             <div className="table-container">
                 <div className="table-section">
                     <h3>ENTITY</h3>
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>NAME</th>
-                                <th>ATTRIBUTE</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {Object.entries(entityHeaders).map(([filePath, headers], index) => (
-                                headers.map((header, headerIndex) => (
-                                    <tr key={`${index}-${headerIndex}`}>
-                                        {headerIndex === 0 && (
-                                            <td rowSpan={headers.length}>{getEntityName(filePath)}</td>
-                                        )}
-                                        <td>{header}</td>
-                                    </tr>
-                                ))
-                            ))}
-                        </tbody>
-                    </table>
+                    <div className="table-wrapper">
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>NAME</th>
+                                    <th>ATTRIBUTE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {Object.entries(entityHeaders).map(([filePath, headers], index) => (
+                                    headers.map((header, headerIndex) => (
+                                        <tr key={`${index}-${headerIndex}`}>
+                                         
+                                                <td>{getEntityName(filePath)}</td>
+                                          
+                                            <td>{header}</td>
+                                        </tr>
+                                    ))
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div className="table-section">
                     <h3>LINK</h3>
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>NAME</th>
-                                <th>ATTRIBUTE</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {Object.entries(linkHeaders).map(([filePath, headers], index) => (
-                                headers.map((header, headerIndex) => (
-                                    <tr key={`${index}-${headerIndex}`}>
-                                        {headerIndex === 0 && (
-                                            <td rowSpan={headers.length}>{getLinkName(filePath)}</td>
-                                        )}
-                                        <td>{header}</td>
-                                    </tr>
-                                ))
-                            ))}
-                        </tbody>
-                    </table>
+                    <div className="table-wrapper">
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>NAME</th>
+                                    <th>ATTRIBUTE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {Object.entries(linkHeaders).map(([filePath, headers], index) => (
+                                    headers.map((header, headerIndex) => (
+                                        <tr key={`${index}-${headerIndex}`}>
+                                           
+                                                <td >{getLinkName(filePath)}</td>
+                                           
+                                            <td>{header}</td>
+                                        </tr>
+                                    ))
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
