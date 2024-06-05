@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Papa from 'papaparse';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import './MainContent.css';
 
 const csvFiles = [
@@ -103,55 +104,59 @@ const MainContent = () => {
 
     return (
         <div className="main">
-            <div className="table-container">
-                <div className="table-section">
-                    <h3>ENTITY</h3>
-                    <div className="table-wrapper">
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th>NAME</th>
-                                    <th>ATTRIBUTE</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {Object.entries(entityHeaders).map(([filePath, headers], index) => (
-                                    headers.map((header, headerIndex) => (
-                                        <tr key={`${index}-${headerIndex}`}>
-                                            
-                                                <td> <input type="checkbox" name="" id="" />{getEntityName(filePath)}</td>
-                                          
-                                            <td> <input type="checkbox" name="" id="" />{header}</td>
+            <div className="row">
+                <div className="col-lg-6">
+                    <div className="table-container">
+                        <div className="table-section">
+                            <h3>ENTITY</h3>
+                            <div className="table-wrapper">
+                                <table className="table">
+                                    <thead>
+                                        <tr>
+                                            <th>NAME</th>
+                                            <th>ATTRIBUTE</th>
                                         </tr>
-                                    ))
-                                ))}
-                            </tbody>
-                        </table>
+                                    </thead>
+                                    <tbody>
+                                        {Object.entries(entityHeaders).map(([filePath, headers], index) => (
+                                            headers.map((header, headerIndex) => (
+                                                <tr key={`${index}-${headerIndex}`}>
+                                                    <td><input type="checkbox" name="" id="" />{getEntityName(filePath)}</td>
+                                                    <td><input type="checkbox" name="" id="" />{header}</td>
+                                                </tr>
+                                            ))
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div className="table-section">
-                    <h3>LINK</h3>
-                    <div className="table-wrapper">
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th>NAME</th>
-                                    <th>ATTRIBUTE</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {Object.entries(linkHeaders).map(([filePath, headers], index) => (
-                                    headers.map((header, headerIndex) => (
-                                        <tr key={`${index}-${headerIndex}`}>
-                                           
-                                                <td><input type="checkbox" name="" id="" />{getLinkName(filePath)}</td>
-                                           
-                                            <td><input type="checkbox" name="" id="" />{header}</td>
+                <div className="col-lg-6">
+                    <div className="table-container">
+                        <div className="table-section">
+                            <h3>LINK</h3>
+                            <div className="table-wrapper">
+                                <table className="table">
+                                    <thead>
+                                        <tr>
+                                            <th>NAME</th>
+                                            <th>ATTRIBUTE</th>
                                         </tr>
-                                    ))
-                                ))}
-                            </tbody>
-                        </table>
+                                    </thead>
+                                    <tbody>
+                                        {Object.entries(linkHeaders).map(([filePath, headers], index) => (
+                                            headers.map((header, headerIndex) => (
+                                                <tr key={`${index}-${headerIndex}`}>
+                                                    <td><input type="checkbox" name="" id="" />{getLinkName(filePath)}</td>
+                                                    <td><input type="checkbox" name="" id="" />{header}</td>
+                                                </tr>
+                                            ))
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
