@@ -118,11 +118,11 @@ const MainContent = () => {
                 <table className="table">
                   <thead>
                     <tr>
-                      <th>row</th>
+                      <th></th>
+                      <th></th>
                       <th>NAME</th>
-                      <th>COUNT</th>
                       <th>ATTRIBUTE</th>
-                      <th>type</th>
+                      <th>TYPE</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -134,10 +134,10 @@ const MainContent = () => {
                             <td>
                               <input type="checkbox" />
                             </td>
-                            <td>{getEntityName(filePath)}</td>
                             <td>{rowCount}</td>
+                            <td>{getEntityName(filePath)}</td>
                             <td>{header}</td>
-                            <td>CHR</td>
+                            <td><input type="text" placeholder="CHR"   /></td>
                           </tr>
                         ))
                     )}
@@ -155,11 +155,11 @@ const MainContent = () => {
                 <table className="table">
                   <thead>
                     <tr>
-                      <th>row</th>
+                      <th></th>
+                      <th></th>
                       <th>NAME</th>
-                      <th>COUNT</th>
                       <th>ATTRIBUTE</th>
-                      <th>type</th>
+                      <th>TYPE</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -170,12 +170,12 @@ const MainContent = () => {
                             <td>
                               <input type="checkbox" />
                             </td>
-                            <td>{getLinkName(filePath)}</td>
                             <td>{linkcount}</td>
+                            <td>{getLinkName(filePath)}</td>
                           
                             <td>{header}</td>
 
-                            <td>CHR</td>
+                            <td><input type="text" placeholder="CHR" /></td>
                           </tr>
                         ))
                     )}
