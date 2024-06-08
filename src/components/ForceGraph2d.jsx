@@ -5,10 +5,21 @@ import * as THREE from 'three';
 import './styles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+const predefinedColors = ['red', 'purple', 'orange', 'cyan', 'lime', 'black'];
+
 const ForceGraph2DComponent = () => {
     const fgRef = useRef();
     const [graphData, setGraphData] = useState({ nodes: [], links: [] });
     const [tooltip, setTooltip] = useState({ visible: false, x: 0, y: 0, content: '' });
+    const [colorPicker, setColorPicker] = useState({ visible: false, x: 0, y: 0, type: '' });
+    const [nodeColors, setNodeColors] = useState({
+        'Customer': 'red',
+        'Part number': 'purple',
+        'Purchase order': 'orange',
+        'Sell order': 'cyan',
+        'Supply': 'lime',
+        'default': 'black'
+    });
 
     useEffect(() => {
         // Function to process CSV data
@@ -51,23 +62,7 @@ const ForceGraph2DComponent = () => {
         }
     }, [graphData]);
 
-    const getNodeColor = node => {
-        switch (node.group) {
-            case 'Customer':
-                return 'red'; // Changed to red
-            case 'Part number':
-                return 'purple'; // Changed to purple
-            case 'Purchase order':
-                return 'orange'; // Changed to orange
-            case 'Sell order':
-                return 'cyan'; // Changed to cyan
-            case 'Supply':
-                return 'lime'; // Changed to lime
-            default:
-                return 'black'; // Changed to black
-        }
-    };
-    
+    const getNodeColor = node => nodeColors[node.group] || nodeColors.default;
 
     const getLinkColor = link => {
         switch (link.type) {
@@ -87,71 +82,71 @@ const ForceGraph2DComponent = () => {
     };
 
     const getNodeShape = node => {
+        const color = getNodeColor(node);
         switch (node.group) {
             case 'Customer':
                 return new THREE.Mesh(
                     new THREE.SphereGeometry(5),
-                    new THREE.MeshBasicMaterial({ color: getNodeColor(node) })
+                    new THREE.MeshBasicMaterial({ color })
                 );
             case 'Part number':
                 return new THREE.Mesh(
                     new THREE.ConeGeometry(5, 20, 3),
-                    new THREE.MeshBasicMaterial({ color: getNodeColor(node) })
+                    new THREE.MeshBasicMaterial({ color })
                 );
             case 'Purchase order':
                 return new THREE.Mesh(
                     new THREE.BoxGeometry(10, 10, 10),
-                    new THREE.MeshBasicMaterial({ color: getNodeColor(node) })
+                    new THREE.MeshBasicMaterial({ color })
                 );
             case 'Sell order':
                 return new THREE.Mesh(
                     new THREE.BoxGeometry(10, 5, 5),
-                    new THREE.MeshBasicMaterial({ color: getNodeColor(node) })
+                    new THREE.MeshBasicMaterial({ color })
                 );
             case 'Supply':
                 return new THREE.Mesh(
                     new THREE.CylinderGeometry(5, 5, 5, 40),
-                    new THREE.MeshBasicMaterial({ color: getNodeColor(node) })
+                    new THREE.MeshBasicMaterial({ color })
                 );
             default:
                 return new THREE.Mesh(
                     new THREE.SphereGeometry(5),
-                    new THREE.MeshBasicMaterial({ color: getNodeColor(node) })
+                    new THREE.MeshBasicMaterial({ color })
                 );
         }
     };
 
     const renderLegend = () => (
         <div className="legend">
-           <ul>
-    <h4>Nodes</h4>
-    <li>
-        <svg width="16" height="16">
-            <circle cx="8" cy="8" r="8" fill="red" />
-        </svg> Customer
-    </li>
-    <li>
-        <svg width="16" height="16">
-            <polygon points="8,0 0,16 16,16" fill="purple" />
-        </svg> Part number
-    </li>
-    <li>
-        <svg width="16" height="16">
-            <rect width="16" height="16" fill="orange" />
-        </svg> Purchase order
-    </li>
-    <li>
-        <svg width="16" height="8" fill="cyan">
-            <rect width="16" height="8" fill="cyan" />
-        </svg> Sell order
-    </li>
-    <li>
-        <svg width="16" height="16">
-            <ellipse cx="8" cy="8" rx="8" ry="5" fill="lime" />
-        </svg> Supply
-    </li>
-</ul>
-
+            <ul>
+                <h4>Nodes</h4>
+                <li onClick={() => handleLegendClick('Customer')}>
+                    <svg width="16" height="16">
+                        <circle cx="8" cy="8" r="8" fill={nodeColors['Customer']} />
+                    </svg> Customer
+                </li>
+                <li onClick={() => handleLegendClick('Part number')}>
+                    <svg width="16" height="16">
+                        <polygon points="8,0 0,16 16,16" fill={nodeColors['Part number']} />
+                    </svg> Part number
+                </li>
+                <li onClick={() => handleLegendClick('Purchase order')}>
+                    <svg width="16" height="16">
+                        <rect width="16" height="16" fill={nodeColors['Purchase order']} />
+                    </svg> Purchase order
+                </li>
+                <li onClick={() => handleLegendClick('Sell order')}>
+                    <svg width="16" height="8">
+                        <rect width="16" height="8" fill={nodeColors['Sell order']} />
+                    </svg> Sell order
+                </li>
+                <li onClick={() => handleLegendClick('Supply')}>
+                    <svg width="16" height="16">
+                        <ellipse cx="8" cy="8" rx="8" ry="5" fill={nodeColors['Supply']} />
+                    </svg> Supply
+                </li>
+            </ul>
             <h4>Links</h4>
             <ul>
                 <li style={{ color: 'darkbrown' }}>E BOM</li>
@@ -163,6 +158,18 @@ const ForceGraph2DComponent = () => {
             </ul>
         </div>
     );
+
+    const handleLegendClick = (type) => {
+        setColorPicker({ visible: true, x: 100, y: 100, type });
+    };
+
+    const handleColorSelect = (color) => {
+        setNodeColors({
+            ...nodeColors,
+            [colorPicker.type]: color
+        });
+        setColorPicker({ visible: false, x: 0, y: 0, type: '' });
+    };
 
     const handleNodeHover = node => {
         if (node) {
@@ -179,7 +186,7 @@ const ForceGraph2DComponent = () => {
 
     return (
         <div className="container1 ">
-            <div className="row graph_legend" >
+            <div className="row graph_legend">
                 <div className="col-8">
                     <div className="graph-container">
                         <ForceGraph3D 
@@ -192,26 +199,21 @@ const ForceGraph2DComponent = () => {
                             linkColor={getLinkColor}
                             nodeColor={getNodeColor}
                             linkWidth={3}
-                            // width={1500}
-                            // height={600}
                             enableZoomInteraction={true}
                             nodeThreeObject={getNodeShape}
                             onNodeHover={handleNodeHover}
                         />
                     </div>
                 </div>
-                <div className="col-2" style={{zIndex :999 ,marginTop:'45px'}}>
+                <div className="col-2" style={{zIndex: 999, marginTop: '45px'}}>
                     {renderLegend()}
                 </div>
             </div>
-            
             {tooltip.visible && (
                 <div
                     className="tooltip2"
                     style={{
                         position: 'absolute',
-                        // top: tooltip.y+120,
-                        // left: tooltip.x+200,
                         top: tooltip.y,
                         left: tooltip.x,
                         backgroundColor: 'black',
@@ -223,6 +225,34 @@ const ForceGraph2DComponent = () => {
                     }}
                 >
                     {tooltip.content}
+                </div>
+            )}
+            {colorPicker.visible && (
+                <div
+                    style={{
+                        position: 'absolute',
+                        top: colorPicker.y,
+                        left: colorPicker.x,
+                        backgroundColor: 'white',
+                        padding: '10px',
+                        border: '1px solid black',
+                        borderRadius: '3px',
+                        zIndex: 1000
+                    }}
+                >
+                    {predefinedColors.map(color => (
+                        <div
+                            key={color}
+                            style={{
+                                backgroundColor: color,
+                                width: '30px',
+                                height: '30px',
+                                margin: '5px',
+                                cursor: 'pointer'
+                            }}
+                            onClick={() => handleColorSelect(color)}
+                        />
+                    ))}
                 </div>
             )}
         </div>
