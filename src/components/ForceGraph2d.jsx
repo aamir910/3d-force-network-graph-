@@ -54,19 +54,20 @@ const ForceGraph2DComponent = () => {
     const getNodeColor = node => {
         switch (node.group) {
             case 'Customer':
-                return 'blue';
+                return 'red'; // Changed to red
             case 'Part number':
-                return 'green';
+                return 'purple'; // Changed to purple
             case 'Purchase order':
-                return 'yellow';
+                return 'orange'; // Changed to orange
             case 'Sell order':
-                return 'pink';
+                return 'cyan'; // Changed to cyan
             case 'Supply':
-                return 'teal';
+                return 'lime'; // Changed to lime
             default:
-                return 'gray';
+                return 'black'; // Changed to black
         }
     };
+    
 
     const getLinkColor = link => {
         switch (link.type) {
@@ -122,34 +123,35 @@ const ForceGraph2DComponent = () => {
 
     const renderLegend = () => (
         <div className="legend">
-            <ul>
-                <h4>Nodes</h4>
-                <li>
-                    <svg width="16" height="16">
-                        <circle cx="8" cy="8" r="8" fill="blue" />
-                    </svg> Customer
-                </li>
-                <li>
-                    <svg width="16" height="16">
-                        <polygon points="8,0 0,16 16,16" fill="green" />
-                    </svg> Part number
-                </li>
-                <li>
-                    <svg width="16" height="16">
-                        <rect width="16" height="16" fill="yellow" />
-                    </svg> Purchase order
-                </li>
-                <li>
-                    <svg width="16" height="8" fill="pink">
-                        <rect width="16" height="8" fill="pink" />
-                    </svg> Sell order
-                </li>
-                <li>
-                    <svg width="16" height="16">
-                        <ellipse cx="8" cy="8" rx="8" ry="5" fill="teal" />
-                    </svg> Supply
-                </li>
-            </ul>
+           <ul>
+    <h4>Nodes</h4>
+    <li>
+        <svg width="16" height="16">
+            <circle cx="8" cy="8" r="8" fill="red" />
+        </svg> Customer
+    </li>
+    <li>
+        <svg width="16" height="16">
+            <polygon points="8,0 0,16 16,16" fill="purple" />
+        </svg> Part number
+    </li>
+    <li>
+        <svg width="16" height="16">
+            <rect width="16" height="16" fill="orange" />
+        </svg> Purchase order
+    </li>
+    <li>
+        <svg width="16" height="8" fill="cyan">
+            <rect width="16" height="8" fill="cyan" />
+        </svg> Sell order
+    </li>
+    <li>
+        <svg width="16" height="16">
+            <ellipse cx="8" cy="8" rx="8" ry="5" fill="lime" />
+        </svg> Supply
+    </li>
+</ul>
+
             <h4>Links</h4>
             <ul>
                 <li style={{ color: 'darkbrown' }}>E BOM</li>
