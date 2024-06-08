@@ -124,7 +124,7 @@ const ForceGraph2DComponent = () => {
                 <li onClick={() => handleLegendClick('Customer')}>
                     <svg width="16" height="16">
                         <circle cx="8" cy="8" r="8" fill={nodeColors['Customer']} />
-                    </svg> Customer
+                    </svg>Customer
                 </li>
                 <li onClick={() => handleLegendClick('Part number')}>
                     <svg width="16" height="16">
@@ -164,10 +164,10 @@ const ForceGraph2DComponent = () => {
     };
 
     const handleColorSelect = (color) => {
-        setNodeColors({
-            ...nodeColors,
-            [colorPicker.type]: color
-        });
+            setNodeColors({
+                ...nodeColors,
+                [colorPicker.type]: color
+            });
         setColorPicker({ visible: false, x: 0, y: 0, type: '' });
     };
 
