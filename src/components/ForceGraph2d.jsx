@@ -118,6 +118,7 @@ const ForceGraph2DComponent = () => {
     };
 
     const renderLegend = () => (
+        
         <div className="legend">
             <ul>
                 <h4>Nodes</h4>
@@ -149,12 +150,12 @@ const ForceGraph2DComponent = () => {
             </ul>
             <h4>Links</h4>
             <ul>
-                <li style={{ color: 'darkbrown' }}>E BOM</li>
-                <li style={{ color: 'darkpurple' }}>E Order customer</li>
-                <li style={{ color: 'darkgoldenrod' }}>E part number supply order</li>
-                <li style={{ color: 'darkmagenta' }}>E part number sell order</li>
-                <li style={{ color: 'darkyellow' }}>E order supply</li>
-                <li style={{ color: 'darkred' }}>Other</li>
+                <li> E BOM</li>
+                <li>E Order customer</li>
+                <li  >E part number supply order</li>
+                <li >E part number sell order</li>
+                <li >E order supply</li>
+                <li >Other</li>
             </ul>
         </div>
     );
