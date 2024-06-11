@@ -236,7 +236,7 @@ const ForceGraph2DComponent = () => {
                         <div
                             style={{
                                 position: 'absolute',
-                                top: colorPicker.y-20,
+                                top: colorPicker.y-200,
                                 left: colorPicker.x+1300,
                                 backgroundColor: 'white',
                                 padding: '5px',
