@@ -7,6 +7,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const predefinedColors = ['red', 'purple', 'orange', 'cyan', 'lime', 'black'];
 
+const customerImage = 'customer.png'; // Replace with the actual path to the customer image
+
 const ForceGraph2DComponent = () => {
     const fgRef = useRef();
     const [graphData, setGraphData] = useState({ nodes: [], links: [] });
@@ -50,7 +52,7 @@ const ForceGraph2DComponent = () => {
             const nodes = Object.values(nodesMap);
             setGraphData({ nodes, links });
             
-        console.log(links , 'here is the links')
+            console.log(links , 'here is the links');
         };
 
         // Fetch and parse the CSV file
@@ -79,37 +81,40 @@ const ForceGraph2DComponent = () => {
 
     const getNodeShape = node => {
         const color = getNodeColor(node);
-        switch (node.group) {
-            case 'Customer':
-                return new THREE.Mesh(
-                    new THREE.SphereGeometry(5),
-                    new THREE.MeshBasicMaterial({ color })
-                );
-            case 'Part number':
-                return new THREE.Mesh(
-                    new THREE.ConeGeometry(5, 20, 3),
-                    new THREE.MeshBasicMaterial({ color })
-                );
-            case 'Purchase order':
-                return new THREE.Mesh(
-                    new THREE.BoxGeometry(10, 10, 10),
-                    new THREE.MeshBasicMaterial({ color })
-                );
-            case 'Sell order':
-                return new THREE.Mesh(
-                    new THREE.BoxGeometry(10, 5, 5),
-                    new THREE.MeshBasicMaterial({ color })
-                );
-            case 'Supply':
-                return new THREE.Mesh(
-                    new THREE.CylinderGeometry(5, 5, 5, 40),
-                    new THREE.MeshBasicMaterial({ color })
-                );
-            default:
-                return new THREE.Mesh(
-                    new THREE.SphereGeometry(5),
-                    new THREE.MeshBasicMaterial({ color })
-                );
+        if (node.group === 'Customer') {
+            const texture = new THREE.TextureLoader().load(customerImage);
+            const material = new THREE.SpriteMaterial({ map: texture });
+            const sprite = new THREE.Sprite(material);
+            sprite.scale.set(12, 12, 1); // Adjust size as needed
+            return sprite;
+        } else {
+            switch (node.group) {
+                case 'Part number':
+                    return new THREE.Mesh(
+                        new THREE.ConeGeometry(5, 20, 3),
+                        new THREE.MeshBasicMaterial({ color })
+                    );
+                case 'Purchase order':
+                    return new THREE.Mesh(
+                        new THREE.BoxGeometry(10, 10, 10),
+                        new THREE.MeshBasicMaterial({ color })
+                    );
+                case 'Sell order':
+                    return new THREE.Mesh(
+                        new THREE.BoxGeometry(10, 5, 5),
+                        new THREE.MeshBasicMaterial({ color })
+                    );
+                case 'Supply':
+                    return new THREE.Mesh(
+                        new THREE.CylinderGeometry(5, 5, 5, 40),
+                        new THREE.MeshBasicMaterial({ color })
+                    );
+                default:
+                    return new THREE.Mesh(
+                        new THREE.SphereGeometry(5),
+                        new THREE.MeshBasicMaterial({ color })
+                    );
+            }
         }
     };
 
@@ -118,9 +123,7 @@ const ForceGraph2DComponent = () => {
             <ul>
                 <h4>Nodes</h4>
                 <li onClick={() => handleLegendClick('Customer', 10, 110)}>
-                    <svg width="16" height="16">
-                        <circle cx="8" cy="8" r="8" fill={nodeColors['Customer']} />
-                    </svg> Customer
+                    <img src={customerImage} alt="Customer" width="16" height="16" /> Customer
                 </li>
                 <li onClick={() => handleLegendClick('Part number', 10, 140)}>
                     <svg width="16" height="16">
@@ -145,7 +148,6 @@ const ForceGraph2DComponent = () => {
             </ul>
             <h4>Links</h4>
             <ul>
-     
                 <li onClick={() => handleLegendClick('E BOM', 10, 300)}>
                     <svg width="16" height="16">
                         <line x1="0" y1="8" x2="16" y2="8" stroke={linkColors['E BOM']} strokeWidth="6" />
@@ -236,8 +238,8 @@ const ForceGraph2DComponent = () => {
                         <div
                             style={{
                                 position: 'absolute',
-                                top: colorPicker.y-200,
-                                left: colorPicker.x+1300,
+                                top: colorPicker.y - 20,
+                                left: colorPicker.x + 1300,
                                 backgroundColor: 'white',
                                 padding: '5px',
                                 border: '1px solid black',
@@ -262,27 +264,26 @@ const ForceGraph2DComponent = () => {
                             ))}
                         </div>
                     )}
-                     {tooltip.visible && (
-                <div
-                    className="tooltip2"
-                    style={{
-                        position: 'absolute',
-                        top: tooltip.y,
-                        left: tooltip.x,
-                        backgroundColor: 'black',
-                        padding: '5px',
-                        border: '1px solid black',
-                        borderRadius: '3px',
-                        pointerEvents: 'none',
-                        color: 'white',
-                    }}
-                >
-                    {tooltip.content}
-                </div>
-            )}
+                    {tooltip.visible && (
+                        <div
+                            className="tooltip2"
+                            style={{
+                                position: 'absolute',
+                                top: tooltip.y,
+                                left: tooltip.x,
+                                backgroundColor: 'black',
+                                padding: '5px',
+                                border: '1px solid black',
+                                borderRadius: '3px',
+                                pointerEvents: 'none',
+                                color: 'white',
+                            }}
+                        >
+                            {tooltip.content}
+                        </div>
+                    )}
                 </div>
             </div>
-           
         </div>
     );
 };
