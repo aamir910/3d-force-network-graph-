@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const predefinedColors = ['red', 'purple', 'orange', 'cyan', 'lime', 'black'];
 
-const customerImage = 'customer2.png'; // Replace with the actual path to the customer image
+const customerImage = 'customer.png'; // Replace with the actual path to the customer image
 
 const ForceGraph2DComponent = () => {
     const fgRef = useRef();
@@ -210,11 +210,17 @@ const ForceGraph2DComponent = () => {
             const vector = new THREE.Vector3(x, y, z).project(fgRef.current.camera());
             const tooltipX = (vector.x * 0.5 + 0.5) * canvas.width;
             const tooltipY = (-(vector.y * 0.5) + 0.5) * canvas.height;
-            setTooltip({ visible: true, x: tooltipX, y: tooltipY, content: `${node.id}(${node.group})` });
+            if (node.group === 'Customer') {
+                // Handle customer node hover differently
+                setTooltip({ visible: true, x: tooltipX, y: tooltipY, content: `${node.id} (Customer)` });
+            } else {
+                setTooltip({ visible: true, x: tooltipX, y: tooltipY, content: `${node.id} (${node.group})` });
+            }
         } else {
             setTooltip({ visible: false, x: 0, y: 0, content: '' });
         }
     };
+    
 
     return (
         <div className="container1 ">
