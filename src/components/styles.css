@@ -84,3 +84,6 @@
 }
 
   /* line shape ended  */
+  .sprite-node:hover {
+    animation: none !important;
+  }

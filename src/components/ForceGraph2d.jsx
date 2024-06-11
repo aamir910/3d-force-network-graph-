@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const predefinedColors = ['red', 'purple', 'orange', 'cyan', 'lime', 'black'];
 
-const customerImage = 'customer.png'; // Replace with the actual path to the customer image
+const customerImage = 'customer2.png'; // Replace with the actual path to the customer image
 
 const ForceGraph2DComponent = () => {
     const fgRef = useRef();
@@ -84,8 +84,13 @@ const ForceGraph2DComponent = () => {
         if (node.group === 'Customer') {
             const texture = new THREE.TextureLoader().load(customerImage);
             const material = new THREE.SpriteMaterial({ map: texture });
+
+
             const sprite = new THREE.Sprite(material);
-            sprite.scale.set(12, 12, 1); // Adjust size as needed
+            sprite.scale.set(12, 12, 1); // Adjust size as needed+
+                    // Disable changing material on hover for customer sprite
+        sprite.material.transparent = false;
+        sprite.material.opacity = 1;
             return sprite;
         } else {
             switch (node.group) {
