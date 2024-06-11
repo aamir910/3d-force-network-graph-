@@ -56,3 +56,31 @@
 } 
 
 /* legend css  */
+  /* line shape  */
+  .line {
+    display: inline-block;
+    width: 26px;
+    height: 6px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+.line-EBOM {
+    background: linear-gradient(to right, red, red);
+}
+.line-OrderCustomer {
+    background: linear-gradient(to right, blue, blue);
+}
+.line-PartNumberSupplyOrder {
+    background: linear-gradient(to right, green, green);
+}
+.line-PartNumberSellOrder {
+    background: linear-gradient(to right, orange, orange);
+}
+.line-OrderSupply {
+    background: linear-gradient(to right, purple, purple);
+}
+.line-Other {
+    background: linear-gradient(to right, grey, grey);
+}
+
+  /* line shape ended  */

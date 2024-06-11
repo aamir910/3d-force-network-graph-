@@ -20,6 +20,15 @@ const ForceGraph2DComponent = () => {
         'Supply': 'lime',
         'default': 'black'
     });
+    const [linkColors, setLinkColors] = useState({
+        "E BOM": 'red',
+        "E Order customer": 'purple',
+        "E part number supply order": 'orange',
+        "E part number sell order": 'cyan',
+        "E order supply": 'lime',
+        'default': 'black'
+    });
+    const [selectedLinkType, setSelectedLinkType] = useState('');
 
     useEffect(() => {
         // Function to process CSV data
@@ -40,6 +49,8 @@ const ForceGraph2DComponent = () => {
 
             const nodes = Object.values(nodesMap);
             setGraphData({ nodes, links });
+            
+        console.log(links , 'here is the links')
         };
 
         // Fetch and parse the CSV file
@@ -64,22 +75,7 @@ const ForceGraph2DComponent = () => {
 
     const getNodeColor = node => nodeColors[node.group] || nodeColors.default;
 
-    const getLinkColor = link => {
-        switch (link.type) {
-            case 'E BOM':
-                return 'darkbrown';
-            case 'E Order customer':
-                return 'darkpurple';
-            case 'E part number supply order':
-                return 'darkgoldenrod';
-            case 'E part number sell order':
-                return 'darkmagenta';
-            case 'E order supply':
-                return 'darkyellow';
-            default:
-                return 'black';
-        }
-    };
+    const getLinkColor = link => linkColors[link.type] || linkColors.default;
 
     const getNodeShape = node => {
         const color = getNodeColor(node);
@@ -118,31 +114,30 @@ const ForceGraph2DComponent = () => {
     };
 
     const renderLegend = () => (
-        
         <div className="legend">
             <ul>
                 <h4>Nodes</h4>
-                <li onClick={() => handleLegendClick('Customer')}>
+                <li onClick={() => handleLegendClick('Customer', 10, 110)}>
                     <svg width="16" height="16">
                         <circle cx="8" cy="8" r="8" fill={nodeColors['Customer']} />
-                    </svg>Customer
+                    </svg> Customer
                 </li>
-                <li onClick={() => handleLegendClick('Part number')}>
+                <li onClick={() => handleLegendClick('Part number', 10, 140)}>
                     <svg width="16" height="16">
                         <polygon points="8,0 0,16 16,16" fill={nodeColors['Part number']} />
                     </svg> Part number
                 </li>
-                <li onClick={() => handleLegendClick('Purchase order')}>
+                <li onClick={() => handleLegendClick('Purchase order', 10, 170)}>
                     <svg width="16" height="16">
                         <rect width="16" height="16" fill={nodeColors['Purchase order']} />
                     </svg> Purchase order
                 </li>
-                <li onClick={() => handleLegendClick('Sell order')}>
+                <li onClick={() => handleLegendClick('Sell order', 10, 200)}>
                     <svg width="16" height="8">
                         <rect width="16" height="8" fill={nodeColors['Sell order']} />
                     </svg> Sell order
                 </li>
-                <li onClick={() => handleLegendClick('Supply')}>
+                <li onClick={() => handleLegendClick('Supply', 10, 230)}>
                     <svg width="16" height="16">
                         <ellipse cx="8" cy="8" rx="8" ry="5" fill={nodeColors['Supply']} />
                     </svg> Supply
@@ -150,26 +145,55 @@ const ForceGraph2DComponent = () => {
             </ul>
             <h4>Links</h4>
             <ul>
-                <li> E BOM</li>
-                <li>E Order customer</li>
-                <li  >E part number supply order</li>
-                <li >E part number sell order</li>
-                <li >E order supply</li>
-                <li >Other</li>
+     
+                <li onClick={() => handleLegendClick('E BOM', 10, 300)}>
+                    <svg width="16" height="16">
+                        <line x1="0" y1="8" x2="16" y2="8" stroke={linkColors['E BOM']} strokeWidth="6" />
+                    </svg> E BOM
+                </li>
+                <li onClick={() => handleLegendClick('E Order customer', 10, 330)}>
+                    <svg width="16" height="16">
+                        <line x1="0" y1="8" x2="16" y2="8" stroke={linkColors['E Order customer']} strokeWidth="6" />
+                    </svg> E Order customer
+                </li>
+                <li onClick={() => handleLegendClick('E part number supply order', 10, 360)}>
+                    <svg width="16" height="16">
+                        <line x1="0" y1="8" x2="16" y2="8" stroke={linkColors['E part number supply order']} strokeWidth="6" />
+                    </svg> E part number supply order
+                </li>
+                <li onClick={() => handleLegendClick('E part number sell order', 10, 390)}>
+                    <svg width="16" height="16">
+                        <line x1="0" y1="8" x2="16" y2="8" stroke={linkColors['E part number sell order']} strokeWidth="6" />
+                    </svg> E part number sell order
+                </li>
+                <li onClick={() => handleLegendClick('E order supply', 10, 420)}>
+                    <svg width="16" height="16">
+                        <line x1="0" y1="8" x2="16" y2="8" stroke={linkColors['E order supply']} strokeWidth="6" />
+                    </svg> E order supply
+                </li>
             </ul>
         </div>
     );
 
-    const handleLegendClick = (type) => {
-        setColorPicker({ visible: true, x: 100, y: 100, type });
+    const handleLegendClick = (type, x, y) => {
+        setSelectedLinkType(type);
+        setColorPicker({ visible: true, x, y, type });
     };
 
     const handleColorSelect = (color) => {
+        if (selectedLinkType in linkColors) {
+            setLinkColors({
+                ...linkColors,
+                [selectedLinkType]: color
+            });
+        } else {
             setNodeColors({
                 ...nodeColors,
                 [colorPicker.type]: color
             });
+        }
         setColorPicker({ visible: false, x: 0, y: 0, type: '' });
+        setSelectedLinkType(''); // Reset selected link type
     };
 
     const handleNodeHover = node => {
@@ -179,7 +203,7 @@ const ForceGraph2DComponent = () => {
             const vector = new THREE.Vector3(x, y, z).project(fgRef.current.camera());
             const tooltipX = (vector.x * 0.5 + 0.5) * canvas.width;
             const tooltipY = (-(vector.y * 0.5) + 0.5) * canvas.height;
-            setTooltip({ visible: true, x: tooltipX, y: tooltipY, content: `${node.id}(${node.group}) ` });
+            setTooltip({ visible: true, x: tooltipX, y: tooltipY, content: `${node.id}(${node.group})` });
         } else {
             setTooltip({ visible: false, x: 0, y: 0, content: '' });
         }
@@ -206,11 +230,39 @@ const ForceGraph2DComponent = () => {
                         />
                     </div>
                 </div>
-                <div className="col-2" style={{zIndex: 999, marginTop: '45px'}}>
+                <div className="col-2" style={{ zIndex: 999, marginTop: '45px' }}>
                     {renderLegend()}
-                </div>
-            </div>
-            {tooltip.visible && (
+                    {colorPicker.visible && (
+                        <div
+                            style={{
+                                position: 'absolute',
+                                top: colorPicker.y-20,
+                                left: colorPicker.x+1300,
+                                backgroundColor: 'white',
+                                padding: '5px',
+                                border: '1px solid black',
+                                borderRadius: '3px',
+                                zIndex: 1000,
+                                display: 'flex',
+                                flexWrap: 'wrap'
+                            }}
+                        >
+                            {predefinedColors.map(color => (
+                                <div
+                                    key={color}
+                                    style={{
+                                        backgroundColor: color,
+                                        width: '20px',
+                                        height: '20px',
+                                        margin: '2px',
+                                        cursor: 'pointer'
+                                    }}
+                                    onClick={() => handleColorSelect(color)}
+                                />
+                            ))}
+                        </div>
+                    )}
+                     {tooltip.visible && (
                 <div
                     className="tooltip2"
                     style={{
@@ -228,34 +280,9 @@ const ForceGraph2DComponent = () => {
                     {tooltip.content}
                 </div>
             )}
-            {colorPicker.visible && (
-                <div
-                    style={{
-                        position: 'absolute',
-                        top: colorPicker.y,
-                        left: colorPicker.x,
-                        backgroundColor: 'white',
-                        padding: '10px',
-                        border: '1px solid black',
-                        borderRadius: '3px',
-                        zIndex: 1000
-                    }}
-                >
-                    {predefinedColors.map(color => (
-                        <div
-                            key={color}
-                            style={{
-                                backgroundColor: color,
-                                width: '30px',
-                                height: '30px',
-                                margin: '5px',
-                                cursor: 'pointer'
-                            }}
-                            onClick={() => handleColorSelect(color)}
-                        />
-                    ))}
                 </div>
-            )}
+            </div>
+           
         </div>
     );
 };
