@@ -81,13 +81,19 @@ const ForceGraph2DComponent = () => {
 
     const getNodeShape = node => {
         const color = getNodeColor(node);
-       
+        if (node.group === 'Customer') {
+            const texture = new THREE.TextureLoader().load(customerImage);
+            const material = new THREE.SpriteMaterial({ map: texture });
+
+
+            const sprite = new THREE.Sprite(material);
+            sprite.scale.set(12, 12, 1); // Adjust size as needed+
+                    // Disable changing material on hover for customer sprite
+        sprite.material.transparent = false;
+        sprite.material.opacity = 1;
+            return sprite;
+        } else {
             switch (node.group) {
-                case 'Customer':
-                    return new THREE.Mesh(
-                        new THREE.SphereGeometry(5),
-                        new THREE.MeshBasicMaterial({ color })
-                    );
                 case 'Part number':
                     return new THREE.Mesh(
                         new THREE.ConeGeometry(5, 20, 3),
@@ -114,7 +120,7 @@ const ForceGraph2DComponent = () => {
                         new THREE.MeshBasicMaterial({ color })
                     );
             }
-        
+        }
     };
 
     const renderLegend = () => (
@@ -122,9 +128,8 @@ const ForceGraph2DComponent = () => {
             <ul>
                 <h4>Nodes</h4>
                 <li onClick={() => handleLegendClick('Customer', 10, 110)}>
-                <svg width="16" height="16">
-                        <circle cx="8" cy="8" r="8" fill={nodeColors['Customer']} />
-                    </svg>Customer  </li>
+                    <img src={customerImage} alt="Customer" width="16" height="16" /> Customer
+                </li>
                 <li onClick={() => handleLegendClick('Part number', 10, 140)}>
                     <svg width="16" height="16">
                         <polygon points="8,0 0,16 16,16" fill={nodeColors['Part number']} />
