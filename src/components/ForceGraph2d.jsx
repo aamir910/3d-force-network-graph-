@@ -121,61 +121,93 @@ const ForceGraph2DComponent = () => {
         <div className="legend">
             <ul>
                 <h4>Nodes</h4>
-                <li onClick={() => handleLegendClick('Customer', 10, 110)}>
-                <svg width="16" height="16">
-                        <circle cx="8" cy="8" r="8" fill={nodeColors['Customer']} />
-                    </svg>Customer  </li>
-                <li onClick={() => handleLegendClick('Part number', 10, 140)}>
-                    <svg width="16" height="16">
-                        <polygon points="8,0 0,16 16,16" fill={nodeColors['Part number']} />
-                    </svg> Part number
+                <li onClick={(e) => handleLegendClick('Customer', e.clientX, e.clientY)}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <svg width="16" height="16">
+                            <circle cx="8" cy="8" r="8" fill={nodeColors['Customer']} />
+                        </svg>
+                        <span>Customer</span>
+                    </div>
                 </li>
-                <li onClick={() => handleLegendClick('Purchase order', 10, 170)}>
-                    <svg width="16" height="16">
-                        <rect width="16" height="16" fill={nodeColors['Purchase order']} />
-                    </svg> Purchase order
+                <li onClick={(e) => handleLegendClick('Part number', e.clientX, e.clientY)}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <svg width="16" height="16">
+                            <polygon points="8,0 0,16 16,16" fill={nodeColors['Part number']} />
+                        </svg>
+                        <span>Part number</span>
+                    </div>
                 </li>
-                <li onClick={() => handleLegendClick('Sell order', 10, 200)}>
-                    <svg width="16" height="8">
-                        <rect width="16" height="8" fill={nodeColors['Sell order']} />
-                    </svg> Sell order
+                <li onClick={(e) => handleLegendClick('Purchase order', e.clientX, e.clientY)}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <svg width="16" height="16">
+                            <rect width="16" height="16" fill={nodeColors['Purchase order']} />
+                        </svg>
+                        <span>Purchase order</span>
+                    </div>
                 </li>
-                <li onClick={() => handleLegendClick('Supply', 10, 230)}>
-                    <svg width="16" height="16">
-                        <ellipse cx="8" cy="8" rx="8" ry="5" fill={nodeColors['Supply']} />
-                    </svg> Supply
+                <li onClick={(e) => handleLegendClick('Sell order', e.clientX, e.clientY)}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <svg width="16" height="8">
+                            <rect width="16" height="8" fill={nodeColors['Sell order']} />
+                        </svg>
+                        <span>Sell order</span>
+                    </div>
+                </li>
+                <li onClick={(e) => handleLegendClick('Supply', e.clientX, e.clientY)}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <svg width="16" height="16">
+                            <ellipse cx="8" cy="8" rx="8" ry="5" fill={nodeColors['Supply']} />
+                        </svg>
+                        <span>Supply</span>
+                    </div>
                 </li>
             </ul>
             <h4>Links</h4>
             <ul>
-                <li onClick={() => handleLegendClick('E BOM', 10, 300)}>
-                    <svg width="16" height="16">
-                        <line x1="0" y1="8" x2="16" y2="8" stroke={linkColors['E BOM']} strokeWidth="6" />
-                    </svg> E BOM
+                <li onClick={(e) => handleLegendClick('E BOM', e.clientX, e.clientY)}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <svg width="16" height="16">
+                            <line x1="0" y1="8" x2="16" y2="8" stroke={linkColors['E BOM']} strokeWidth="6" />
+                        </svg>
+                        <span>E BOM</span>
+                    </div>
                 </li>
-                <li onClick={() => handleLegendClick('E Order customer', 10, 330)}>
-                    <svg width="16" height="16">
-                        <line x1="0" y1="8" x2="16" y2="8" stroke={linkColors['E Order customer']} strokeWidth="6" />
-                    </svg> E Order customer
+                <li onClick={(e) => handleLegendClick('E Order customer', e.clientX, e.clientY)}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <svg width="16" height="16">
+                            <line x1="0" y1="8" x2="16" y2="8" stroke={linkColors['E Order customer']} strokeWidth="6" />
+                        </svg>
+                        <span>E Order customer</span>
+                    </div>
                 </li>
-                <li onClick={() => handleLegendClick('E part number supply order', 10, 360)}>
-                    <svg width="16" height="16">
-                        <line x1="0" y1="8" x2="16" y2="8" stroke={linkColors['E part number supply order']} strokeWidth="6" />
-                    </svg> E part number supply order
+                <li onClick={(e) => handleLegendClick('E part number supply order', e.clientX, e.clientY)}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <svg width="16" height="16">
+                            <line x1="0" y1="8" x2="16" y2="8" stroke={linkColors['E part number supply order']} strokeWidth="6" />
+                        </svg>
+                        <span>E part number supply order</span>
+                    </div>
                 </li>
-                <li onClick={() => handleLegendClick('E part number sell order', 10, 390)}>
-                    <svg width="16" height="16">
-                        <line x1="0" y1="8" x2="16" y2="8" stroke={linkColors['E part number sell order']} strokeWidth="6" />
-                    </svg> E part number sell order
+                <li onClick={(e) => handleLegendClick('E part number sell order', e.clientX, e.clientY)}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <svg width="16" height="16">
+                            <line x1="0" y1="8" x2="16" y2="8" stroke={linkColors['E part number sell order']} strokeWidth="6" />
+                        </svg>
+                        <span>E part number sell order</span>
+                    </div>
                 </li>
-                <li onClick={() => handleLegendClick('E order supply', 10, 420)}>
-                    <svg width="16" height="16">
-                        <line x1="0" y1="8" x2="16" y2="8" stroke={linkColors['E order supply']} strokeWidth="6" />
-                    </svg> E order supply
+                <li onClick={(e) => handleLegendClick('E order supply', e.clientX, e.clientY)}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <svg width="16" height="16">
+                            <line x1="0" y1="8" x2="16" y2="8" stroke={linkColors['E order supply']} strokeWidth="6" />
+                        </svg>
+                        <span>E order supply</span>
+                    </div>
                 </li>
             </ul>
         </div>
     );
+    
 
     const handleLegendClick = (type, x, y) => {
         setSelectedLinkType(type);
