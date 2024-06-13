@@ -268,6 +268,7 @@ const ForceGraph2DComponent = () => {
       const vector = new THREE.Vector3(x, y, z).project(fgRef.current.camera());
       const tooltipX = (vector.x * 0.5 + 0.5) * canvas.width;
       const tooltipY = (-(vector.y * 0.5) + 0.5) * canvas.height;
+     
       setTooltip({
         visible: true,
         x: tooltipX,
@@ -312,7 +313,7 @@ const ForceGraph2DComponent = () => {
           )}
           {tooltip.visible && (
             <div
-              className="tooltip"
+              className="tooltip1"
               style={{
                 position: "absolute",
                 top: tooltip.y,
