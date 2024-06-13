@@ -30,32 +30,32 @@ const ForceGraph2DComponent = () => {
         "E order supply": 'lime',
         'default': 'black'
     });
+
     const [selectedLinkType, setSelectedLinkType] = useState('');
+    const [excludedTypes, setExcludedTypes] = useState([]);
 
+    const processCSV = (data) => {
+        const nodesMap = {};
+        const links = data.slice(0, 200).map(row => {
+            const { Entity_1, Entity_2, Entity_Type_1, Entity_Type_2, Edge_Type } = row;
+
+            if (!nodesMap[Entity_1]) {
+                nodesMap[Entity_1] = { id: Entity_1, group: Entity_Type_1 };
+            }
+            if (!nodesMap[Entity_2]) {
+                nodesMap[Entity_2] = { id: Entity_2, group: Entity_Type_2 };
+            }
+
+            return { source: Entity_1, target: Entity_2, type: Edge_Type };
+        });
+
+        const nodes = Object.values(nodesMap);
+        setGraphData({ nodes, links });
+        
+        console.log(links , 'here is the links');
+    };
     useEffect(() => {
-        // Function to process CSV data
-        const processCSV = (data) => {
-            const nodesMap = {};
-            const links = data.slice(0, 200).map(row => {
-                const { Entity_1, Entity_2, Entity_Type_1, Entity_Type_2, Edge_Type } = row;
 
-                if (!nodesMap[Entity_1]) {
-                    nodesMap[Entity_1] = { id: Entity_1, group: Entity_Type_1 };
-                }
-                if (!nodesMap[Entity_2]) {
-                    nodesMap[Entity_2] = { id: Entity_2, group: Entity_Type_2 };
-                }
-
-                return { source: Entity_1, target: Entity_2, type: Edge_Type };
-            });
-
-            const nodes = Object.values(nodesMap);
-            setGraphData({ nodes, links });
-            
-            console.log(links , 'here is the links');
-        };
-
-        // Fetch and parse the CSV file
         Papa.parse('/Edges_orderd_data.csv', {
             download: true,
             header: true,
@@ -82,132 +82,116 @@ const ForceGraph2DComponent = () => {
     const getNodeShape = node => {
         const color = getNodeColor(node);
        
-            switch (node.group) {
-                case 'Customer':
-                    return new THREE.Mesh(
-                        new THREE.SphereGeometry(5),
-                        new THREE.MeshBasicMaterial({ color })
-                    );
-                case 'Part number':
-                    return new THREE.Mesh(
-                        new THREE.ConeGeometry(5, 20, 3),
-                        new THREE.MeshBasicMaterial({ color })
-                    );
-                case 'Purchase order':
-                    return new THREE.Mesh(
-                        new THREE.BoxGeometry(10, 10, 10),
-                        new THREE.MeshBasicMaterial({ color })
-                    );
-                case 'Sell order':
-                    return new THREE.Mesh(
-                        new THREE.BoxGeometry(10, 5, 5),
-                        new THREE.MeshBasicMaterial({ color })
-                    );
-                case 'Supply':
-                    return new THREE.Mesh(
-                        new THREE.CylinderGeometry(5, 5, 5, 40),
-                        new THREE.MeshBasicMaterial({ color })
-                    );
-                default:
-                    return new THREE.Mesh(
-                        new THREE.SphereGeometry(5),
-                        new THREE.MeshBasicMaterial({ color })
-                    );
-            }
-        
+        switch (node.group) {
+            case 'Customer':
+                return new THREE.Mesh(
+                    new THREE.SphereGeometry(5),
+                    new THREE.MeshBasicMaterial({ color })
+                );
+            case 'Part number':
+                return new THREE.Mesh(
+                    new THREE.ConeGeometry(5, 20, 3),
+                    new THREE.MeshBasicMaterial({ color })
+                );
+            case 'Purchase order':
+                return new THREE.Mesh(
+                    new THREE.BoxGeometry(10, 10, 10),
+                    new THREE.MeshBasicMaterial({ color })
+                );
+            case 'Sell order':
+                return new THREE.Mesh(
+                    new THREE.BoxGeometry(10, 5, 5),
+                    new THREE.MeshBasicMaterial({ color })
+                );
+            case 'Supply':
+                return new THREE.Mesh(
+                    new THREE.CylinderGeometry(5, 5, 5, 40),
+                    new THREE.MeshBasicMaterial({ color })
+                );
+            default:
+                return new THREE.Mesh(
+                    new THREE.SphereGeometry(5),
+                    new THREE.MeshBasicMaterial({ color })
+                );
+        }
     };
 
-    const renderLegend = () => (
+  
+const renderLegend = () => (
     <div className="legend">
         <ul>
             <h4>Nodes</h4>
-            <li>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <svg width="16" height="16" onClick={(e) => handleLegendClick('Customer', e.clientX, e.clientY)}>
-                        <circle cx="8" cy="8" r="8" fill={nodeColors['Customer']} />
-                    </svg>
-                    <span>Customer</span>
-                </div>
-            </li>
-            <li>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <svg width="16" height="16" onClick={(e) => handleLegendClick('Part number', e.clientX, e.clientY)}>
-                        <polygon points="8,0 0,16 16,16" fill={nodeColors['Part number']} />
-                    </svg>
-                    <span>Part number</span>
-                </div>
-            </li>
-            <li>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <svg width="16" height="16" onClick={(e) => handleLegendClick('Purchase order', e.clientX, e.clientY)}>
-                        <rect width="16" height="16" fill={nodeColors['Purchase order']} />
-                    </svg>
-                    <span>Purchase order</span>
-                </div>
-            </li>
-            <li>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <svg width="16" height="8" onClick={(e) => handleLegendClick('Sell order', e.clientX, e.clientY)}>
-                        <rect width="16" height="8" fill={nodeColors['Sell order']} />
-                    </svg>
-                    <span>Sell order</span>
-                </div>
-            </li>
-            <li>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <svg width="16" height="16" onClick={(e) => handleLegendClick('Supply', e.clientX, e.clientY)}>
-                        <ellipse cx="8" cy="8" rx="8" ry="5" fill={nodeColors['Supply']} />
-                    </svg>
-                    <span>Supply</span>
-                </div>
-            </li>
-        </ul>
-        <h4>Links</h4>
-        <ul>
-            <li>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <svg width="16" height="16" onClick={(e) => handleLegendClick('E BOM', e.clientX, e.clientY)}>
-                        <line x1="0" y1="8" x2="16" y2="8" stroke={linkColors['E BOM']} strokeWidth="6" />
-                    </svg>
-                    <span>E BOM</span>
-                </div>
-            </li>
-            <li>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <svg width="16" height="16" onClick={(e) => handleLegendClick('E Order customer', e.clientX, e.clientY)}>
-                        <line x1="0" y1="8" x2="16" y2="8" stroke={linkColors['E Order customer']} strokeWidth="6" />
-                    </svg>
-                    <span>E Order customer</span>
-                </div>
-            </li>
-            <li>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <svg width="16" height="16" onClick={(e) => handleLegendClick('E part number supply order', e.clientX, e.clientY)}>
-                        <line x1="0" y1="8" x2="16" y2="8" stroke={linkColors['E part number supply order']} strokeWidth="6" />
-                    </svg>
-                    <span>E part number supply order</span>
-                </div>
-            </li>
-            <li>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <svg width="16" height="16" onClick={(e) => handleLegendClick('E part number sell order', e.clientX, e.clientY)}>
-                        <line x1="0" y1="8" x2="16" y2="8" stroke={linkColors['E part number sell order']} strokeWidth="6" />
-                    </svg>
-                    <span>E part number sell order</span>
-                </div>
-            </li>
-            <li>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <svg width="16" height="16" onClick={(e) => handleLegendClick('E order supply', e.clientX, e.clientY)}>
-                        <line x1="0" y1="8" x2="16" y2="8" stroke={linkColors['E order supply']} strokeWidth="6" />
-                    </svg>
-                    <span>E order supply</span>
-                </div>
-            </li>
+            {Object.keys(nodeColors).map(type => (
+                <li key={type}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <input
+                            type="checkbox"
+                            checked={!excludedTypes.includes(type)}
+                            onChange={() => handleCheckboxChange(type)}
+                        />
+                        <svg width="20" height="20" onClick={(e) => handleLegendClick(type, e.clientX, e.clientY)}>
+                            {getNodeShape({ group: type }).geometry.type === "SphereGeometry" && (
+                                <circle cx="10" cy="10" r="8" fill={nodeColors[type]} />
+                            )}
+                            {getNodeShape({ group: type }).geometry.type === "ConeGeometry" && (
+                                <polygon points="5,0 15,20 5,20" fill={nodeColors[type]} />
+                            )}
+                            {getNodeShape({ group: type }).geometry.type === "BoxGeometry" && (
+                                <rect x="5" y="5" width="10" height="10" fill={nodeColors[type]} />
+                            )}
+                            {getNodeShape({ group: type }).geometry.type === "CylinderGeometry" && (
+                                <rect x="5" y="5" width="20" height="10" fill={nodeColors[type]} />
+                            )}
+                        </svg>
+                        <span>{type}</span>
+                    </div>
+                </li>
+            ))}
+            <h4>Links</h4>
+            {Object.keys(linkColors).map(type => (
+                <li key={type}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <input
+                            type="checkbox"
+                            checked={!excludedTypes.includes(type)}
+                            onChange={() => handleCheckboxChange(type)}
+                        />
+                        <svg width="20" height="20" onClick={(e) => handleLegendClick(type, e.clientX, e.clientY)}>
+                            <line x1="0" y1="10" x2="20" y2="10" stroke={linkColors[type]} strokeWidth="6" />
+                        </svg>
+                        <span>{type}</span>
+                    </div>
+                </li>
+            ))}
+            <button onClick={applyFilters}>Apply</button>
         </ul>
     </div>
 );
+    const handleCheckboxChange = (type) => {
+        setExcludedTypes(prevExcludedTypes => 
+            prevExcludedTypes.includes(type) 
+                ? prevExcludedTypes.filter(excludedType => excludedType !== type)
+                : [...prevExcludedTypes, type]
+        );
+    };
 
+    const applyFilters = () => {
+        Papa.parse('/Edges_orderd_data.csv', {
+            download: true,
+            header: true,
+            complete: (result) => {
+                const filteredData = result.data.filter(row => 
+                    !excludedTypes.includes(row.Entity_Type_1) &&
+                    !excludedTypes.includes(row.Entity_Type_2) &&
+                    !excludedTypes.includes(row.Edge_Type)
+                );
+                processCSV(filteredData);
+            },
+            error: (error) => {
+                console.error("Error reading CSV file:", error);
+            }
+        });
+    };
 
     const handleLegendClick = (type, x, y) => {
         setSelectedLinkType(type);
@@ -237,17 +221,11 @@ const ForceGraph2DComponent = () => {
             const vector = new THREE.Vector3(x, y, z).project(fgRef.current.camera());
             const tooltipX = (vector.x * 0.5 + 0.5) * canvas.width;
             const tooltipY = (-(vector.y * 0.5) + 0.5) * canvas.height;
-            if (node.group === 'Customer') {
-                // Handle customer node hover differently
-                setTooltip({ visible: true, x: tooltipX, y: tooltipY, content: `${node.id} (Customer)` });
-            } else {
-                setTooltip({ visible: true, x: tooltipX, y: tooltipY, content: `${node.id} (${node.group})` });
-            }
+            setTooltip({ visible: true, x: tooltipX, y: tooltipY, content: `${node.id} (${node.group})` });
         } else {
             setTooltip({ visible: false, x: 0, y: 0, content: '' });
         }
     };
-    
 
     return (
         <div className="container1 ">
@@ -276,27 +254,18 @@ const ForceGraph2DComponent = () => {
                         <div
                             style={{
                                 position: 'absolute',
-                                top: colorPicker.y ,
-                                left: colorPicker.x ,
+                                top: colorPicker.y,
+                                left: colorPicker.x,
                                 backgroundColor: 'white',
-                                padding: '5px',
                                 border: '1px solid black',
-                                borderRadius: '3px',
-                                zIndex: 1000,
-                                display: 'flex',
-                                flexWrap: 'wrap'
+                                padding: '10px',
+                                zIndex: 1000
                             }}
                         >
                             {predefinedColors.map(color => (
                                 <div
                                     key={color}
-                                    style={{
-                                        backgroundColor: color,
-                                        width: '20px',
-                                        height: '20px',
-                                        margin: '2px',
-                                        cursor: 'pointer'
-                                    }}
+                                    style={{ backgroundColor: color, width: '20px', height: '20px', margin: '5px', cursor: 'pointer' }}
                                     onClick={() => handleColorSelect(color)}
                                 />
                             ))}
@@ -304,17 +273,16 @@ const ForceGraph2DComponent = () => {
                     )}
                     {tooltip.visible && (
                         <div
-                            className="tooltip2"
+                            className="tooltip"
                             style={{
                                 position: 'absolute',
                                 top: tooltip.y,
                                 left: tooltip.x,
-                                backgroundColor: 'black',
-                                padding: '5px',
+                                backgroundColor: 'white',
                                 border: '1px solid black',
-                                borderRadius: '3px',
+                                padding: '5px',
                                 pointerEvents: 'none',
-                                color: 'white',
+                                zIndex: 1000
                             }}
                         >
                             {tooltip.content}
