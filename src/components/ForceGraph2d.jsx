@@ -282,7 +282,7 @@ const ForceGraph2DComponent = () => {
   return (
     <div className="container1 ">
       <div className="row graph_legend">
-      <div className="col-2 legend_main_box" >
+      <div className="col-2 legend_main_box" style={{zIndex: 999, marginTop: '55px' , background:'black'}} >
           {renderLegend()}
           {colorPicker.visible && (
             <div
