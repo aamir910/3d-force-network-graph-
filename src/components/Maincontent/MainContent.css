@@ -1,68 +1,73 @@
-.main {
-    flex: 1;
+.flex {
+    display: flex;
+  }
+  
+  .column {
+    flex-direction: column;
+  }
+  
+  .col-2 {
+    flex: 0 0 20%; /* Sidebar width */
+  }
+  
+  .col-10 {
+    flex: 1; /* Main content width */
+  }
+  
+  .main {
     padding: 10px;
-    /* margin-top: 66px; */
-}
-
-.table-container {
+  }
+  
+  .table-container {
+    margin-top: 20px;
     display: flex;
     justify-content: space-between;
-}
-
-.table-section1 {
+    margin-bottom: 20px; /* Add margin between sections if needed */
+  }
+  
+  .table-section1 {
     flex: 1;
-    margin-right: 20px;
-}
-
-.table-section1:last-child {
-    margin-right: 0;
-}
-
-.table-wrapper {
-    /* min-width: 550px; */
+    margin-right: 20px; /* Space between tables */
+  }
+  
+  .table-wrapper {
     overflow-y: auto;
     max-height: 70vh; /* Adjust as needed */
     position: relative;
-}
-
-.table {
+  }
+  
+  .table {
     border-collapse: collapse;
     width: 100%;
-}
-
-.table th, .table td {
+  }
+  
+  .table th, .table td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
-}
-
-.table th {
+  }
+  
+  .table th {
     background-color: #f2f2f2;
     position: sticky;
     top: 0;
     z-index: 1;
-}
-
-h3 {
-    background-color: orange; /* Entity header color */
+  }
+  
+  h3 {
+    background-color: orange;
     text-align: start;
     padding: 5px;
     color: white;
     margin: 0;
-}
-.link_color{
+  }
+  
+  .link_color {
     background-color: yellow;
-}
-
-.table-section1:nth-child(2) h3 {
-    background-color: yellow; /* Link header color */
-    color: black;
-}
-
-.table-section1:nth-child(2) .table th {
-    background-color: yellow;
-}
-
-.table td:first-child {
-    background-color: #f9f9f9; /* Added background for NAME column */
-}
+  }
+  
+  /* Adjustments for specific table styles */
+  .table td:first-child {
+    background-color: #f9f9f9;
+  }
+  

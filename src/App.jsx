@@ -13,11 +13,11 @@ const App = () => {
 <Navbar/>
       <div className="App">
 
-
+{/* 
         <Sidebar className="App-header">
 
              <Sidebar/>
-        </Sidebar>
+        </Sidebar> */}
 
         <main>
           <div>

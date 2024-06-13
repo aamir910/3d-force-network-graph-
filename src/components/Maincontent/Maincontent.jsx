@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Papa from "papaparse";
 import "./MainContent.css";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+import Sidebar from "../Buttons/SIdeBar";
 
 const csvFiles = [
   "/EDGES/E_BOM.csv",
@@ -108,7 +109,13 @@ const MainContent = () => {
   };
  
   return (
-    <div className="main">
+    <>
+    <div className="flex coloum">
+<div className="col-2">
+
+      <Sidebar />
+</div>
+    <div className="main col-10">
       <div className="row">
         <div className="col-6">
           <div className="table-container">
@@ -187,6 +194,8 @@ const MainContent = () => {
         </div>
       </div>
     </div>
+    </div>
+    </>
   );
 };
 
