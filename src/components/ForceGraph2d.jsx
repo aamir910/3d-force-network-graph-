@@ -44,7 +44,7 @@ const ForceGraph2DComponent = () => {
 
   const processCSV = (data) => {
     const nodesMap = {};
-    const links = data.slice(0, 200).map((row) => {
+    const links = data.slice(0, 2300).map((row) => {
       const { Entity_1, Entity_2, Entity_Type_1, Entity_Type_2, Edge_Type } =
         row;
 
@@ -344,6 +344,7 @@ const ForceGraph2DComponent = () => {
               enableZoomInteraction={true}
               nodeThreeObject={getNodeShape}
               onNodeHover={handleNodeHover}
+              
             />
           </div>
         </div>
