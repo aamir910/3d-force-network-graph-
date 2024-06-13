@@ -238,7 +238,7 @@ const renderLegend = () => (
                             graphData={graphData}
                             nodeLabel={node => `${node.id}`}
                             nodeAutoColorBy="group"
-                            backgroundColor="white"
+                            backgroundColor="black"
                             linkColor={getLinkColor}
                             nodeColor={getNodeColor}
                             linkWidth={3}
