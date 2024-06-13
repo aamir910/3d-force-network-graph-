@@ -1,5 +1,6 @@
 
   .container1 {
+    background-color: black;
     display: flex;
     flex-direction: row;
     align-items: center; /* Align items horizontally at the center */
@@ -10,11 +11,12 @@
     margin-top: 40px;
   }
   .legend{
+    background-color: black;
     color: white;
     border :2px solid white ;
     border-radius: 15px;
     margin: 4px ;
-    right:0;
+    margin-left:5px;
   }  
 
 

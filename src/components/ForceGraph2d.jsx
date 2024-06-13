@@ -282,25 +282,7 @@ const ForceGraph2DComponent = () => {
   return (
     <div className="container1 ">
       <div className="row graph_legend">
-        <div className="col-8">
-          <div className="graph-container">
-            <ForceGraph3D
-              ref={fgRef}
-              nodeRelSize={8}
-              graphData={graphData}
-              nodeLabel={(node) => `${node.id}`}
-              nodeAutoColorBy="group"
-              backgroundColor="black"
-              linkColor={getLinkColor}
-              nodeColor={getNodeColor}
-              linkWidth={3}
-              enableZoomInteraction={true}
-              nodeThreeObject={getNodeShape}
-              onNodeHover={handleNodeHover}
-            />
-          </div>
-        </div>
-        <div className="col-2" style={{ zIndex: 999, marginTop: "45px" }}>
+      <div className="col-2" style={{ zIndex: 999, marginTop: "45px" }}>
           {renderLegend()}
           {colorPicker.visible && (
             <div
@@ -345,6 +327,26 @@ const ForceGraph2DComponent = () => {
             </div>
           )}
         </div>
+
+        <div className="col-8">
+          <div className="graph-container">
+            <ForceGraph3D
+              ref={fgRef}
+              nodeRelSize={8}
+              graphData={graphData}
+              nodeLabel={(node) => `${node.id}`}
+              nodeAutoColorBy="group"
+              backgroundColor="black"
+              linkColor={getLinkColor}
+              nodeColor={getNodeColor}
+              linkWidth={3}
+              enableZoomInteraction={true}
+              nodeThreeObject={getNodeShape}
+              onNodeHover={handleNodeHover}
+            />
+          </div>
+        </div>
+      
       </div>
     </div>
   );
