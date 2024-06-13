@@ -92,3 +92,8 @@
   .sprite-node:hover {
     animation: none !important;
   }
+  .checkbox1{
+    margin-right: 10px;
+    
+    margin-left: 5px;
+  }

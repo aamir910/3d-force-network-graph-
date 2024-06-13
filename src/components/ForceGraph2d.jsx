@@ -142,7 +142,7 @@ const ForceGraph2DComponent = () => {
         {Object.keys(nodeColors).map((type) => (
           <li key={type}>
             <div style={{ display: "flex", alignItems: "center" }}>
-              <input
+              <input className="checkbox1"
                 type="checkbox"
                 checked={!excludedTypes.includes(type)}
                 onChange={() => handleCheckboxChange(type)}
@@ -188,7 +188,7 @@ const ForceGraph2DComponent = () => {
         {Object.keys(linkColors).map((type) => (
           <li key={type}>
             <div style={{ display: "flex", alignItems: "center" }}>
-              <input
+              <input className="checkbox1"
                 type="checkbox"
                 checked={!excludedTypes.includes(type)}
                 onChange={() => handleCheckboxChange(type)}
