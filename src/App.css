@@ -10,6 +10,7 @@
 }
 
 main {
+  margin-top: 12px;
   flex-grow: 1;
-  padding: 20px; /* Adjust the padding as needed */
+  /* padding: 20px; Adjust the padding as needed */
 }

@@ -8,17 +8,19 @@
 
   .graph-container {
     /* margin-bottom: 20px; Add some margin between the graph and the div */
-    margin-top: 40px;
+    margin-top: 48px;
+
   }
   .legend{
     background-color: black;
     color: white;
     border :2px solid white ;
     border-radius: 15px;
-    margin: 4px ;
-    margin-left:5px;
+  
   }  
-
+.legend_main_box{
+  margin-top: 40px;
+}
 
   /* legend css   */
 

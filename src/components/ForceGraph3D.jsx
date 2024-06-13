@@ -202,6 +202,7 @@ const ForceGraph2DComponent = () => {
                             enableZoomInteraction={true}
                             nodeThreeObject={getNodeShape}
                             onNodeHover={handleNodeHover}
+                            width={100}
                         />
                     </div>
                 </div>
