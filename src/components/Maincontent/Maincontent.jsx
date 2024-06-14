@@ -3,6 +3,7 @@ import Papa from "papaparse";
 import "./MainContent.css";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import Sidebar from "../Buttons/SIdeBar";
+import Navbar from "../NavBar/NavBar";
 
 const csvFiles = [
   "/EDGES/E_BOM.csv",
@@ -110,6 +111,7 @@ const MainContent = () => {
  
   return (
     <>
+    <Navbar image = "newedgeintelligence.png" color= "#f0f0f0"/>
     <div className="flex coloum">
 <div className="col-2">
 

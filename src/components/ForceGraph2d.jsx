@@ -4,7 +4,7 @@ import Papa from "papaparse";
 import * as THREE from "three";
 import "./styles.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import Navbar from "./NavBar/NavBar";
 const predefinedColors = ["white", "lightblue", "orange", "cyan", "lime", "black"];
 
 const customerImage = "customer.png"; // Replace with the actual path to the customer image
@@ -125,6 +125,9 @@ const ForceGraph2DComponent = () => {
   };
 
   const renderLegend = () => (
+    <>
+   
+   <Navbar image = "edge_white_text.png" color="black"/>
     <div className="legend">
       <ul>
         <div class="container">
@@ -212,6 +215,7 @@ const ForceGraph2DComponent = () => {
         ))}
       </ul>
     </div>
+    </>
   );
   const handleCheckboxChange = (type) => {
     setExcludedTypes((prevExcludedTypes) =>
@@ -281,6 +285,8 @@ const ForceGraph2DComponent = () => {
   };
 
   return (
+
+    <>
     <div className="container1 ">
       <div className="row graph_legend">
       <div className="col-2 legend_main_box" style={{zIndex: 999, marginTop: '55px' , background:'black'}} >
@@ -351,6 +357,7 @@ const ForceGraph2DComponent = () => {
       
       </div>
     </div>
+    </>
   );
 };
 
