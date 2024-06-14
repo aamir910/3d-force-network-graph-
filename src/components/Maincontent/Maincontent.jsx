@@ -117,7 +117,25 @@ const MainContent = () => {
       "SELL_ORD",
       "PURCH_ITEM",
     ];
-    return integerAttributes.includes(attribute) ? "INTEGER" : "CHR";
+  
+    const realAttributes = [
+      "SELL_QTY",
+      "PURCH_ORD_QTY",
+    ];
+  
+    const dateAttributes = [
+      "SELL_DELIV_DATE",
+    ];
+  
+    if (integerAttributes.includes(attribute)) {
+      return "INTEGER";
+    } else if (realAttributes.includes(attribute)) {
+      return "REAL";
+    } else if (dateAttributes.includes(attribute)) {
+      return "DATE";
+    } else {
+      return "CHR";
+    }
   };
   
   return (
