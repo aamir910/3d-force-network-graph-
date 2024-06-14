@@ -109,6 +109,17 @@ const MainContent = () => {
     }
   };
  
+
+  const determineType = (attribute) => {
+    const integerAttributes = [
+      "BOMLEV",
+      "PURCH_ORD",
+      "SELL_ORD",
+      "PURCH_ITEM",
+    ];
+    return integerAttributes.includes(attribute) ? "INTEGER" : "CHR";
+  };
+  
   return (
     <>
     <Navbar image = "newedgeintelligence.png" color= "#f0f0f0"/>
@@ -146,7 +157,14 @@ const MainContent = () => {
                             <td>{rowCount}</td>
                             <td>{getEntityName(filePath)}</td>
                             <td>{header}</td>
-                            <td><input type="text" placeholder="CHR"   /></td>
+                            
+                            <td>
+                               <input
+                                    type="text"
+                                    value={determineType(header)}
+                                   
+                                  />
+                                  </td>
                           </tr>
                         ))
                     )}
@@ -184,7 +202,11 @@ const MainContent = () => {
                           
                             <td>{header}</td>
 
-                            <td><input type="text" placeholder="CHR" /></td>
+                            <td> <input
+                                    type="text"
+                                    value={determineType(header)}
+                                   
+                                  /></td>
                           </tr>
                         ))
                     )}
