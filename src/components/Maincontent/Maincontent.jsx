@@ -44,7 +44,7 @@ const MainContent = () => {
       try {
         const entityHeaderPromises = csvFiles2.map((file) => loadCSV(file));
         const linkHeaderPromises = csvFiles.map((file) => loadCSV(file));
-
+            console.log(entityHeaderPromises , 'entityHeaderPromises')
         const entityHeadersArray = await Promise.all(entityHeaderPromises);
         const linkHeadersArray = await Promise.all(linkHeaderPromises);
 
@@ -139,7 +139,7 @@ const MainContent = () => {
   };
   
   return (
-    <>
+    <>                        
     <Navbar image = "newedgeintelligence.png" color= "#f0f0f0"/>
     <div className="flex coloum">
 <div className="col-2">
