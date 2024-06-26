@@ -31,7 +31,9 @@ const MainContent = () => {
           download: true,
           header: true,
           complete: (results) => {
-            resolve(results.meta.fields);
+            const headers = results.meta.fields;
+            const data = results.data;
+            resolve({ headers, data });
           },
           error: (error) => {
             reject(error);
