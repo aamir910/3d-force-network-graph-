@@ -23,7 +23,7 @@ const csvFiles2 = [
 const MainContent = () => {
   const [entityHeaders, setEntityHeaders] = useState({});
   const [linkHeaders, setLinkHeaders] = useState({});
-
+ 
   useEffect(() => {
     const loadCSV = (filePath) => {
       return new Promise((resolve, reject) => {
@@ -31,9 +31,9 @@ const MainContent = () => {
           download: true,
           header: true,
           complete: (results) => {
-            const headers = results.meta.fields;
             const data = results.data;
-            resolve({ headers, data });
+            const header =results.meta.fields; 
+            resolve({data , header});
           },
           error: (error) => {
             reject(error);
@@ -46,11 +46,21 @@ const MainContent = () => {
       try {
         const entityHeaderPromises = csvFiles2.map((file) => loadCSV(file));
         const linkHeaderPromises = csvFiles.map((file) => loadCSV(file));
-            console.log(entityHeaderPromises , 'entityHeaderPromises')
-        const entityHeadersArray = await Promise.all(entityHeaderPromises);
-        const linkHeadersArray = await Promise.all(linkHeaderPromises);
+        
+        const entityResults = await Promise.all(entityHeaderPromises);
+        const linkResults = await Promise.all(linkHeaderPromises);
 
-        const newEntityHeaders = {};
+        console.log(entityResults , 'here is the entity results')
+        const entityHeadersArray = entityResults.map(result => result.header);
+        const linkHeadersArray = linkResults.map(result => result.header);
+        const entityDataArray = entityResults.map(result => result.data);
+
+        console.log(entityHeadersArray, 'entityHeadersArray');
+        console.log(entityDataArray[0], 'entityDataArray data is '); // Log the entity data
+
+
+
+       const newEntityHeaders = {};
         csvFiles2.forEach((file, index) => {
           newEntityHeaders[file] = entityHeadersArray[index];
         });
@@ -69,6 +79,7 @@ const MainContent = () => {
 
     loadAllCSVs();
   }, []);
+
 
   let rowCount = 1;
   let linkcount = 1;
