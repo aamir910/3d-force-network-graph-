@@ -172,11 +172,11 @@ console.log(uniquePlants ,'here are the unique plant ')
   
   return (
     <>                        
-    <Navbar image = "newedgeintelligence.png" color= "#f0f0f0"/>
+    {/* <Navbar image = "newedgeintelligence.png" color= "#f0f0f0"/> */}
     <div className="flex coloum">
 <div className="col-2">
 
-      <Sidebar />
+      {/* <Sidebar /> */}
 </div>
     <div className="main col-10">
       <div className="row">
@@ -188,11 +188,11 @@ console.log(uniquePlants ,'here are the unique plant ')
                 <table className="table">
                   <thead>
                     <tr>
-                      <th></th>
-                      <th></th>
+                      {/* <th></th>
+                      <th></th> */}
                       <th>NAME</th>
                       <th>ATTRIBUTE</th>
-                      <th>TYPE</th>
+                      
                     </tr>
                   </thead>
                   <tbody>
@@ -201,20 +201,14 @@ console.log(uniquePlants ,'here are the unique plant ')
                       ([filePath, headers], index) =>
                         headers.map((header, headerIndex) => (
                           <tr key={`${index}-${headerIndex}`}>
-                            <td>
+                            {/* <td>
                               <input type="checkbox" />
                             </td>
-                            <td>{rowCount}</td>
+                            <td>{rowCount}</td> */}
                             <td>{getEntityName(filePath)}</td>
                             <td>{header}</td>
                             
-                            <td>
-                               <input
-                                    type="text"
-                                    // value={determineType(header)}
-                                   defaultValue={determineType(header)}
-                                  />
-                                  </td>
+                       
                           </tr>
                         ))
                     )}
@@ -232,11 +226,11 @@ console.log(uniquePlants ,'here are the unique plant ')
                 <table className="table">
                   <thead>
                     <tr>
-                      <th></th>
-                      <th></th>
+                      {/* <th></th> */}
+                      {/* <th></th> */}
                       <th>NAME</th>
                       <th>ATTRIBUTE</th>
-                      <th>TYPE</th>
+                   
                     </tr>
                   </thead>
                   <tbody>
@@ -244,20 +238,14 @@ console.log(uniquePlants ,'here are the unique plant ')
                       ([filePath, headers], index) =>
                         headers.map((header, headerIndex) => (
                           <tr key={`${index}-${headerIndex}`}>
-                            <td>
+                            {/* <td>
                               <input type="checkbox" />
                             </td>
-                            <td>{linkcount}</td>
+                            <td>{linkcount}</td> */}
                             <td>{getLinkName(filePath)}</td>
                           
                             <td>{header}</td>
 
-                            <td> <input
-                                    type="text"
-                                    // value={determineType(header)}
-                                   
-                                    defaultValue={determineType(header)}
-                                  /></td>
                           </tr>
                         ))
                     )}
