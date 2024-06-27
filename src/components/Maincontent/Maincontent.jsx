@@ -26,6 +26,7 @@ const MainContent = () => {
   const [entityData ,setEnitityData] = useState({}) ; 
   const [uniqueValues, setUniqueValues] = useState([]);
   
+  const [uniquePlants, setUniquePlants] = useState([]);
   useEffect(() => {
     const loadCSV = (filePath) => {
       return new Promise((resolve, reject) => {
@@ -83,34 +84,20 @@ const MainContent = () => {
     loadAllCSVs();
   }, []);
   
-  // Function to extract unique values for each key
+  
+  useEffect (()=>{
+     // Extract unique values for each key whenever uploadedData changes
+     if (entityData.length > 0) {
+     const uniquePlantsSet = new Set(entityData[0].map(item => item.AREA));
+     const uniquePlantsArray = [...uniquePlantsSet];
+     setUniquePlants(uniquePlantsArray);
+     }
  
+     // Add similar logic for other keys (COUNTRY, ZONE, etc.) as needed
+ 
+  },[entityData])
 
-    // Get unique values for each sub-array and set them in the state
-   
-console.log(entityData[0] , 'here is the data ') 
-
-// let uniqueValues2= {};
-
-
-//   entityData[0].forEach(obj => {
-//       Object.keys(obj).forEach(key => {
-//           let value = obj[key];
-//           if (!uniqueValues[key]) {
-//               uniqueValues[key] = new Set();
-//           }
-//           uniqueValues[key].add(value);
-//       });
-//   });
-  
-//   // Convert Sets to arrays if needed
-//   Object.keys(uniqueValues).forEach(key => {
-//       uniqueValues[key] = Array.from(uniqueValues[key]);
-//   });
-  
-//   console.log(uniqueValues2);
-
-
+console.log(uniquePlants ,'here are the unique plant ')
 
 
   let rowCount = 1;
