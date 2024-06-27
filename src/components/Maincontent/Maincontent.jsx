@@ -23,7 +23,9 @@ const csvFiles2 = [
 const MainContent = () => {
   const [entityHeaders, setEntityHeaders] = useState({});
   const [linkHeaders, setLinkHeaders] = useState({});
- 
+  const [entityData ,setEnitityData] = useState({}) ; 
+  const [uniqueValues, setUniqueValues] = useState([]);
+  
   useEffect(() => {
     const loadCSV = (filePath) => {
       return new Promise((resolve, reject) => {
@@ -56,7 +58,7 @@ const MainContent = () => {
         const entityDataArray = entityResults.map(result => result.data);
 
         console.log(entityHeadersArray, 'entityHeadersArray');
-        console.log(entityDataArray[0], 'entityDataArray data is '); // Log the entity data
+        console.log(entityDataArray, 'entityDataArray data is '); // Log the entity data
 
 
 
@@ -72,6 +74,7 @@ const MainContent = () => {
 
         setEntityHeaders(newEntityHeaders);
         setLinkHeaders(newLinkHeaders);
+        setEnitityData(entityDataArray) ; 
       } catch (error) {
         console.error("Error loading CSV files:", error);
       }
@@ -79,6 +82,35 @@ const MainContent = () => {
 
     loadAllCSVs();
   }, []);
+  
+  // Function to extract unique values for each key
+ 
+
+    // Get unique values for each sub-array and set them in the state
+   
+console.log(entityData[0] , 'here is the data ') 
+
+// let uniqueValues2= {};
+
+
+//   entityData[0].forEach(obj => {
+//       Object.keys(obj).forEach(key => {
+//           let value = obj[key];
+//           if (!uniqueValues[key]) {
+//               uniqueValues[key] = new Set();
+//           }
+//           uniqueValues[key].add(value);
+//       });
+//   });
+  
+//   // Convert Sets to arrays if needed
+//   Object.keys(uniqueValues).forEach(key => {
+//       uniqueValues[key] = Array.from(uniqueValues[key]);
+//   });
+  
+//   console.log(uniqueValues2);
+
+
 
 
   let rowCount = 1;
@@ -192,8 +224,8 @@ const MainContent = () => {
                             <td>
                                <input
                                     type="text"
-                                    value={determineType(header)}
-                                   
+                                    // value={determineType(header)}
+                                   defaultValue={determineType(header)}
                                   />
                                   </td>
                           </tr>
@@ -235,8 +267,9 @@ const MainContent = () => {
 
                             <td> <input
                                     type="text"
-                                    value={determineType(header)}
+                                    // value={determineType(header)}
                                    
+                                    defaultValue={determineType(header)}
                                   /></td>
                           </tr>
                         ))
