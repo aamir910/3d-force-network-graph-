@@ -1,7 +1,7 @@
 // src/App.jsx
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import ForceGraph3DComponent from "./components/ForceGraph3D";
+import Visualize_filteration from "./components/visualize/ForceGraph3D";
 import ForceGraph2DComponent from "./components/ForceGraph2d";
 import Sidebar from "./components/Buttons/SIdeBar";
 import MainContent from "./components/Maincontent/Maincontent";
@@ -24,7 +24,7 @@ const App = () => {
               <Routes>
                 
               <Route path="/" element={<MainContent />} />
-                <Route path="/visualize" element={<ForceGraph3DComponent />} />
+                <Route path="/visualize" element={<Visualize_filteration />} />
                 <Route path="/CONFIGURATION" element={<MainContent/>} />
 
                 
