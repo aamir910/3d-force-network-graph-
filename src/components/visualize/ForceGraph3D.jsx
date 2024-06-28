@@ -174,25 +174,23 @@ console.log(uniquePlants ,'here are the unique plant ')
     <>                        
     <Navbar image = "newedgeintelligence.png" color= "#f0f0f0"/>
     <div className="flex coloum">
-<div className="col-2">
 
-      {/* <Sidebar /> */}
-</div>
-    <div className="main col-10">
+    <div className="main_visualize col-12">
       <div className="row">
         <div className="col-6">
           <div className="table-container">
             <div className="table-section1">
-              <h3>ENTITY</h3>
+              <h3 className="entity_class">ENTITY_FILTERATION</h3>
               <div className="table-wrapper">
-                <table className="table">
+                <table className="table2">
                   <thead>
                     <tr>
                       {/* <th></th>
                       <th></th> */}
                       <th>NAME</th>
-                      <th>ATTRIBUTE</th>
+                      <th>TYPE</th>
                       
+                      <th>SUB TYPE</th>    
                     </tr>
                   </thead>
                   <tbody>
@@ -212,7 +210,7 @@ console.log(uniquePlants ,'here are the unique plant ')
                                 )}
                               </td>
                             <td><input type="checkbox" name="" id="" /> {header}</td>
-                          
+                         
                           </tr>
                         ))
                     )}
@@ -224,8 +222,8 @@ console.log(uniquePlants ,'here are the unique plant ')
         </div>
         <div className="col-6">
           <div className="table-container">
-            <div className="table-section1">
-              <h3 className="link_color">LINK</h3>
+            <div className="table-section2">
+              <h3 className="entity_class">LINK_FILTERATION</h3>
               <div className="table-wrapper">
                 <table className="table">
                   <thead>
@@ -233,8 +231,8 @@ console.log(uniquePlants ,'here are the unique plant ')
                       {/* <th></th> */}
                       {/* <th></th> */}
                       <th>NAME</th>
-                      <th>ATTRIBUTE</th>
-                   
+                      <th>TYPE</th>
+                       <th>SUB TYPE</th>                   
                     </tr>
                   </thead>
                   <tbody>

@@ -10,12 +10,12 @@
     flex: 0 0 20%; /* Sidebar width */
   }
   
-  .col-10 {
+  .col-12 {
     flex: 1; /* Main content width */
   }
   
-  .main {
-    padding: 10px;
+  .main_visualize {
+    padding: 50px;
   }
   
   .table-container {
@@ -25,9 +25,9 @@
     margin-bottom: 20px; /* Add margin between sections if needed */
   }
   
-  .table-section1 {
+  .table-section2 {
     flex: 1;
-    margin-right: 20px; /* Space between tables */
+    /* margin-right: 20px; */
   }
   
   .table-wrapper {
@@ -36,26 +36,26 @@
     position: relative;
   }
   
-  .table {
+  .table2 {
     border-collapse: collapse;
     width: 100%;
   }
   
-  .table th, .table td {
-    border: 1px solid #ddd;
-    padding: 8px;
+  .table2 th, .table2 td {
+      padding: 8px;
+      border: 1px solid #ddd;
     text-align: left;
   }
-  
-  .table th {
+ 
+  .table2 th {
     background-color: #f2f2f2;
     position: sticky;
     top: 0;
     z-index: 1;
   }
   
-  h3 {
-    background-color: orange;
+  .entity_class {
+    background-color: black;
     text-align: start;
     padding: 5px;
     color: white;
@@ -63,11 +63,11 @@
   }
   
   .link_color {
-    background-color: yellow;
+    background-color: black;
   }
   
   /* Adjustments for specific table styles */
-  .table td:first-child {
+  .table2 td:first-child {
     background-color: #f9f9f9;
   }
   
