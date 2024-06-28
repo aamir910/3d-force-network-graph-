@@ -183,49 +183,68 @@ const Visualize_filteration = () => {
                         <tr>
                           <th>NAME</th>
                           <th>TYPE</th>
-                          {/* <th>SUB TYPE</th> */}
+                          <th>SUB TYPE</th>
                         </tr>
                       </thead>
 
-                     <tbody>
+                      <tbody>
   {Object.entries(entityHeaders).map(([filePath, headers], index) =>
     headers.map((header, headerIndex) => {
-      if (true) {
-        return (
-          <tr key={`${index}-${headerIndex}`}>
-            <td>
-              {headerIndex === 0 ? (
-                <>{getEntityName(filePath)}</>
-              ) : (
-                ""
-              )}
-            </td>
-            <td>
-              <input
-                type="checkbox"
-                name=""
-                id=""
-                checked={checkedEntities[filePath] === headerIndex}
-                onChange={() =>
-                  handleEntityCheckboxChange(filePath, headerIndex)
-                }
-              />{" "}
-              {header}
-            </td>
-          </tr>
-        );
-      } else {
-        return null; // Return null if condition is not met (row won't be rendered)
+      if (uniqueData.length !== 0) {
+        if (uniqueData[index][header].length < 100) {
+          return (
+            <tr key={`${index}-${headerIndex}`}>
+              <td>
+                {headerIndex === 0 ? (
+                  <>{getEntityName(filePath)}</>
+                ) : (
+                  ""
+                )}
+              </td>
+              <td>
+                <input
+                  type="checkbox"
+                  name=""
+                  id=""
+                  checked={checkedEntities[filePath] === headerIndex}
+                  onChange={() =>
+                    handleEntityCheckboxChange(filePath, headerIndex)
+                  }
+                />{" "}
+                {header}
+              </td>
+              <td>
+                <div className="dropdown">
+                  <button className="dropbtn">Dropdown</button>
+                  <div className="dropdown-content">
+                    {uniqueData[index][header].map((item, itemIndex) => (
+                      <label key={itemIndex}>
+                        <input
+                          type="checkbox"
+                          value={item}
+                          // Handle checkbox change logic here
+                        />
+                        {item}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              </td>
+            </tr>
+          );
+        } else {
+          return null; // Return null if condition is not met (row won't be rendered)
+        }
       }
     })
   )}
 </tbody>
 
-                    </table>
+                   </table>
                   </div>
                 </div>
               </div>
-            </div>
+            </div> 
             <div className="col-4">
               <div className="table-container">
                 <div className="table-section2">

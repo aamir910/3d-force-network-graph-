@@ -71,3 +71,55 @@
     background-color: #f9f9f9;
   }
   
+
+  /* Basic styling for the dropdown */
+/* Basic styling for the dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown button styling */
+.dropbtn {
+  background-color: #3cb9eb; /* Green background */
+  color: white;
+  padding: 8px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  width: auto; /* Adjust as needed */
+  max-height: 300px; /* Fixed height */
+  overflow-y: auto; /* Enable vertical scrollbar */
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  width: 200px;
+}
+
+/* Dropdown content - show it when clicking on the dropdown button */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Dropdown content items (checkboxes) */
+.dropdown-content label {
+  display: block;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+/* Optional: Style checkboxes */
+.dropdown-content input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+/* Optional: Hover state for dropdown items */
+.dropdown-content label:hover {
+  background-color: #ddd;
+}
