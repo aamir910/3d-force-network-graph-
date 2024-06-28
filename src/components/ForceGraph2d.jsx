@@ -68,6 +68,7 @@ const ForceGraph2DComponent = () => {
       download: true,
       header: true,
       complete: (result) => {
+        console.log(result.data , 'result.data')
         processCSV(result.data);
       },
       error: (error) => {

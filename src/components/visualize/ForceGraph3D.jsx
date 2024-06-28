@@ -80,7 +80,7 @@ const Visualize_filteration = () => {
 
     loadAllCSVs();
   }, []);
-
+  console.log(entityHeaders , 'entityHeaders')
   const [uniqueData, setUniqueData] = useState([]);
 
   useEffect(() => {
@@ -120,15 +120,15 @@ const Visualize_filteration = () => {
     const fileName = filePath.split("/").pop();
     switch (fileName) {
       case "N_CUSTOMER.csv":
-        return "CUSTOMER";
+        return "Customer";
       case "N_PARTNUMBER.csv":
-        return "PARTNUMBER";
+        return "Part number";
       case "N_PURCHORDER.csv":
-        return "PURCHORDER";
+        return "Purchase order";
       case "N_SELLORDER.csv":
-        return "SELLORDER";
+        return "Sell order";
       case "N_SUPPLIER.csv":
-        return "SUPPLIER";
+        return "Supply";
       default:
         return "";
     }
@@ -138,15 +138,15 @@ const Visualize_filteration = () => {
     const fileName = filePath.split("/").pop();
     switch (fileName) {
       case "E_BOM.csv":
-        return "BOM";
+        return "E BOM";
       case "E_ORDERCUST.csv":
-        return "ORDERCUST";
+        return "E Order customer";
       case "E_ORDERSUPP.csv":
-        return "ORDERSUPP";
+        return "E order supply";
       case "E_PNSELLORD.csv":
-        return "PNSELLORD";
+        return "E part number sell order";
       case "E_PNSUPPORD.csv":
-        return "PNSUPPORD";
+        return "E part number supply order";
       default:
         return "";
     }
@@ -196,7 +196,7 @@ const Visualize_filteration = () => {
             <tr key={`${index}-${headerIndex}`}>
               <td>
                 {headerIndex === 0 ? (
-                  <>{getEntityName(filePath)}</>
+                  <><input type="checkbox" name="" id="" value={getEntityName(filePath)} /> {getEntityName(filePath)}</>
                 ) : (
                   ""
                 )}
@@ -278,7 +278,7 @@ const Visualize_filteration = () => {
                       </tbody>
                     </table>
                     
-      <button><Link to="/3d_graph">VISUALIZE</Link></button>
+          <button><Link to="/3d_graph">VISUALIZE</Link></button>
                   </div>
                 </div>
               </div>

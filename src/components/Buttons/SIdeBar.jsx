@@ -6,9 +6,9 @@ function Sidebar() {
     return (
         <div className="sidebar">
             
+            <button><Link to="/main">CONFIGURATION</Link>  </button>
             <button><Link to="/upload">UPLOAD DATA</Link></button>
             <button ><Link to="/visualize">VISUALIZE</Link></button>
-            <button><Link to="/main">CONFIGURATION</Link>  </button>
         </div>
     );   
 }
