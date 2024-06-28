@@ -176,11 +176,13 @@ console.log(uniquePlants ,'here are the unique plant ')
     <div className="flex coloum">
 
     <div className="main_visualize col-12">
+
       <div className="row">
-        <div className="col-6">
+        <h1>Select Filteration</h1>
+        <div className="col-8">
           <div className="table-container">
             <div className="table-section1">
-              <h3 className="entity_class">ENTITY_FILTERATION</h3>
+              <h3 className="entity_class">ENTITY</h3>
               <div className="table-wrapper">
                 <table className="table2">
                   <thead>
@@ -202,7 +204,7 @@ console.log(uniquePlants ,'here are the unique plant ')
                             <td>
                             {headerIndex === 0 ? (
                                   <>
-                                    <input type="checkbox" name="" id="" /> {getEntityName(filePath)}
+                                   {getEntityName(filePath)}
                                   </>
                                 ) : (
                                   ""
@@ -219,10 +221,10 @@ console.log(uniquePlants ,'here are the unique plant ')
             </div>
           </div>
         </div>
-        <div className="col-6">
+        <div className="col-4">
           <div className="table-container">
             <div className="table-section2">
-              <h3 className="entity_class">LINK_FILTERATION</h3>
+              <h3 className="entity_class">LINK</h3>
               <div className="table-wrapper">
                 <table className="table">
                   <thead>
