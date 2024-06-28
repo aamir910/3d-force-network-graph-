@@ -80,17 +80,43 @@ const Visualize_filteration = () => {
     loadAllCSVs();
   }, []);
 
+  const [uniqueData, setUniqueData] = useState([]);
+
+
   useEffect(() => {
-    // Extract unique values for each key whenever uploadedData changes
+    // Function to extract unique values from an array of objects for all keys
+    const getUniqueValues = (array) => {
+      const uniqueValues = {};
+
+      array.forEach(item => {
+        Object.keys(item).forEach(key => {
+          if (!uniqueValues[key]) {
+            uniqueValues[key] = new Set();
+          }
+          if (item[key]) {
+            uniqueValues[key].add(item[key]);
+          }
+        });
+      });
+
+      // Convert sets to arrays
+      Object.keys(uniqueValues).forEach(key => {
+        uniqueValues[key] = Array.from(uniqueValues[key]);
+      });
+
+      return uniqueValues;
+    };
+
     if (entityData.length > 0) {
-      const uniquePlantsSet = new Set(entityData[0].map((item) => item.AREA));
-      const uniquePlantsArray = [...uniquePlantsSet];
-      setUniquePlants(uniquePlantsArray);
+      // Loop through each array in entityData
+      const result = entityData.map(subArray => getUniqueValues(subArray));
+      setUniqueData(result);
     }
-
-    // Add similar logic for other keys (COUNTRY, ZONE, etc.) as needed
   }, [entityData]);
+  console.log(uniqueData , 'uniqueData')
 
+
+console.log(entityData , 'entityData')
   const getEntityName = (filePath) => {
     const fileName = filePath.split("/").pop();
     switch (fileName) {
@@ -140,7 +166,7 @@ const Visualize_filteration = () => {
       [filePath]: !prevState[filePath],
     }));
   };
-  console.log("check box state" ,checkedEntities , checkedLinks)
+
   return (
     <>
       <Navbar image="newedgeintelligence.png" color="#f0f0f0" />
@@ -158,6 +184,7 @@ const Visualize_filteration = () => {
                         <tr>
                           <th>NAME</th>
                           <th>TYPE</th>
+                          <th>SUB TYPE</th>
                         </tr>
                       </thead>
                       <tbody>
