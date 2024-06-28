@@ -82,14 +82,13 @@ const Visualize_filteration = () => {
 
   const [uniqueData, setUniqueData] = useState([]);
 
-
   useEffect(() => {
     // Function to extract unique values from an array of objects for all keys
     const getUniqueValues = (array) => {
       const uniqueValues = {};
 
-      array.forEach(item => {
-        Object.keys(item).forEach(key => {
+      array.forEach((item) => {
+        Object.keys(item).forEach((key) => {
           if (!uniqueValues[key]) {
             uniqueValues[key] = new Set();
           }
@@ -100,7 +99,7 @@ const Visualize_filteration = () => {
       });
 
       // Convert sets to arrays
-      Object.keys(uniqueValues).forEach(key => {
+      Object.keys(uniqueValues).forEach((key) => {
         uniqueValues[key] = Array.from(uniqueValues[key]);
       });
 
@@ -109,14 +108,13 @@ const Visualize_filteration = () => {
 
     if (entityData.length > 0) {
       // Loop through each array in entityData
-      const result = entityData.map(subArray => getUniqueValues(subArray));
+      const result = entityData.map((subArray) => getUniqueValues(subArray));
       setUniqueData(result);
     }
   }, [entityData]);
-  console.log(uniqueData , 'uniqueData')
+  console.log(uniqueData, "uniqueData");
 
-
-console.log(entityData , 'entityData')
+  console.log(entityData, "entityData");
   const getEntityName = (filePath) => {
     const fileName = filePath.split("/").pop();
     switch (fileName) {
@@ -194,9 +192,7 @@ console.log(entityData , 'entityData')
                               <tr key={`${index}-${headerIndex}`}>
                                 <td>
                                   {headerIndex === 0 ? (
-                                    <>
-                                      {getEntityName(filePath)}
-                                    </>
+                                    <>{getEntityName(filePath)}</>
                                   ) : (
                                     ""
                                   )}
@@ -206,8 +202,15 @@ console.log(entityData , 'entityData')
                                     type="checkbox"
                                     name=""
                                     id=""
-                                    checked={checkedEntities[filePath] === headerIndex}
-                                    onChange={() => handleEntityCheckboxChange(filePath, headerIndex)}
+                                    checked={
+                                      checkedEntities[filePath] === headerIndex
+                                    }
+                                    onChange={() =>
+                                      handleEntityCheckboxChange(
+                                        filePath,
+                                        headerIndex
+                                      )
+                                    }
                                   />{" "}
                                   {header}
                                 </td>
@@ -232,20 +235,24 @@ console.log(entityData , 'entityData')
                         </tr>
                       </thead>
                       <tbody>
-                        {Object.entries(linkHeaders).map(([filePath, headers], index) => (
-                          <tr key={index}>
-                            <td>
-                              <input
-                                type="checkbox"
-                                name=""
-                                id=""
-                                checked={checkedLinks[filePath] || false}
-                                onChange={() => handleLinkCheckboxChange(filePath)}
-                              />{" "}
-                              {getLinkName(filePath)}
-                            </td>
-                          </tr>
-                        ))}
+                        {Object.entries(linkHeaders).map(
+                          ([filePath, headers], index) => (
+                            <tr key={index}>
+                              <td>
+                                <input
+                                  type="checkbox"
+                                  name=""
+                                  id=""
+                                  checked={checkedLinks[filePath] || false}
+                                  onChange={() =>
+                                    handleLinkCheckboxChange(filePath)
+                                  }
+                                />{" "}
+                                {getLinkName(filePath)}
+                              </td>
+                            </tr>
+                          )
+                        )}
                       </tbody>
                     </table>
                   </div>
