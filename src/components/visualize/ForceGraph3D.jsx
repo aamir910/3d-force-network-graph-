@@ -185,39 +185,41 @@ const Visualize_filteration = () => {
                           <th>SUB TYPE</th>
                         </tr>
                       </thead>
+
                       <tbody>
-                        {Object.entries(entityHeaders).map(
-                          ([filePath, headers], index) =>
-                            headers.map((header, headerIndex) => (
-                              <tr key={`${index}-${headerIndex}`}>
-                                <td>
-                                  {headerIndex === 0 ? (
-                                    <>{getEntityName(filePath)}</>
-                                  ) : (
-                                    ""
-                                  )}
-                                </td>
-                                <td>
-                                  <input
-                                    type="checkbox"
-                                    name=""
-                                    id=""
-                                    checked={
-                                      checkedEntities[filePath] === headerIndex
-                                    }
-                                    onChange={() =>
-                                      handleEntityCheckboxChange(
-                                        filePath,
-                                        headerIndex
-                                      )
-                                    }
-                                  />{" "}
-                                  {header}
-                                </td>
-                              </tr>
-                            ))
-                        )}
-                      </tbody>
+  {Object.entries(entityHeaders).map(([filePath, headers], index) =>
+    headers.map((header, headerIndex) => {
+      if (uniqueData[index][header].length < 100) {
+        return (
+          <tr key={`${index}-${headerIndex}`}>
+            <td>
+              {headerIndex === 0 ? (
+                <>{getEntityName(filePath)}</>
+              ) : (
+                ""
+              )}
+            </td>
+            <td>
+              <input
+                type="checkbox"
+                name=""
+                id=""
+                checked={checkedEntities[filePath] === headerIndex}
+                onChange={() =>
+                  handleEntityCheckboxChange(filePath, headerIndex)
+                }
+              />{" "}
+              {header}
+            </td>
+          </tr>
+        );
+      } else {
+        return null; // Return null if condition is not met (row won't be rendered)
+      }
+    })
+  )}
+</tbody>
+
                     </table>
                   </div>
                 </div>
