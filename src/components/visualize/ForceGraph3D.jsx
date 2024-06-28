@@ -25,11 +25,11 @@ const Visualize_filteration = () => {
   const [entityHeaders, setEntityHeaders] = useState({});
   const [linkHeaders, setLinkHeaders] = useState({});
   const [entityData, setEnitityData] = useState({});
-  const [uniqueValues, setUniqueValues] = useState([]);
-  const [uniquePlants, setUniquePlants] = useState([]);
   const [checkedEntities, setCheckedEntities] = useState({});
   const [checkedLinks, setCheckedLinks] = useState({});
 
+  const [checkedEntityNames, setCheckedEntityNames] = useState([]);
+  const [checkedLinkNames, setCheckedLinkNames] = useState([]);
   useEffect(() => {
     const loadCSV = (filePath) => {
       return new Promise((resolve, reject) => {
@@ -163,16 +163,38 @@ const Visualize_filteration = () => {
     setCheckedLinks((prevState) => ({
       ...prevState,
       [filePath]: !prevState[filePath],
-    }));
+      }));
+    
+  };
+  const handleEntityData = (filePath) => {
+    // Assuming filePath is a single entity name string
+    const newEntityName = filePath.trim();
+
+    // Check if the entity name is already in checkedEntityNames
+    if (!checkedEntityNames.includes(newEntityName)) {
+      setCheckedEntityNames(prevNames => [...prevNames, newEntityName]);
+    }
   };
 
+  const handleLinkData = (filePath) => {
+    // Assuming filePath is a single entity name string
+    const newEntityName = filePath.trim();
+
+    // Check if the entity name is already in checkedEntityNames
+    if (!checkedLinkNames.includes(newEntityName)) {
+      setCheckedLinkNames(prevNames => [...prevNames, newEntityName]);
+    }
+  };
+
+let aammir =['asdasdasd' ,'asdjasd']
+console.log(checkedEntityNames , checkedLinkNames,  'newEntityNames')
   return (
     <>
       <Navbar image="newedgeintelligence.png" color="#f0f0f0" />
       <div className="flex coloum">
         <div className="main_visualize col-12">
           <div className="row">
-            <h1>Select Filteration</h1>
+            <h1> Filters</h1>
             <div className="col-8">
               <div className="table-container">
                 <div className="table-section1">
@@ -196,7 +218,11 @@ const Visualize_filteration = () => {
             <tr key={`${index}-${headerIndex}`}>
               <td>
                 {headerIndex === 0 ? (
-                  <><input type="checkbox" name="" id="" value={getEntityName(filePath)} /> {getEntityName(filePath)}</>
+                  <><input type="checkbox" name="" id="" value={getEntityName(filePath)} 
+                  onChange={() => handleEntityData(getEntityName(filePath))}
+
+
+                  /> {getEntityName(filePath)}</>
                 ) : (
                   ""
                 )}
@@ -265,10 +291,10 @@ const Visualize_filteration = () => {
                                   type="checkbox"
                                   name=""
                                   id=""
-                                  checked={checkedLinks[filePath] || false}
                                   onChange={() =>
-                                    handleLinkCheckboxChange(filePath)
+                                    handleLinkData(getLinkName(filePath))
                                   }
+                                  value={getLinkName(filePath)}
                                 />{" "}
                                 {getLinkName(filePath)}
                               </td>
@@ -278,7 +304,12 @@ const Visualize_filteration = () => {
                       </tbody>
                     </table>
                     
-          <button><Link to="/3d_graph">VISUALIZE</Link></button>
+          <button> <Link to={{
+      pathname: "/3d_graph",
+      state: {
+        aammir :aammir
+      }
+    }}>VISUALIZE</Link></button>
                   </div>
                 </div>
               </div>

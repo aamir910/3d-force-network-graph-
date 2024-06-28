@@ -7,9 +7,19 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./NavBar/NavBar";
 const predefinedColors = ["white", "lightblue", "orange", "cyan", "lime", "black"];
 
+import { useLocation } from 'react-router-dom';
 const customerImage = "customer.png"; // Replace with the actual path to the customer image
 
 const ForceGraph2DComponent = () => {
+
+  const location = useLocation();
+  
+console.log(location.state ,"location.state")
+  // Check if location.state exists before accessing its properties
+  const checkedEntityNames = location.state?.checkedEntityNames || [];
+  const checkedLinkNames = location.state?.checkedLinkNames || [];
+console.log(checkedEntityNames ,checkedLinkNames , '3d force graph' )
+
   const fgRef = useRef();
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
   const [tooltip, setTooltip] = useState({
