@@ -259,7 +259,7 @@ const Visualize_filteration = () => {
                       </tbody>
                     </table>
                     
-      <button><Link to="/CONFIGURATION">VISUALIZE</Link></button>
+      <button><Link to="/3d_graph">VISUALIZE</Link></button>
                   </div>
                 </div>
               </div>
