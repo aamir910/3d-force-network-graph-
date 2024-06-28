@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import Sidebar from "../Buttons/SIdeBar";
 import Navbar from "../NavBar/NavBar";
 
+import { Link } from 'react-router-dom';
 const csvFiles = [
   "/EDGES/E_BOM.csv",
   "/EDGES/E_ORDERCUST.csv",
@@ -182,14 +183,14 @@ const Visualize_filteration = () => {
                         <tr>
                           <th>NAME</th>
                           <th>TYPE</th>
-                          <th>SUB TYPE</th>
+                          {/* <th>SUB TYPE</th> */}
                         </tr>
                       </thead>
 
-                      <tbody>
+                     <tbody>
   {Object.entries(entityHeaders).map(([filePath, headers], index) =>
     headers.map((header, headerIndex) => {
-      if (uniqueData[index][header].length < 100) {
+      if (true) {
         return (
           <tr key={`${index}-${headerIndex}`}>
             <td>
@@ -257,6 +258,8 @@ const Visualize_filteration = () => {
                         )}
                       </tbody>
                     </table>
+                    
+      <button><Link to="/CONFIGURATION">VISUALIZE</Link></button>
                   </div>
                 </div>
               </div>

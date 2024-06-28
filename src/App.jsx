@@ -25,14 +25,12 @@ const App = () => {
                 
               <Route path="/" element={<MainContent />} />
                 <Route path="/visualize" element={<Visualize_filteration />} />
-                <Route path="/CONFIGURATION" element={<MainContent/>} />
+                <Route path="/CONFIGURATION" element={<ForceGraph2DComponent />} />
+                <Route path="/main" element={<MainContent />} />
 
-                
-
-                {/* Add more routes as needed */}
               </Routes>
 
-              {/* <ForceGraph2DComponent /> */}
+
             </div>
           </div>
         </main>
