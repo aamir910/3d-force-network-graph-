@@ -23,10 +23,12 @@ const csvFiles2 = [
 const Visualize_filteration = () => {
   const [entityHeaders, setEntityHeaders] = useState({});
   const [linkHeaders, setLinkHeaders] = useState({});
-  const [entityData ,setEnitityData] = useState({}) ; 
+  const [entityData, setEnitityData] = useState({});
   const [uniqueValues, setUniqueValues] = useState([]);
-  
   const [uniquePlants, setUniquePlants] = useState([]);
+  const [checkedEntities, setCheckedEntities] = useState({});
+  const [checkedLinks, setCheckedLinks] = useState({});
+
   useEffect(() => {
     const loadCSV = (filePath) => {
       return new Promise((resolve, reject) => {
@@ -35,8 +37,8 @@ const Visualize_filteration = () => {
           header: true,
           complete: (results) => {
             const data = results.data;
-            const header =results.meta.fields; 
-            resolve({data , header});
+            const header = results.meta.fields;
+            resolve({ data, header });
           },
           error: (error) => {
             reject(error);
@@ -49,21 +51,15 @@ const Visualize_filteration = () => {
       try {
         const entityHeaderPromises = csvFiles2.map((file) => loadCSV(file));
         const linkHeaderPromises = csvFiles.map((file) => loadCSV(file));
-        
+
         const entityResults = await Promise.all(entityHeaderPromises);
         const linkResults = await Promise.all(linkHeaderPromises);
 
-        console.log(entityResults , 'here is the entity results')
-        const entityHeadersArray = entityResults.map(result => result.header);
-        const linkHeadersArray = linkResults.map(result => result.header);
-        const entityDataArray = entityResults.map(result => result.data);
+        const entityHeadersArray = entityResults.map((result) => result.header);
+        const linkHeadersArray = linkResults.map((result) => result.header);
+        const entityDataArray = entityResults.map((result) => result.data);
 
-        console.log(entityHeadersArray, 'entityHeadersArray');
-        console.log(entityDataArray, 'entityDataArray data is '); // Log the entity data
-
-
-
-       const newEntityHeaders = {};
+        const newEntityHeaders = {};
         csvFiles2.forEach((file, index) => {
           newEntityHeaders[file] = entityHeadersArray[index];
         });
@@ -75,7 +71,7 @@ const Visualize_filteration = () => {
 
         setEntityHeaders(newEntityHeaders);
         setLinkHeaders(newLinkHeaders);
-        setEnitityData(entityDataArray) ; 
+        setEnitityData(entityDataArray);
       } catch (error) {
         console.error("Error loading CSV files:", error);
       }
@@ -83,28 +79,19 @@ const Visualize_filteration = () => {
 
     loadAllCSVs();
   }, []);
-  
-  
-  useEffect (()=>{
-     // Extract unique values for each key whenever uploadedData changes
-     if (entityData.length > 0) {
-     const uniquePlantsSet = new Set(entityData[0].map(item => item.AREA));
-     const uniquePlantsArray = [...uniquePlantsSet];
-     setUniquePlants(uniquePlantsArray);
-     }
- 
-     // Add similar logic for other keys (COUNTRY, ZONE, etc.) as needed
- 
-  },[entityData])
 
-console.log(uniquePlants ,'here are the unique plant ')
+  useEffect(() => {
+    // Extract unique values for each key whenever uploadedData changes
+    if (entityData.length > 0) {
+      const uniquePlantsSet = new Set(entityData[0].map((item) => item.AREA));
+      const uniquePlantsArray = [...uniquePlantsSet];
+      setUniquePlants(uniquePlantsArray);
+    }
 
+    // Add similar logic for other keys (COUNTRY, ZONE, etc.) as needed
+  }, [entityData]);
 
-  let rowCount = 1;
-  let linkcount = 1;
   const getEntityName = (filePath) => {
-  rowCount++ ;
-
     const fileName = filePath.split("/").pop();
     switch (fileName) {
       case "N_CUSTOMER.csv":
@@ -123,7 +110,6 @@ console.log(uniquePlants ,'here are the unique plant ')
   };
 
   const getLinkName = (filePath) => {
-    linkcount++
     const fileName = filePath.split("/").pop();
     switch (fileName) {
       case "E_BOM.csv":
@@ -140,132 +126,108 @@ console.log(uniquePlants ,'here are the unique plant ')
         return "";
     }
   };
- 
 
-  const determineType = (attribute) => {
-    const integerAttributes = [
-      "BOMLEV",
-      "PURCH_ORD",
-      "SELL_ORD",
-      "PURCH_ITEM",
-    ];
-  
-    const realAttributes = [
-      "SELL_QTY",
-      "PURCH_ORD_QTY",
-    ];
-  
-    const dateAttributes = [
-      "SELL_DELIV_DATE",
-    ];
-  
-    if (integerAttributes.includes(attribute)) {
-      return "INTEGER";
-    } else if (realAttributes.includes(attribute)) {
-      return "REAL";
-    } else if (dateAttributes.includes(attribute)) {
-      return "DATE";
-    } else {
-      return "CHR";
-    }
+  const handleEntityCheckboxChange = (filePath, headerIndex) => {
+    setCheckedEntities((prevState) => ({
+      ...prevState,
+      [filePath]: headerIndex,
+    }));
   };
-  
+
+  const handleLinkCheckboxChange = (filePath) => {
+    setCheckedLinks((prevState) => ({
+      ...prevState,
+      [filePath]: !prevState[filePath],
+    }));
+  };
+  console.log("check box state" ,checkedEntities , checkedLinks)
   return (
-    <>                        
-    <Navbar image = "newedgeintelligence.png" color= "#f0f0f0"/>
-    <div className="flex coloum">
-
-    <div className="main_visualize col-12">
-
-      <div className="row">
-        <h1>Select Filteration</h1>
-        <div className="col-8">
-          <div className="table-container">
-            <div className="table-section1">
-              <h3 className="entity_class">ENTITY</h3>
-              <div className="table-wrapper">
-                <table className="table2">
-                  <thead>
-                    <tr>
-                      {/* <th></th>
-                      <th></th> */}
-                      <th>NAME</th>
-                      <th>TYPE</th>
-                     {/* <th>SUB TYPE</th>     */}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {Object.entries(entityHeaders).map(
-                       
-                      ([filePath, headers], index) =>
-                        headers.map((header, headerIndex) => (
-                          <tr key={`${index}-${headerIndex}`}>
-                           
-                            <td>
-                            {headerIndex === 0 ? (
-                                  <>
-                                   {getEntityName(filePath)}
-                                  </>
-                                ) : (
-                                  ""
-                                )}
-                              </td>
-                            <td><input type="checkbox" name="" id="" /> {header}</td>
-                         
-                          </tr>
-                        ))
-                    )}
-                  </tbody>
-                </table>
+    <>
+      <Navbar image="newedgeintelligence.png" color="#f0f0f0" />
+      <div className="flex coloum">
+        <div className="main_visualize col-12">
+          <div className="row">
+            <h1>Select Filteration</h1>
+            <div className="col-8">
+              <div className="table-container">
+                <div className="table-section1">
+                  <h3 className="entity_class">ENTITY</h3>
+                  <div className="table-wrapper">
+                    <table className="table2">
+                      <thead>
+                        <tr>
+                          <th>NAME</th>
+                          <th>TYPE</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {Object.entries(entityHeaders).map(
+                          ([filePath, headers], index) =>
+                            headers.map((header, headerIndex) => (
+                              <tr key={`${index}-${headerIndex}`}>
+                                <td>
+                                  {headerIndex === 0 ? (
+                                    <>
+                                      {getEntityName(filePath)}
+                                    </>
+                                  ) : (
+                                    ""
+                                  )}
+                                </td>
+                                <td>
+                                  <input
+                                    type="checkbox"
+                                    name=""
+                                    id=""
+                                    checked={checkedEntities[filePath] === headerIndex}
+                                    onChange={() => handleEntityCheckboxChange(filePath, headerIndex)}
+                                  />{" "}
+                                  {header}
+                                </td>
+                              </tr>
+                            ))
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div className="col-4">
-          <div className="table-container">
-            <div className="table-section2">
-              <h3 className="entity_class">LINK</h3>
-              <div className="table-wrapper">
-                <table className="table">
-                  <thead>
-                    <tr>
-                      {/* <th></th> */}
-                      {/* <th></th> */}
-                      <th>NAME</th>
-                      {/* <th>TYPE</th> */}
-                       {/* <th>SUB TYPE</th>                    */}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {Object.entries(linkHeaders).map(
-                      ([filePath, headers], index) =>
-                     
-                          <tr>
-                            {/* <td>
-                              <input type="checkbox" />
+            <div className="col-4">
+              <div className="table-container">
+                <div className="table-section2">
+                  <h3 className="entity_class">LINK</h3>
+                  <div className="table-wrapper">
+                    <table className="table">
+                      <thead>
+                        <tr>
+                          <th>NAME</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {Object.entries(linkHeaders).map(([filePath, headers], index) => (
+                          <tr key={index}>
+                            <td>
+                              <input
+                                type="checkbox"
+                                name=""
+                                id=""
+                                checked={checkedLinks[filePath] || false}
+                                onChange={() => handleLinkCheckboxChange(filePath)}
+                              />{" "}
+                              {getLinkName(filePath)}
                             </td>
-                            <td>{linkcount}</td> */}
-                         <td>
-                              
-                                  <>
-                                    <input type="checkbox" name="" id="" /> {getLinkName(filePath)}
-                                  </>
-                               
-                              </td>
-                          
-
                           </tr>
-                        
-                    )}
-                  </tbody>
-                </table>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    </div>
     </>
   );
 };
