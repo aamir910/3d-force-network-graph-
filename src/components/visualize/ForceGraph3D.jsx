@@ -189,8 +189,7 @@ console.log(uniquePlants ,'here are the unique plant ')
                       <th></th> */}
                       <th>NAME</th>
                       <th>TYPE</th>
-                      
-                      <th>SUB TYPE</th>    
+                     {/* <th>SUB TYPE</th>     */}
                     </tr>
                   </thead>
                   <tbody>
@@ -231,33 +230,30 @@ console.log(uniquePlants ,'here are the unique plant ')
                       {/* <th></th> */}
                       {/* <th></th> */}
                       <th>NAME</th>
-                      <th>TYPE</th>
-                       <th>SUB TYPE</th>                   
+                      {/* <th>TYPE</th> */}
+                       {/* <th>SUB TYPE</th>                    */}
                     </tr>
                   </thead>
                   <tbody>
                     {Object.entries(linkHeaders).map(
                       ([filePath, headers], index) =>
-                        headers.map((header, headerIndex) => (
-                          <tr key={`${index}-${headerIndex}`}>
+                     
+                          <tr>
                             {/* <td>
                               <input type="checkbox" />
                             </td>
                             <td>{linkcount}</td> */}
                          <td>
-                                {headerIndex === 0 ? (
+                              
                                   <>
                                     <input type="checkbox" name="" id="" /> {getLinkName(filePath)}
                                   </>
-                                ) : (
-                                  ""
-                                )}
+                               
                               </td>
                           
-                            <td><input type="checkbox" name="" id="" /> {header}</td>
 
                           </tr>
-                        ))
+                        
                     )}
                   </tbody>
                 </table>
