@@ -166,76 +166,68 @@ console.log(checkedEntityNames ,checkedLinkNames , '3d force graph' )
           </div>
         </div>
         {Object.keys(nodeColors).map((type) => (
-          <li key={type}>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <input className="checkbox1"
-                type="checkbox"
-                checked={!excludedTypes.includes(type) && checkedEntityNames.includes(type)   }
-                onChange={() => handleCheckboxChange(type)}
-              />
-              <svg
-                width="20"
-                height="20"
-                onClick={(e) => handleLegendClick(type, e.clientX, e.clientY)}>
-                {getNodeShape({ group: type }).geometry.type ===
-                  "SphereGeometry" && (
-                  <circle cx="10" cy="10" r="8" fill={nodeColors[type]} />
-                )}
-                {getNodeShape({ group: type }).geometry.type ===
-                  "ConeGeometry" && (
-                  <polygon points="5,0 15,20 5,20" fill={nodeColors[type]} />
-                )}
-                {getNodeShape({ group: type }).geometry.type ===
-                  "BoxGeometry" && (
-                  <rect
-                    x="5"
-                    y="5"
-                    width="10"
-                    height="10"
-                    fill={nodeColors[type]}
-                  />
-                )}
-                {getNodeShape({ group: type }).geometry.type ===
-                  "CylinderGeometry" && (
-                  <rect
-                    x="5"
-                    y="5"
-                    width="20"
-                    height="10"
-                    fill={nodeColors[type]}
-                  />
-                )}
-              </svg>
-              <span>{type}</span>
-            </div>
-          </li>
-        ))}
+  checkedEntityNames.includes(type) && (
+    <li key={type}>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <input
+          className="checkbox1"
+          type="checkbox"
+          checked={!excludedTypes.includes(type) && checkedEntityNames.includes(type)}
+          onChange={() => handleCheckboxChange(type)}
+        />
+        <svg
+          width="20"
+          height="20"
+          onClick={(e) => handleLegendClick(type, e.clientX, e.clientY)}
+        >
+          {getNodeShape({ group: type }).geometry.type === "SphereGeometry" && (
+            <circle cx="10" cy="10" r="8" fill={nodeColors[type]} />
+          )}
+          {getNodeShape({ group: type }).geometry.type === "ConeGeometry" && (
+            <polygon points="5,0 15,20 5,20" fill={nodeColors[type]} />
+          )}
+          {getNodeShape({ group: type }).geometry.type === "BoxGeometry" && (
+            <rect x="5" y="5" width="10" height="10" fill={nodeColors[type]} />
+          )}
+          {getNodeShape({ group: type }).geometry.type === "CylinderGeometry" && (
+            <rect x="5" y="5" width="20" height="10" fill={nodeColors[type]} />
+          )}
+        </svg>
+        <span>{type}</span>
+      </div>
+    </li>
+  )
+))}
         <h4>Links</h4>
         {Object.keys(linkColors).map((type) => (
-          <li key={type}>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <input className="checkbox1"
-                type="checkbox"
-                checked={!excludedTypes.includes(type)  && checkedEntityNames.includes(type)}
-                onChange={() => handleCheckboxChange(type)}
-              />
-              <svg
-                width="20"
-                height="20"
-                onClick={(e) => handleLegendClick(type, e.clientX, e.clientY)}>
-                <line
-                  x1="0"
-                  y1="10"
-                  x2="20"
-                  y2="10"
-                  stroke={linkColors[type]}
-                  strokeWidth="6"
-                />
-              </svg>
-              <span>{type}</span>
-            </div>
-          </li>
-        ))}
+  checkedEntityNames.includes(type) && (
+    <li key={type}>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <input
+          className="checkbox1"
+          type="checkbox"
+          checked={!excludedTypes.includes(type) && checkedEntityNames.includes(type)}
+          onChange={() => handleCheckboxChange(type)}
+        />
+        <svg
+          width="20"
+          height="20"
+          onClick={(e) => handleLegendClick(type, e.clientX, e.clientY)}
+        >
+          <line
+            x1="0"
+            y1="10"
+            x2="20"
+            y2="10"
+            stroke={linkColors[type]}
+            strokeWidth="6"
+          />
+        </svg>
+        <span>{type}</span>
+      </div>
+    </li>
+  )
+))}
       </ul>
     </div>
     </>
