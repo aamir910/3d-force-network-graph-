@@ -85,12 +85,11 @@ console.log(checkedEntityNames ,checkedLinkNames , '3d force graph' )
         
         console.log(result.data ,excludedTypes ,  'result.data')
 
-        setExcludedTypes(checkedEntityNames);
         const filteredData = result.data.filter(
           (row) =>
-            !checkedEntityNames.includes(row.Entity_Type_1) &&
-            !checkedEntityNames.includes(row.Entity_Type_2) &&
-            !checkedEntityNames.includes(row.Edge_Type)
+            checkedEntityNames.includes(row.Entity_Type_1) &&  
+            checkedEntityNames.includes(row.Entity_Type_2) &&
+            checkedEntityNames.includes(row.Edge_Type)
         );
         processCSV(filteredData);
       },
@@ -171,7 +170,7 @@ console.log(checkedEntityNames ,checkedLinkNames , '3d force graph' )
             <div style={{ display: "flex", alignItems: "center" }}>
               <input className="checkbox1"
                 type="checkbox"
-                checked={!excludedTypes.includes(type)}
+                checked={!excludedTypes.includes(type) && checkedEntityNames.includes(type)   }
                 onChange={() => handleCheckboxChange(type)}
               />
               <svg
@@ -217,7 +216,7 @@ console.log(checkedEntityNames ,checkedLinkNames , '3d force graph' )
             <div style={{ display: "flex", alignItems: "center" }}>
               <input className="checkbox1"
                 type="checkbox"
-                checked={!excludedTypes.includes(type)}
+                checked={!excludedTypes.includes(type)  && checkedEntityNames.includes(type)}
                 onChange={() => handleCheckboxChange(type)}
               />
               <svg

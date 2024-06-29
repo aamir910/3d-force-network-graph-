@@ -4,8 +4,8 @@ import "./Visualize_filteration.css";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import Sidebar from "../Buttons/SIdeBar";
 import Navbar from "../NavBar/NavBar";
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 const csvFiles = [
   "/EDGES/E_BOM.csv",
   "/EDGES/E_ORDERCUST.csv",
@@ -81,7 +81,7 @@ const Visualize_filteration = () => {
 
     loadAllCSVs();
   }, []);
-  console.log(entityHeaders , 'entityHeaders')
+  console.log(entityHeaders, "entityHeaders");
   const [uniqueData, setUniqueData] = useState([]);
 
   useEffect(() => {
@@ -164,8 +164,7 @@ const Visualize_filteration = () => {
     setCheckedLinks((prevState) => ({
       ...prevState,
       [filePath]: !prevState[filePath],
-      }));
-    
+    }));
   };
   const handleEntityData = (filePath) => {
     // Assuming filePath is a single entity name string
@@ -173,7 +172,7 @@ const Visualize_filteration = () => {
 
     // Check if the entity name is already in checkedEntityNames
     if (!checkedEntityNames.includes(newEntityName)) {
-      setCheckedEntityNames(prevNames => [...prevNames, newEntityName]);
+      setCheckedEntityNames((prevNames) => [...prevNames, newEntityName]);
     }
   };
 
@@ -183,13 +182,11 @@ const Visualize_filteration = () => {
 
     // Check if the entity name is already in checkedEntityNames
     if (!checkedLinkNames.includes(newEntityName)) {
-      setCheckedLinkNames(prevNames => [...prevNames, newEntityName]);
+      setCheckedLinkNames((prevNames) => [...prevNames, newEntityName]);
     }
   };
 
-console.log(checkedEntityNames , checkedLinkNames,  'newEntityNames')
-
-
+  console.log(checkedEntityNames, checkedLinkNames, "newEntityNames");
 
   return (
     <>
@@ -208,72 +205,77 @@ console.log(checkedEntityNames , checkedLinkNames,  'newEntityNames')
                         <tr>
                           <th>NAME</th>
                           <th>TYPE</th>
-                          <th>SUB TYPE</th>
                         </tr>
                       </thead>
 
                       <tbody>
-  {Object.entries(entityHeaders).map(([filePath, headers], index) =>
-    headers.map((header, headerIndex) => {
-      if (uniqueData.length !== 0) {
-        if (uniqueData[index][header].length < 100) {
-          return (
-            <tr key={`${index}-${headerIndex}`}>
-              <td>
-                {headerIndex === 0 ? (
-                  <><input type="checkbox" name="" id="" value={getEntityName(filePath)} 
-                  onChange={() => handleEntityData(getEntityName(filePath))}
-
-
-                  /> {getEntityName(filePath)}</>
-                ) : (
-                  ""
-                )}
-              </td>
-              <td>
-                <input
-                  type="checkbox"
-                  name=""
-                  id=""
-                  checked={checkedEntities[filePath] === headerIndex}
-                  onChange={() =>
-                    handleEntityCheckboxChange(filePath, headerIndex)
-                  }
-                />{" "}
-                {header}
-              </td>
-              <td>
-                <div className="dropdown">
-                  <button className="dropbtn">Dropdown</button>
-                  <div className="dropdown-content">
-                    {uniqueData[index][header].map((item, itemIndex) => (
-                      <label key={itemIndex}>
-                        <input
-                          type="checkbox"
-                          value={item}
-                          // Handle checkbox change logic here
-                        />
-                        {item}
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              </td>
-            </tr>
-          );
-        } else {
-          return null; // Return null if condition is not met (row won't be rendered)
-        }
-      }
-    })
-  )}
-</tbody>
-
-                   </table>
+                        {Object.entries(entityHeaders).map(
+                          ([filePath, headers], index) =>
+                            headers.map((header, headerIndex) => {
+                              if (uniqueData.length !== 0) {
+                                if (uniqueData[index][header].length < 100) {
+                                  return (
+                                    <tr key={`${index}-${headerIndex}`}>
+                                      <td>
+                                        {headerIndex === 0 ? (
+                                          <>
+                                            <input
+                                              type="checkbox"
+                                              name=""
+                                              id=""
+                                              value={getEntityName(filePath)}
+                                              onChange={() =>
+                                                handleEntityData(
+                                                  getEntityName(filePath)
+                                                )
+                                              }
+                                            />{" "}
+                                            {getEntityName(filePath)}
+                                          </>
+                                        ) : (
+                                          ""
+                                        )}
+                                      </td>
+                                      {uniqueData[index][header].length > 1 ? (
+                                        <>
+                                          <td>
+                                            <div className="dropdown">
+                                              <button className="dropbtn">
+                                                {" "}
+                                                {header}
+                                              </button>
+                                              <div className="dropdown-content">
+                                                {uniqueData[index][header].map(
+                                                  (item, itemIndex) => (
+                                                    <label key={itemIndex}>
+                                                      <input
+                                                        type="checkbox"
+                                                        value={item}
+                                                        // Handle checkbox change logic here
+                                                      />
+                                                      {item}
+                                                    </label>
+                                                  )
+                                                )}
+                                              </div>
+                                            </div>
+                                          </td>
+                                        </>
+                                      ) : null}
+                                    </tr>
+                                  );
+                                } else {
+                                  return null; // Return null if condition is not met (row won't be rendered)
+                                }
+                              }
+                            })
+                        )}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
-            </div> 
+            </div>
             <div className="col-4">
               <div className="table-container">
                 <div className="table-section2">
@@ -306,10 +308,15 @@ console.log(checkedEntityNames , checkedLinkNames,  'newEntityNames')
                         )}
                       </tbody>
                     </table>
-                    
-                    <button onClick={() => navigate('/3d_graph',{ state: { checkedEntityNames, checkedLinkNames } })}>
-      VISUALIZE
-    </button>
+
+                    <button
+                      onClick={() =>
+                        navigate("/3d_graph", {
+                          state: { checkedEntityNames, checkedLinkNames },
+                        })
+                      }>
+                      VISUALIZE
+                    </button>
                   </div>
                 </div>
               </div>
