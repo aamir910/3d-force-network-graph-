@@ -195,7 +195,7 @@ const Visualize_filteration = () => {
         <div className="main_visualize col-12">
           <div className="row">
             <h1> Filters</h1>
-            <div className="col-8">
+            <div className="col-7">
               <div className="table-container">
                 <div className="table-section1">
                   <h3 className="entity_class">ENTITY</h3>
@@ -235,6 +235,7 @@ const Visualize_filteration = () => {
                                         ) : (
                                           ""
                                         )}
+
                                       </td>
                                       {uniqueData[index][header].length > 1 ? (
                                         <>

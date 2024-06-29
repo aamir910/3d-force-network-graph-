@@ -72,8 +72,7 @@
   }
   
 
-  /* Basic styling for the dropdown */
-/* Basic styling for the dropdown */
+ /* Basic styling for the dropdown */
 .dropdown {
   position: relative;
   display: inline-block;
@@ -81,28 +80,42 @@
 
 /* Dropdown button styling */
 .dropbtn {
-  background-color: #3cb9eb; /* Green background */
-  color: white;
+  min-width: 250px;
+  background-color: whitesmoke;
+  color: black;
   padding: 8px;
   font-size: 14px;
   border: none;
   cursor: pointer;
+  position: relative;
+  /* Add an arrow using CSS */
+  padding-right: 30px; /* Space for arrow */
+}
+
+.dropbtn::after {
+  content: '▼'; /* Down arrow */
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: black;
 }
 
 /* Dropdown content (hidden by default) */
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f9f9f9;
-  width: auto; /* Adjust as needed */
-  max-height: 300px; /* Fixed height */
-  overflow-y: auto; /* Enable vertical scrollbar */
+  background-color: #ffffff; /* White background */
+  color: black; /* Black text */
+  max-height: 300px;
+  overflow-y: auto;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
-  width: 200px;
+  width: 250px;
 }
 
-/* Dropdown content - show it when clicking on the dropdown button */
+/* Dropdown content - show it when hovering on the dropdown button */
 .dropdown:hover .dropdown-content {
   display: block;
 }
