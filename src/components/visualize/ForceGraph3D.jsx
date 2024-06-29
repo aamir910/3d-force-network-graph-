@@ -219,7 +219,7 @@ const Visualize_filteration = () => {
                                       <td>
                                         {headerIndex === 0 ? (
                                           <>
-                                            <input
+                                            {/* <input
                                               type="checkbox"
                                               name=""
                                               id=""
@@ -229,7 +229,7 @@ const Visualize_filteration = () => {
                                                   getEntityName(filePath)
                                                 )
                                               }
-                                            />{" "}
+                                            />{" "} */}
                                             {getEntityName(filePath)}
                                           </>
                                         ) : (
@@ -251,6 +251,11 @@ const Visualize_filteration = () => {
                                                       <input
                                                         type="checkbox"
                                                         value={item}
+                                                        onChange={() =>
+                                                          handleEntityData(
+                                                            getEntityName(filePath)
+                                                          )
+                                                        }
                                                         // Handle checkbox change logic here
                                                       />
                                                       {item}
