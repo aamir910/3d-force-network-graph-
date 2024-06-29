@@ -4,7 +4,7 @@ import "./Visualize_filteration.css";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import Sidebar from "../Buttons/SIdeBar";
 import Navbar from "../NavBar/NavBar";
-
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 const csvFiles = [
   "/EDGES/E_BOM.csv",
@@ -28,6 +28,7 @@ const Visualize_filteration = () => {
   const [checkedEntities, setCheckedEntities] = useState({});
   const [checkedLinks, setCheckedLinks] = useState({});
 
+  const navigate = useNavigate();
   const [checkedEntityNames, setCheckedEntityNames] = useState([]);
   const [checkedLinkNames, setCheckedLinkNames] = useState([]);
   useEffect(() => {
@@ -186,8 +187,10 @@ const Visualize_filteration = () => {
     }
   };
 
-let aammir =['asdasdasd' ,'asdjasd']
 console.log(checkedEntityNames , checkedLinkNames,  'newEntityNames')
+
+
+
   return (
     <>
       <Navbar image="newedgeintelligence.png" color="#f0f0f0" />
@@ -292,7 +295,7 @@ console.log(checkedEntityNames , checkedLinkNames,  'newEntityNames')
                                   name=""
                                   id=""
                                   onChange={() =>
-                                    handleLinkData(getLinkName(filePath))
+                                    handleEntityData(getLinkName(filePath))
                                   }
                                   value={getLinkName(filePath)}
                                 />{" "}
@@ -304,12 +307,9 @@ console.log(checkedEntityNames , checkedLinkNames,  'newEntityNames')
                       </tbody>
                     </table>
                     
-          <button> <Link to={{
-      pathname: "/3d_graph",
-      state: {
-        aammir :aammir
-      }
-    }}>VISUALIZE</Link></button>
+                    <button onClick={() => navigate('/3d_graph',{ state: { checkedEntityNames, checkedLinkNames } })}>
+      VISUALIZE
+    </button>
                   </div>
                 </div>
               </div>

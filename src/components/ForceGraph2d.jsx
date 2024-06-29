@@ -15,6 +15,7 @@ const ForceGraph2DComponent = () => {
   const location = useLocation();
   
 console.log(location.state ,"location.state")
+
   // Check if location.state exists before accessing its properties
   const checkedEntityNames = location.state?.checkedEntityNames || [];
   const checkedLinkNames = location.state?.checkedLinkNames || [];
@@ -51,10 +52,11 @@ console.log(checkedEntityNames ,checkedLinkNames , '3d force graph' )
 
   const [selectedLinkType, setSelectedLinkType] = useState("");
   const [excludedTypes, setExcludedTypes] = useState([]);
-
   const processCSV = (data) => {
     const nodesMap = {};
-    const links = data.slice(0, 2300).map((row) => {
+    
+    console.log("excludedTypes" ,excludedTypes)
+    const links = data.slice(0, 300).map((row) => {
       const { Entity_1, Entity_2, Entity_Type_1, Entity_Type_2, Edge_Type } =
         row;
 
@@ -73,13 +75,24 @@ console.log(checkedEntityNames ,checkedLinkNames , '3d force graph' )
 
     console.log(links, "here is the links");
   };
+
   useEffect(() => {
     Papa.parse("/Edges_orderd_data.csv", {
       download: true,
       header: true,
       complete: (result) => {
-        console.log(result.data , 'result.data')
-        processCSV(result.data);
+        
+        
+        console.log(result.data ,excludedTypes ,  'result.data')
+
+        setExcludedTypes(checkedEntityNames);
+        const filteredData = result.data.filter(
+          (row) =>
+            !checkedEntityNames.includes(row.Entity_Type_1) &&
+            !checkedEntityNames.includes(row.Entity_Type_2) &&
+            !checkedEntityNames.includes(row.Edge_Type)
+        );
+        processCSV(filteredData);
       },
       error: (error) => {
         console.error("Error reading CSV file:", error);
