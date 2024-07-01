@@ -245,13 +245,25 @@ console.log(checkedEntityNames ,checkedLinkNames , '3d force graph' )
       download: true,
       header: true,
       complete: (result) => {
-        const filteredData = result.data.filter(
+
+
+        let filteredData = result.data.filter(
+          (row) =>
+            checkedEntityNames.includes(row.Entity_Type_1) &&  
+            checkedEntityNames.includes(row.Entity_Type_2) &&
+            checkedEntityNames.includes(row.Edge_Type)
+        );
+
+        
+
+
+        const filteredData2 = filteredData.filter(
           (row) =>
             !excludedTypes.includes(row.Entity_Type_1) &&
             !excludedTypes.includes(row.Entity_Type_2) &&
             !excludedTypes.includes(row.Edge_Type)
         );
-        processCSV(filteredData);
+        processCSV(filteredData2);
       },
       error: (error) => {
         console.error("Error reading CSV file:", error);
