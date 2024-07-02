@@ -36,18 +36,18 @@ console.log(checkedEntityNames ,checkedLinkNames , '3d force graph' )
     type: "",
   });
   const [nodeColors, setNodeColors] = useState({
-    Customer: "white",
-    "Part number": "lightblue",
-    "Purchase order": "orange",
-    "Sell order": "cyan",
-    Supply: "lime",
+    N_CUSTOMER: "white",
+    N_PARTNUMBER: "lightblue",
+    N_PURCHORDER: "orange",
+    N_SELLORDER: "cyan",
+    N_SUPPLIER: "lime",
   });
   const [linkColors, setLinkColors] = useState({
-    "E BOM": "white",
-    "E Order customer": "lightblue",
-    "E part number supply order": "orange",
-    "E part number sell order": "cyan",
-    "E order supply": "lime",
+    E_BOM: "white",
+    E_ORDERCUST: "lightblue",
+    E_ORDERSUPP: "orange",
+    E_PNSELLORD: "cyan",
+    E_PNSUPPORD: "lime",
   });
 
   const [selectedLinkType, setSelectedLinkType] = useState("");
@@ -77,7 +77,7 @@ console.log(checkedEntityNames ,checkedLinkNames , '3d force graph' )
   };
 
   useEffect(() => {
-    Papa.parse("/Edges_orderd_data.csv", {
+    Papa.parse("/Edges_And_Nodes_new.csv", {
       download: true,
       header: true,
       complete: (result) => {
@@ -241,7 +241,7 @@ console.log(checkedEntityNames ,checkedLinkNames , '3d force graph' )
   };
 
   const applyFilters = () => {
-    Papa.parse("/Edges_orderd_data.csv", {
+    Papa.parse("/Edges_And_Nodes_new.csv", {
       download: true,
       header: true,
       complete: (result) => {

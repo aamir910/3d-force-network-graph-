@@ -121,15 +121,15 @@ const Visualize_filteration = () => {
     const fileName = filePath.split("/").pop();
     switch (fileName) {
       case "N_CUSTOMER.csv":
-        return "Customer";
+        return "N_CUSTOMER";
       case "N_PARTNUMBER.csv":
-        return "Part number";
+        return "N_PARTNUMBER";
       case "N_PURCHORDER.csv":
-        return "Purchase order";
+        return "N_PURCHORDER";
       case "N_SELLORDER.csv":
-        return "Sell order";
+        return "N_SELLORDER";
       case "N_SUPPLIER.csv":
-        return "Supply";
+        return "N_SUPPLIER";
       default:
         return "";
     }
@@ -139,15 +139,15 @@ const Visualize_filteration = () => {
     const fileName = filePath.split("/").pop();
     switch (fileName) {
       case "E_BOM.csv":
-        return "E BOM";
+        return "E_BOM";
       case "E_ORDERCUST.csv":
-        return "E Order customer";
+        return "E_ORDERCUST";
       case "E_ORDERSUPP.csv":
-        return "E order supply";
+        return "E_ORDERSUPP";
       case "E_PNSELLORD.csv":
-        return "E part number sell order";
+        return "E_PNSELLORD";
       case "E_PNSUPPORD.csv":
-        return "E part number supply order";
+        return "E_PNSUPPORD";
       default:
         return "";
     }
