@@ -19,7 +19,9 @@ console.log(location.state ,"location.state")
   // Check if location.state exists before accessing its properties
   const checkedEntityNames = location.state?.checkedEntityNames || [];
   const checkedLinkNames = location.state?.checkedLinkNames || [];
-console.log(checkedEntityNames ,checkedLinkNames , '3d force graph' )
+  
+  const checkedDropdownItems = location.state?.checkedDropdownItems || [];
+console.log(checkedEntityNames ,checkedLinkNames ,checkedDropdownItems , '3d force graph' )
 
   const fgRef = useRef();
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });

@@ -6,6 +6,7 @@ import Sidebar from "../Buttons/SIdeBar";
 import Navbar from "../NavBar/NavBar";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+
 const csvFiles = [
   "/EDGES/E_BOM.csv",
   "/EDGES/E_ORDERCUST.csv",
@@ -27,10 +28,11 @@ const Visualize_filteration = () => {
   const [entityData, setEnitityData] = useState({});
   const [checkedEntities, setCheckedEntities] = useState({});
   const [checkedLinks, setCheckedLinks] = useState({});
-
-  const navigate = useNavigate();
   const [checkedEntityNames, setCheckedEntityNames] = useState([]);
   const [checkedLinkNames, setCheckedLinkNames] = useState([]);
+  const navigate = useNavigate();
+  const [checkedDropdownItems, setCheckedDropdownItems] = useState({});
+
   useEffect(() => {
     const loadCSV = (filePath) => {
       return new Promise((resolve, reject) => {
@@ -81,7 +83,7 @@ const Visualize_filteration = () => {
 
     loadAllCSVs();
   }, []);
-  console.log(entityHeaders, "entityHeaders");
+
   const [uniqueData, setUniqueData] = useState([]);
 
   useEffect(() => {
@@ -114,9 +116,7 @@ const Visualize_filteration = () => {
       setUniqueData(result);
     }
   }, [entityData]);
-  console.log(uniqueData, "uniqueData");
 
-  console.log(entityData, "entityData");
   const getEntityName = (filePath) => {
     const fileName = filePath.split("/").pop();
     switch (fileName) {
@@ -166,27 +166,36 @@ const Visualize_filteration = () => {
       [filePath]: !prevState[filePath],
     }));
   };
-  const handleEntityData = (filePath) => {
-    // Assuming filePath is a single entity name string
-    const newEntityName = filePath.trim();
 
-    // Check if the entity name is already in checkedEntityNames
-    if (!checkedEntityNames.includes(newEntityName)) {
-      setCheckedEntityNames((prevNames) => [...prevNames, newEntityName]);
+  const handleEntityData = (filePath, header, item) => {
+    const entityName = getEntityName(filePath);
+    const newCheckedItems = {
+      ...checkedDropdownItems,
+      [entityName]: {
+        ...checkedDropdownItems[entityName],
+        [header]: {
+          ...checkedDropdownItems[entityName]?.[header],
+          [item]: !checkedDropdownItems[entityName]?.[header]?.[item],
+        },
+      },
+    };
+    setCheckedDropdownItems(newCheckedItems);
+
+    if (!checkedEntityNames.includes(entityName)) {
+      setCheckedEntityNames((prevNames) => [...prevNames, entityName]);
     }
+    console.log(checkedDropdownItems ,checkedEntityNames , 'checkedDropdownItems')
   };
 
   const handleLinkData = (filePath) => {
-    // Assuming filePath is a single entity name string
-    const newEntityName = filePath.trim();
-
-    // Check if the entity name is already in checkedEntityNames
-    if (!checkedLinkNames.includes(newEntityName)) {
-      setCheckedLinkNames((prevNames) => [...prevNames, newEntityName]);
+    const linkName = getLinkName(filePath);
+    if (!checkedLinkNames.includes(linkName)) {
+      setCheckedLinkNames((prevNames) => [...prevNames, linkName]);
+    }
+    if (!checkedEntityNames.includes(linkName)) {
+      setCheckedEntityNames((prevNames) => [...prevNames, linkName]);
     }
   };
-
-  console.log(checkedEntityNames, checkedLinkNames, "newEntityNames");
 
   return (
     <>
@@ -207,7 +216,6 @@ const Visualize_filteration = () => {
                           <th>TYPE</th>
                         </tr>
                       </thead>
-
                       <tbody>
                         {Object.entries(entityHeaders).map(
                           ([filePath, headers], index) =>
@@ -219,30 +227,17 @@ const Visualize_filteration = () => {
                                       <td>
                                         {headerIndex === 0 ? (
                                           <>
-                                            {/* <input
-                                              type="checkbox"
-                                              name=""
-                                              id=""
-                                              value={getEntityName(filePath)}
-                                              onChange={() =>
-                                                handleEntityData(
-                                                  getEntityName(filePath)
-                                                )
-                                              }
-                                            />{" "} */}
                                             {getEntityName(filePath)}
                                           </>
                                         ) : (
                                           ""
                                         )}
-
                                       </td>
                                       {uniqueData[index][header].length > 1 ? (
                                         <>
                                           <td>
                                             <div className="dropdown">
                                               <button className="dropbtn">
-                                                {" "}
                                                 {header}
                                               </button>
                                               <div className="dropdown-content">
@@ -254,10 +249,18 @@ const Visualize_filteration = () => {
                                                         value={item}
                                                         onChange={() =>
                                                           handleEntityData(
-                                                            getEntityName(filePath)
+                                                            filePath,
+                                                            header,
+                                                            item
                                                           )
                                                         }
-                                                        // Handle checkbox change logic here
+                                                        checked={
+                                                          checkedDropdownItems[
+                                                            getEntityName(
+                                                              filePath
+                                                            )
+                                                          ]?.[header]?.[item]
+                                                        }
                                                       />
                                                       {item}
                                                     </label>
@@ -303,8 +306,11 @@ const Visualize_filteration = () => {
                                   name=""
                                   id=""
                                   onChange={() =>
-                                    handleEntityData(getLinkName(filePath))
+                                    handleLinkData(filePath)
                                   }
+                                  checked={checkedLinkNames.includes(
+                                    getLinkName(filePath)
+                                  )}
                                   value={getLinkName(filePath)}
                                 />{" "}
                                 {getLinkName(filePath)}
@@ -314,13 +320,13 @@ const Visualize_filteration = () => {
                         )}
                       </tbody>
                     </table>
-
                     <button
                       onClick={() =>
                         navigate("/3d_graph", {
-                          state: { checkedEntityNames, checkedLinkNames },
+                          state: { checkedEntityNames, checkedLinkNames, checkedDropdownItems },
                         })
-                      }>
+                      }
+                    >
                       VISUALIZE
                     </button>
                   </div>
