@@ -114,27 +114,27 @@ console.log(checkedEntityNames ,checkedLinkNames , '3d force graph' )
     const color = getNodeColor(node);
 
     switch (node.group) {
-      case "Customer":
+      case "N_CUSTOMER":
         return new THREE.Mesh(
           new THREE.SphereGeometry(5),
           new THREE.MeshBasicMaterial({ color })
         );
-      case "Part number":
+      case "N_PARTNUMBER":
         return new THREE.Mesh(
           new THREE.ConeGeometry(5, 20, 3),
           new THREE.MeshBasicMaterial({ color })
         );
-      case "Purchase order":
+      case "N_PURCHORDER":
         return new THREE.Mesh(
           new THREE.BoxGeometry(10, 10, 10),
           new THREE.MeshBasicMaterial({ color })
         );
-      case "Sell order":
+      case "N_SELLORDER":
         return new THREE.Mesh(
           new THREE.BoxGeometry(10, 5, 5),
           new THREE.MeshBasicMaterial({ color })
         );
-      case "Supply":
+      case "N_SUPPLIER":
         return new THREE.Mesh(
           new THREE.CylinderGeometry(5, 5, 5, 40),
           new THREE.MeshBasicMaterial({ color })
