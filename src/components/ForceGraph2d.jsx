@@ -21,7 +21,7 @@ console.log(location.state ,"location.state")
   const checkedLinkNames = location.state?.checkedLinkNames || [];
   
   const checkedDropdownItems = location.state?.checkedDropdownItems || [];
-console.log(checkedEntityNames ,checkedLinkNames ,checkedDropdownItems , '3d force graph' )
+console.log(checkedEntityNames ,checkedLinkNames    , checkedDropdownItems  , '3d force graph' )
 
   const fgRef = useRef();
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
@@ -58,7 +58,9 @@ console.log(checkedEntityNames ,checkedLinkNames ,checkedDropdownItems , '3d for
     const nodesMap = {};
     
     console.log("excludedTypes" ,excludedTypes)
-    const links = data.slice(0, 300).map((row) => {
+    const links = data.slice(0, 4000).map((row) => {
+      
+    // const links = data.map((row) => {
       const { Entity_1, Entity_2, Entity_Type_1, Entity_Type_2, Edge_Type } =
         row;
 
@@ -79,7 +81,7 @@ console.log(checkedEntityNames ,checkedLinkNames ,checkedDropdownItems , '3d for
   };
 
   useEffect(() => {
-    Papa.parse("/Edges_And_Nodes_new.csv", {
+    Papa.parse("/Edges_and_Nodes_orderd_data.csv", {
       download: true,
       header: true,
       complete: (result) => {
@@ -93,6 +95,15 @@ console.log(checkedEntityNames ,checkedLinkNames ,checkedDropdownItems , '3d for
             checkedEntityNames.includes(row.Entity_Type_2) &&
             checkedEntityNames.includes(row.Edge_Type)
         );
+        console.log(filteredData , "filteredData") 
+  //         const subfilteration = filteredData.filter(row => {
+            
+  //           checkedDropdownItems.N_CUSTOMER.COUNTRY.includes(row.COUNTRY) ||checkedDropdownItems.N_CUSTOMER.ZONE.includes(row.ZONE) || checkedDropdownItems.N_CUSTOMER.AREA.includes(row.AREA)
+
+  //       });
+
+  // console.log(subfilteration , 'subfilteration')
+
         processCSV(filteredData);
       },
       error: (error) => {
@@ -100,6 +111,7 @@ console.log(checkedEntityNames ,checkedLinkNames ,checkedDropdownItems , '3d for
       },
     });
   }, []);
+
 
   useEffect(() => {
     const fg = fgRef.current;
@@ -243,7 +255,7 @@ console.log(checkedEntityNames ,checkedLinkNames ,checkedDropdownItems , '3d for
   };
 
   const applyFilters = () => {
-    Papa.parse("/Edges_And_Nodes_new.csv", {
+    Papa.parse("/Edges_and_Nodes_orderd_data.csv", {
       download: true,
       header: true,
       complete: (result) => {

@@ -17,7 +17,7 @@ const csvFiles = [
 const csvFiles2 = [
   "/NODES/N_CUSTOMER.csv",
   "/NODES/N_PARTNUMBER.csv",
-  "/NODES/N_PURCHORDER.csv",
+  "/NODES/N_PURCHORDER.csv",  
   "/NODES/N_SELLORDER.csv",
   "/NODES/N_SUPPLIER.csv",
 ];
@@ -32,7 +32,7 @@ const Visualize_filteration = () => {
   const [checkedLinkNames, setCheckedLinkNames] = useState([]);
   const navigate = useNavigate();
   const [checkedDropdownItems, setCheckedDropdownItems] = useState({});
-
+   
   useEffect(() => {
     const loadCSV = (filePath) => {
       return new Promise((resolve, reject) => {
@@ -169,23 +169,42 @@ const Visualize_filteration = () => {
 
   const handleEntityData = (filePath, header, item) => {
     const entityName = getEntityName(filePath);
+    
+    // Get the current state of the dropdown items for the specific entity and header
+    const currentItems = checkedDropdownItems[entityName]?.[header] || [];
+  
+    // Determine if the item should be added or removed
+    const newItems = currentItems.includes(item)
+      ? currentItems.filter(i => i !== item)
+      : [...currentItems, item];
+  
+    // Create the updated checked items structure
     const newCheckedItems = {
       ...checkedDropdownItems,
       [entityName]: {
         ...checkedDropdownItems[entityName],
-        [header]: {
-          ...checkedDropdownItems[entityName]?.[header],
-          [item]: !checkedDropdownItems[entityName]?.[header]?.[item],
-        },
+        [header]: newItems,
       },
     };
+  
     setCheckedDropdownItems(newCheckedItems);
-
+  
     if (!checkedEntityNames.includes(entityName)) {
       setCheckedEntityNames((prevNames) => [...prevNames, entityName]);
     }
-    console.log(checkedDropdownItems ,checkedEntityNames , 'checkedDropdownItems')
+    
   };
+
+  const  handleEntityData_main   = (filePath) => {
+    const entityName = getEntityName(filePath); 
+    if (!checkedEntityNames.includes(entityName)) {
+      setCheckedEntityNames((prevNames) => [...prevNames, entityName]);
+    }
+    
+  };
+
+  
+
 
   const handleLinkData = (filePath) => {
     const linkName = getLinkName(filePath);
@@ -227,6 +246,20 @@ const Visualize_filteration = () => {
                                       <td>
                                         {headerIndex === 0 ? (
                                           <>
+
+
+<input
+                                  type="checkbox"
+                                  name=""
+                                  id=""
+                                  onChange={() =>
+                                    handleEntityData_main(filePath)
+                                  }
+                                  checked={checkedEntityNames.includes(
+                                    getEntityName(filePath)
+                                  )}
+                                  value={getEntityName(filePath)}
+                                />
                                             {getEntityName(filePath)}
                                           </>
                                         ) : (
