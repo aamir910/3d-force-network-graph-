@@ -61,7 +61,7 @@ console.log(checkedEntityNames ,checkedLinkNames    , checkedDropdownItems  , '3
     // const links = data.slice(0, 4000).map((row) => {
       
     const links = data.map((row) => {
-      const { Entity_1, Entity_2, Entitys_Type_1, Entity_Type_2, Edge_Type } =
+      const { Entity_1, Entity_2, Entity_Type_1, Entity_Type_2, Edge_Type } =
         row;
 
       if (!nodesMap[Entity_1]) {
