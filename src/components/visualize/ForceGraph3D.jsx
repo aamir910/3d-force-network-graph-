@@ -189,18 +189,26 @@ const Visualize_filteration = () => {
   
     setCheckedDropdownItems(newCheckedItems);
   
-    if (!checkedEntityNames.includes(entityName)) {
-      setCheckedEntityNames((prevNames) => [...prevNames, entityName]);
+    if (checkedEntityNames.includes(entityName)) {
+      // If entity is already checked, uncheck it
+      setCheckedEntityNames(checkedEntityNames.filter(name => name !== entityName));
+    } else {
+      // If entity is not checked, check it
+      setCheckedEntityNames([...checkedEntityNames, entityName]);
     }
+
     
   };
 
   const  handleEntityData_main   = (filePath) => {
     const entityName = getEntityName(filePath); 
-    if (!checkedEntityNames.includes(entityName)) {
-      setCheckedEntityNames((prevNames) => [...prevNames, entityName]);
+      if (checkedEntityNames.includes(entityName)) {
+      // If entity is already checked, uncheck it
+      setCheckedEntityNames(checkedEntityNames.filter(name => name !== entityName));
+    } else {
+      // If entity is not checked, check it
+      setCheckedEntityNames([...checkedEntityNames, entityName]);
     }
-    
   };
 
   
@@ -214,6 +222,7 @@ const Visualize_filteration = () => {
     if (!checkedEntityNames.includes(linkName)) {
       setCheckedEntityNames((prevNames) => [...prevNames, linkName]);
     }
+    
   };
 
   return (
