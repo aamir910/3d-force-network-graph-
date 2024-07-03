@@ -58,9 +58,9 @@ console.log(checkedEntityNames ,checkedLinkNames    , checkedDropdownItems  , '3
     const nodesMap = {};
     
     console.log("excludedTypes" ,excludedTypes)
-    // const links = data.slice(0, 4000).map((row) => {
+    const links = data.slice(0, 4000).map((row) => {
       
-    const links = data.map((row) => {
+    // const links = data.map((row) => {
       const { Entity_1, Entity_2, Entity_Type_1, Entity_Type_2, Edge_Type } =
         row;
 
@@ -103,6 +103,79 @@ console.log(checkedEntityNames ,checkedLinkNames    , checkedDropdownItems  , '3
 //       });
 
 // console.log(subfilteration , 'subfilteration')
+
+
+
+
+
+// Arrays to store main keys and sub-keys
+let mainKeys = [];
+let subKeys = [];
+
+// Iterate through the main keys
+for (let mainKey in checkedDropdownItems) {
+    mainKeys.push(mainKey); // Push the main key into the mainKeys array
+    
+    // Iterate through the sub-keys
+    for (let subKey in checkedDropdownItems[mainKey]) {
+        subKeys.push(subKey); // Push the sub-key into the subKeys array
+    }
+}
+let keyValuesArray = [];
+
+// Iterate through the main keys
+for (let mainKey in checkedDropdownItems) {
+    // Iterate through the sub-keys and add them to the array
+    for (let subKey in checkedDropdownItems[mainKey]) {
+        keyValuesArray.push({ key: subKey, values: checkedDropdownItems[mainKey][subKey] });
+    }
+}
+
+console.log("Key-Value Pairs Array:", keyValuesArray);
+
+
+console.log("Main Keys:", mainKeys);
+console.log("Sub Keys:", subKeys);
+// const main_1 = result.data.filter(row =>
+  
+//   {
+// if(mainKeys[0] === row.Entity_Type_1)
+//           {
+//              console.log(checkedDropdownItems[mainKeys[0].COUNTRY])
+//           }
+
+//   }
+// );
+// console.log("main_1 main_1:", mainKeys[0], main_1);
+
+// const main_2 = result.data.filter(row => mainKeys[1] === row.Entity_Type_1);
+// console.log("main_1 main_2:", mainKeys[1], main_2);
+
+// const main_3 = result.data.filter(row => mainKeys[2] === row.Entity_Type_1);
+// console.log("main_1 main_3:", mainKeys[2], main_3);
+
+// const main_4 = result.data.filter(row => mainKeys[3] === row.Entity_Type_1);
+// console.log("main_1 main_4:", mainKeys[3], main_4);
+
+// const main_5 = result.data.filter(row => mainKeys[4] === row.Entity_Type_1);
+// console.log("main_1 main_5:", mainKeys[4], main_5);
+
+const filteredData_main = {};
+
+// Iterate over mainKeys and filter data for each key
+mainKeys.forEach((key, index) => {
+  filteredData_main[`main_${index + 1}`] = result.data.filter(row => key === row.Entity_Type_1);
+});
+
+console.log(filteredData_main);
+// Logging the filtered data arrays
+console.log("Filtered Data for main_1:", filteredData_main.main_1);
+console.log("Filtered Data for main_2:", filteredData_main.main_2);
+console.log("Filtered Data for main_3:", filteredData_main.main_3);
+console.log("Filtered Data for main_4:", filteredData_main.main_4);
+
+
+
 
         processCSV(filteredData);
       },
