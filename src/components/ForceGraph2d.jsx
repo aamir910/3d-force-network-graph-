@@ -148,17 +148,17 @@ console.log("Sub Keys:", subKeys);
 // );
 // console.log("main_1 main_1:", mainKeys[0], main_1);
 
-// const main_2 = result.data.filter(row => mainKeys[1] === row.Entity_Type_1);
-// console.log("main_1 main_2:", mainKeys[1], main_2);
+const main_2 = result.data.filter(row => mainKeys[1] === row.Entity_Type_1);
+console.log("main_1 main_2:", mainKeys[1], main_2);
 
-// const main_3 = result.data.filter(row => mainKeys[2] === row.Entity_Type_1);
-// console.log("main_1 main_3:", mainKeys[2], main_3);
+const main_3 = result.data.filter(row => mainKeys[2] === row.Entity_Type_1);
+console.log("main_1 main_3:", mainKeys[2], main_3);
 
-// const main_4 = result.data.filter(row => mainKeys[3] === row.Entity_Type_1);
-// console.log("main_1 main_4:", mainKeys[3], main_4);
+const main_4 = result.data.filter(row => mainKeys[3] === row.Entity_Type_1);
+console.log("main_1 main_4:", mainKeys[3], main_4);
 
-// const main_5 = result.data.filter(row => mainKeys[4] === row.Entity_Type_1);
-// console.log("main_1 main_5:", mainKeys[4], main_5);
+const main_5 = result.data.filter(row => mainKeys[4] === row.Entity_Type_1);
+console.log("main_1 main_5:", mainKeys[4], main_5);
 
 const filteredData_main = {};
 
@@ -172,12 +172,42 @@ console.log(filteredData_main);
 console.log("Filtered Data for main_1:", filteredData_main.main_1);
 console.log("Filtered Data for main_2:", filteredData_main.main_2);
 console.log("Filtered Data for main_3:", filteredData_main.main_3);
-console.log("Filtered Data for main_4:", filteredData_main.main_4);
+console.log("Filtered Data for main_4:", filteredData_main.main_4 , checkedDropdownItems);
+
+function isObjectEmpty(obj) {
+  for (let key in obj) {
+      if (obj.hasOwnProperty(key)) {
+          if (Array.isArray(obj[key])) {
+              if (obj[key].length > 0) {
+                  return false;
+              }
+          } else if (typeof obj[key] === 'object' && obj[key] !== null) {
+              if (!isObjectEmpty(obj[key])) {
+                  return false;
+              }
+          } else if (obj[key]) {
+              return false;
+          }
+      }
+  }
+  return true;
+}
 
 
 
 
-        processCSV(filteredData);
+if(isObjectEmpty(checkedDropdownItems)){
+
+  processCSV(filteredData);
+}
+else{
+  
+  processCSV(filteredData_main);
+}
+
+
+
+
       },
       error: (error) => {
         console.error("Error reading CSV file:", error);
