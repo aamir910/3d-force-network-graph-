@@ -187,16 +187,15 @@ const Visualize_filteration = () => {
       },
     };
   
+
+    
     setCheckedDropdownItems(newCheckedItems);
   
-    if (checkedEntityNames.includes(entityName)) {
+    if (!checkedEntityNames.includes(entityName)) {
       // If entity is already checked, uncheck it
-      setCheckedEntityNames(checkedEntityNames.filter(name => name !== entityName));
-    } else {
-      // If entity is not checked, check it
+      
       setCheckedEntityNames([...checkedEntityNames, entityName]);
-    }
-
+      } 
     
   };
 
