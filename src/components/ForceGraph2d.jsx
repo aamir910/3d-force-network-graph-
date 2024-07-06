@@ -21,7 +21,7 @@ console.log(location.state ,"location.state")
   const checkedLinkNames = location.state?.checkedLinkNames || [];
   
   const checkedDropdownItems = location.state?.checkedDropdownItems || [];
-console.log(checkedEntityNames ,checkedLinkNames    , checkedDropdownItems  , '3d force graph' )
+// console.log(checkedEntityNames ,checkedLinkNames    , checkedDropdownItems  , '3d force graph' )
 
   const fgRef = useRef();
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
@@ -58,9 +58,9 @@ console.log(checkedEntityNames ,checkedLinkNames    , checkedDropdownItems  , '3
     const nodesMap = {};
     
     console.log("excludedTypes" ,excludedTypes)
-    // const links = data.slice(0, 4000).map((row) => {
+    const links = data.slice(0, 300).map((row) => {
       
-    const links = data.map((row) => {
+    // const links = data.map((row) => {
       const { Entity_1, Entity_2, Entity_Type_1, Entity_Type_2, Edge_Type } =
         row;
 
@@ -81,7 +81,7 @@ console.log(checkedEntityNames ,checkedLinkNames    , checkedDropdownItems  , '3
   };
 
   useEffect(() => {
-    Papa.parse("/Edges_and_Nodes_orderd_data.csv", {
+    Papa.parse("/Edeges_And_Nodes_with_Entity_2.csv", {
       download: true,
       header: true,
       complete: (result) => {
@@ -91,24 +91,15 @@ console.log(checkedEntityNames ,checkedLinkNames    , checkedDropdownItems  , '3
 
         const filteredData = result.data.filter(
           (row) =>
-            checkedEntityNames.includes(row.Entity_Type_1) &&  
-            checkedEntityNames.includes(row.Entity_Type_2) &&
-            checkedEntityNames.includes(row.Edge_Type)
+           checkedEntityNames.includes(row.Entity_Type_1) &&
+              checkedEntityNames.includes(row.Entity_Type_1)  &&
+              checkedEntityNames.includes(row.Edge_Type)
         );
-        console.log(filteredData , "filteredData") 
-//         const subfilteration = filteredData.filter(row => {
-          
-//           checkedDropdownItems.N_CUSTOMER.COUNTRY.includes(row.COUNTRY) ||checkedDropdownItems.N_CUSTOMER.ZONE.includes(row.ZONE) || checkedDropdownItems.N_CUSTOMER.AREA.includes(row.AREA)
-
-//       });
-
-// console.log(subfilteration , 'subfilteration')
+        console.log(  "filteredData 222 " ,checkedEntityNames ,filteredData ) ; 
 
 
 
-
-
-// Arrays to store main keys and sub-keys
+        // Arrays to store main keys and sub-keys
 let mainKeys = [];
 let subKeys = [];
 
@@ -136,29 +127,105 @@ console.log("Key-Value Pairs Array:", keyValuesArray);
 
 console.log("Main Keys:", mainKeys);
 console.log("Sub Keys:", subKeys);
-// const main_1 = result.data.filter(row =>
-  
-//   {
-// if(mainKeys[0] === row.Entity_Type_1)
-//           {
-//              console.log(checkedDropdownItems[mainKeys[0].COUNTRY])
-//           }
 
-//   }
-// );
-// console.log("main_1 main_1:", mainKeys[0], main_1);
+const nCustomer_file = filteredData.filter(row => "N_CUSTOMER" === row.Entity_Type_1);
 
-const main_2 = result.data.filter(row => mainKeys[1] === row.Entity_Type_1);
-console.log("main_1 main_2:", mainKeys[1], main_2);
+const nPartNumber_file = filteredData.filter(row => "N_PARTNUMBER" === row.Entity_Type_1);
 
-const main_3 = result.data.filter(row => mainKeys[2] === row.Entity_Type_1);
-console.log("main_1 main_3:", mainKeys[2], main_3);
+const nPurchOrder_file = filteredData.filter(row => "N_PURCHORDER" === row.Entity_Type_1);
 
-const main_4 = result.data.filter(row => mainKeys[3] === row.Entity_Type_1);
-console.log("main_1 main_4:", mainKeys[3], main_4);
+const nSellOrder_file = filteredData.filter(row => "N_SELLORDER"  === row.Entity_Type_1);
 
-const main_5 = result.data.filter(row => mainKeys[4] === row.Entity_Type_1);
-console.log("main_1 main_5:", mainKeys[4], main_5);
+const manSupplier_file = filteredData.filter(row =>"N_SUPPLIER" === row.Entity_Type_1);
+
+
+
+const nCustomer = checkedDropdownItems["N_CUSTOMER"] || {};
+const nPartNumber = checkedDropdownItems["N_PARTNUMBER"] || {};
+const nPurchOrder = checkedDropdownItems["N_PURCHORDER"] || {};
+const nSellOrder = checkedDropdownItems["N_SELLORDER"] || {};
+const nSupplier = checkedDropdownItems["N_SUPPLIER"] || {};
+
+console.log("N_CUSTOMER:   ", nCustomer , nCustomer_file) ;
+console.log("N_PARTNUMBER:   ", nPartNumber ,nPartNumber_file);
+console.log("N_PURCHORDER:  ", nPurchOrder ,nPurchOrder_file);
+console.log("N_SELLORDER :", nSellOrder ,nSellOrder_file);
+console.log("N_SUPPLIER:"   , nSupplier ,manSupplier_file);
+
+
+function filterByNCustomer(data) {
+  return data.filter(item =>
+
+    
+    (
+      (!item.COUNTRY ||nCustomer.COUNTRY === undefined || nCustomer.COUNTRY.includes(item.COUNTRY)) &&
+      (!item.MARKET  ||nCustomer.MARKET === undefined || nCustomer.MARKET.includes(item.MARKET)) &&
+      (!item.AREA    ||nCustomer.AREA   === undefined || nCustomer.AREA.includes(item.AREA)) &&
+      (!item.ZONE    ||nCustomer.ZONE  === undefined || nCustomer.ZONE.includes(item.ZONE))
+  ));
+}
+
+
+
+function filterByN_PARTNUMBER(data) {
+  return data.filter(item => (
+      (!nPartNumber.CLASS ||  nPartNumber.CLASS.length === 0 || nPartNumber.CLASS.includes(item.CLASS)) &&
+      (!nPartNumber.MOB ||    nPartNumber.MOB.length === 0 || nPartNumber.MOB.includes(item.MOB)) &&
+      (!nPartNumber.UM ||     nPartNumber.UM.length === 0 || nPartNumber.UM.includes(item.UM)) &&
+      (!nPartNumber.DEPT ||   nPartNumber.DEPT.length === 0 || nPartNumber.DEPT.includes(item.DEPT)) &&
+      (!nPartNumber.WOCE ||   nPartNumber.WOCE.length === 0 || nPartNumber.WOCE.includes(item.WOCE)) &&
+      (!nPartNumber.BOMLEV || nPartNumber.BOMLEV.length === 0 || nPartNumber.BOMLEV.includes(item.BOMLEV))
+  ));
+}
+
+function filterByN_PurchOrder(data) {
+  return data.filter(item => (
+      (!nPurchOrder.PURCH_ORDER_TYPE || nPurchOrder.PURCH_ORDER_TYPE.length === 0 || nPurchOrder.PURCH_ORDER_TYPE.includes(item.PURCH_ORDER_TYPE))
+  ));
+}
+
+function filterByN_Sellorder(data) {
+  return data.filter(item => (
+      (!nSellOrder.SELL_ORDER_TYPE || nSellOrder.SELL_ORDER_TYPE.length === 0 || nSellOrder.SELL_ORDER_TYPE.includes(item.PURCH_ORDER_TYPE))
+  ));
+}
+function filterByN_SUPPLIER(data) {
+  return data.filter(item => (
+      (!nSupplier.COUNTRY || nSupplier.COUNTRY.length === 0 || nSupplier.PURCH_ORDER_TYPE.includes(item.COUNTRY_SUPPLIER))
+  ));
+}
+
+
+
+
+
+//  let customer = filterByNCustomer_customer(nCustomer_file)
+// console.log("Filtered by nPurchOrder:", filteredData_PurchOrder);
+
+let N_PARTNUMBER_filter = filterByN_PARTNUMBER(nPartNumber_file);
+let nCustomer_file_filters = filterByNCustomer(nCustomer_file);
+let filteredData_PurchOrder = filterByN_PurchOrder(nPurchOrder_file);
+
+let nSellOrder_file_filter = filterByN_Sellorder(nSellOrder_file);
+
+let manSupplier_file_filter = filterByN_SUPPLIER(manSupplier_file);
+
+console.log( 'nCustomer_file_filters' ,  nCustomer_file_filters   )
+   
+console.log('N_PARTNUMBER_filter' , N_PARTNUMBER_filter );
+
+   
+console.log('filteredData_PurchOrder' , filteredData_PurchOrder );
+
+   
+console.log('nSellOrder_file_filter' , nSellOrder_file_filter );
+
+   
+console.log('manSupplier_file_filter' , manSupplier_file_filter );
+
+
+
+
 
 const filteredData_main = {};
 
@@ -169,44 +236,14 @@ mainKeys.forEach((key, index) => {
 
 console.log(filteredData_main);
 // Logging the filtered data arrays
-console.log("Filtered Data for main_1:", filteredData_main.main_1);
-console.log("Filtered Data for main_2:", filteredData_main.main_2);
-console.log("Filtered Data for main_3:", filteredData_main.main_3);
-console.log("Filtered Data for main_4:", filteredData_main.main_4 , checkedDropdownItems);
-
-function isObjectEmpty(obj) {
-  for (let key in obj) {
-      if (obj.hasOwnProperty(key)) {
-          if (Array.isArray(obj[key])) {
-              if (obj[key].length > 0) {
-                  return false;
-              }
-          } else if (typeof obj[key] === 'object' && obj[key] !== null) {
-              if (!isObjectEmpty(obj[key])) {
-                  return false;
-              }
-          } else if (obj[key]) {
-              return false;
-          }
-      }
-  }
-  return true;
-}
+// console.log("Filtered Data for main_1:", filteredData_main.main_1);
+// console.log("Filtered Data for main_2:", filteredData_main.main_2);
+// console.log("Filtered Data for main_3:", filteredData_main.main_3);
+// console.log("Filtered Data for main_4:", filteredData_main.main_4 , checkedDropdownItems);
 
 
-
-
-if(isObjectEmpty(checkedDropdownItems)){
 
   processCSV(filteredData);
-}
-else{
-  
-  processCSV(filteredData_main);
-}
-
-
-
 
       },
       error: (error) => {
@@ -358,7 +395,7 @@ else{
   };
 
   const applyFilters = () => {
-    Papa.parse("/Edges_and_Nodes_orderd_data.csv", {
+    Papa.parse("/Edeges_And_Nodes_with_Entity_2.csv", {
       download: true,
       header: true,
       complete: (result) => {
