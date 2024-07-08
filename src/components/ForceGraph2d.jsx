@@ -79,6 +79,9 @@ const ForceGraph2DComponent = () => {
     console.log(links, "here is the links");
   };
 
+
+
+  
   useEffect(() => {
     Papa.parse("/Edeges_And_Nodes_with_Entity_2.csv", {
       download: true,
@@ -231,7 +234,7 @@ let filteredData_PurchOrder = filterByN_PurchOrder(finalFilteredRows);
 filterFunctionResult = filterAndUpdateNodes(filteredData_PurchOrder, Remove_nodes);
 
 while (filterFunctionResult.removeNodes2.length > 0) {
-  filterFunctionResult = filterAndUpdateNodes(filterFunctionResult.filteredRows, filterFunctionResult.removeNodes2);
+  filterFunctionResult = filterAndUpdateNodes(filterFunctionResult.filteredRows, filterFunctionResult.removeNodes3);
 }
 
 finalFilteredRows = filterFunctionResult.filteredRows;
@@ -242,7 +245,7 @@ let nSellOrder_file_filter = filterByN_Sellorder(finalFilteredRows);
 filterFunctionResult = filterAndUpdateNodes(nSellOrder_file_filter, Remove_nodes);
 
 while (filterFunctionResult.removeNodes2.length > 0) {
-  filterFunctionResult = filterAndUpdateNodes(filterFunctionResult.filteredRows, filterFunctionResult.removeNodes2);
+  filterFunctionResult = filterAndUpdateNodes(filterFunctionResult.filteredRows, filterFunctionResult.removeNodes3);
 }
 
 finalFilteredRows = filterFunctionResult.filteredRows;
@@ -253,7 +256,7 @@ let manSupplier_file_filter = filterByN_SUPPLIER(finalFilteredRows);
 filterFunctionResult = filterAndUpdateNodes(manSupplier_file_filter, Remove_nodes);
 
 while (filterFunctionResult.removeNodes2.length > 0) {
-  filterFunctionResult = filterAndUpdateNodes(filterFunctionResult.filteredRows, filterFunctionResult.removeNodes2);
+  filterFunctionResult = filterAndUpdateNodes(filterFunctionResult.filteredRows, filterFunctionResult.removeNodes3);
 }
 finalFilteredRows = filterFunctionResult.filteredRows;
 console.log("Final filtered rows after N_SUPPLIER:", finalFilteredRows);
@@ -566,7 +569,7 @@ let filteredData_PurchOrder = filterByN_PurchOrder(finalFilteredRows);
 filterFunctionResult = filterAndUpdateNodes(filteredData_PurchOrder, Remove_nodes);
 
 while (filterFunctionResult.removeNodes2.length > 0) {
-  filterFunctionResult = filterAndUpdateNodes(filterFunctionResult.filteredRows, filterFunctionResult.removeNodes2);
+  filterFunctionResult = filterAndUpdateNodes(filterFunctionResult.filteredRows, filterFunctionResult.removeNodes3);
 }
 
 finalFilteredRows = filterFunctionResult.filteredRows;
@@ -577,7 +580,7 @@ let nSellOrder_file_filter = filterByN_Sellorder(finalFilteredRows);
 filterFunctionResult = filterAndUpdateNodes(nSellOrder_file_filter, Remove_nodes);
 
 while (filterFunctionResult.removeNodes2.length > 0) {
-  filterFunctionResult = filterAndUpdateNodes(filterFunctionResult.filteredRows, filterFunctionResult.removeNodes2);
+  filterFunctionResult = filterAndUpdateNodes(filterFunctionResult.filteredRows, filterFunctionResult.removeNodes3);
 }
 
 finalFilteredRows = filterFunctionResult.filteredRows;
@@ -588,7 +591,7 @@ let manSupplier_file_filter = filterByN_SUPPLIER(finalFilteredRows);
 filterFunctionResult = filterAndUpdateNodes(manSupplier_file_filter, Remove_nodes);
 
 while (filterFunctionResult.removeNodes2.length > 0) {
-  filterFunctionResult = filterAndUpdateNodes(filterFunctionResult.filteredRows, filterFunctionResult.removeNodes2);
+  filterFunctionResult = filterAndUpdateNodes(filterFunctionResult.filteredRows, filterFunctionResult.removeNodes3);
 }
 finalFilteredRows = filterFunctionResult.filteredRows;
 console.log("Final filtered rows after N_SUPPLIER:", finalFilteredRows);
