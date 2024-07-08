@@ -421,9 +421,9 @@ console.log("Final filtered rows after N_SUPPLIER:", finalFilteredRows);
 
         let filteredData = result.data.filter(
           (row) =>
-            checkedEntityNames.includes(row.Entity_Type_1) &&  
-            checkedEntityNames.includes(row.Entity_Type_2) &&
-            checkedEntityNames.includes(row.Edge_Type)
+            checkedEntityNames.includes(row.Entity_Type_1) &&
+          checkedEntityNames.includes(row.Entity_Type_1)  &&
+          checkedEntityNames.includes(row.Edge_Type)
         );
 
         
@@ -435,7 +435,7 @@ console.log("Final filtered rows after N_SUPPLIER:", finalFilteredRows);
             !excludedTypes.includes(row.Entity_Type_2) &&
             !excludedTypes.includes(row.Edge_Type)
         );
-        
+        console.log("filteredData2"    , checkedEntityNames ,filteredData  ,filteredData2 ,excludedTypes)
         // Arrays to store main keys and sub-keys
 
 
