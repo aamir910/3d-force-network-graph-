@@ -57,9 +57,9 @@ const ForceGraph2DComponent = () => {
     const nodesMap = {};
     
     console.log("excludedTypes" ,excludedTypes)
-    // const links = data.slice(0, 300).map((row) => {
+    const links = data.slice(0, 5000).map((row) => {
       
-    const links = data.map((row) => {
+    // const links = data.map((row) => {
       const { Entity_1, Entity_2, Entity_Type_1, Entity_Type_2, Edge_Type } =
         row;
 
@@ -158,32 +158,75 @@ function filterByNCustomer(data) {
 
 
 function filterByN_PARTNUMBER(data) {
-  return data.filter(item => (
-      (!nPartNumber.CLASS ||  nPartNumber.CLASS.length === 0 || nPartNumber.CLASS.includes(item.CLASS) || item.CLASS === ""  ) &&
-      (!nPartNumber.MOB ||    nPartNumber.MOB.length === 0 || nPartNumber.MOB.includes(item.MOB) || item.MOB === "" ) &&
-      (!nPartNumber.UM ||     nPartNumber.UM.length === 0 || nPartNumber.UM.includes(item.UM)|| item.UM === "" ) &&
-      (!nPartNumber.DEPT ||   nPartNumber.DEPT.length === 0 || nPartNumber.DEPT.includes(item.DEPT)|| item.DEPT === "" ) &&
-      (!nPartNumber.WOCE ||   nPartNumber.WOCE.length === 0 || nPartNumber.WOCE.includes(item.WOCE)|| item.WOCE === "" ) &&
-      (!nPartNumber.BOMLEV || nPartNumber.BOMLEV.length === 0 || nPartNumber.BOMLEV.includes(item.BOMLEV)|| item.BOMLEV === "" )
-  ));
+  const filteredData = data.filter(item => {
+    const matchesClass = !item.CLASS || nPartNumber.CLASS === undefined || nPartNumber.CLASS.includes(item.CLASS) || item.CLASS === "";
+    const matchesMOB = !item.MOB || nPartNumber.MOB === undefined || nPartNumber.MOB.includes(item.MOB) || item.MOB === "";
+    const matchesUM = !item.UM || nPartNumber.UM === undefined || nPartNumber.UM.includes(item.UM) || item.UM === "";
+    const matchesDept = !item.DEPT || nPartNumber.DEPT === undefined || nPartNumber.DEPT.includes(item.DEPT) || item.DEPT === "";
+    const matchesWOCE = !item.WOCE || nPartNumber.WOCE === undefined || nPartNumber.WOCE.includes(item.WOCE) || item.WOCE === "";
+    const matchesBOMLEV = !item.BOMLEV || nPartNumber.BOMLEV === undefined || nPartNumber.BOMLEV.includes(item.BOMLEV) || item.BOMLEV === "";
+
+    if (!matchesClass && item.CLASS !== "") Remove_nodes.push(item.Entity_1, item.Entity_2);
+    if (!matchesMOB && item.MOB !== "") Remove_nodes.push(item.Entity_1, item.Entity_2);
+    if (!matchesUM && item.UM !== "") Remove_nodes.push(item.Entity_1, item.Entity_2);
+    if (!matchesDept && item.DEPT !== "") Remove_nodes.push(item.Entity_1, item.Entity_2);
+    if (!matchesWOCE && item.WOCE !== "") Remove_nodes.push(item.Entity_1, item.Entity_2);
+    if (!matchesBOMLEV && item.BOMLEV !== "") Remove_nodes.push(item.Entity_1, item.Entity_2);
+
+    return matchesClass && matchesMOB && matchesUM && matchesDept && matchesWOCE && matchesBOMLEV;
+  });
+
+  // Optionally, remove duplicates from Remove_nodes
+  // Remove_nodes = [...new Set(Remove_nodes)];
+
+  return filteredData;
 }
 
 function filterByN_PurchOrder(data) {
-  return data.filter(item => (
-      (!nPurchOrder.PURCH_ORDER_TYPE || nPurchOrder.PURCH_ORDER_TYPE.length === 0 || nPurchOrder.PURCH_ORDER_TYPE.includes(item.PURCH_ORDER_TYPE) ||  item.PURCH_ORDER_TYPE ==="" )
-  ));
+  const filteredData = data.filter(item => {
+    const matchesPurchOrderType = !item.PURCH_ORDER_TYPE || nPurchOrder.PURCH_ORDER_TYPE === undefined || nPurchOrder.PURCH_ORDER_TYPE.includes(item.PURCH_ORDER_TYPE) || item.PURCH_ORDER_TYPE === "";
+
+    // Add entities to Remove_nodes if they don't match criteria
+    if (!matchesPurchOrderType && item.PURCH_ORDER_TYPE !== "") {
+      Remove_nodes.push(item.Entity_1, item.Entity_2);
+    }
+
+    return matchesPurchOrderType;
+  });
+
+  return filteredData;
 }
 
 function filterByN_Sellorder(data) {
-  return data.filter(item => (
-      (!nSellOrder.SELL_ORDER_TYPE || nSellOrder.SELL_ORDER_TYPE.length === 0 || nSellOrder.SELL_ORDER_TYPE.includes(item.PURCH_ORDER_TYPE) || item.PURCH_ORDER_TYPE ==="" )
-  ));
+  const filteredData = data.filter(item => {
+    const matchesSellOrderType = !item.SELL_ORDER_TYPE || nSellOrder.SELL_ORDER_TYPE === undefined || nSellOrder.SELL_ORDER_TYPE.includes(item.SELL_ORDER_TYPE) || item.SELL_ORDER_TYPE === "";
+
+    // Add entities to Remove_nodes if they don't match criteria
+    if (!matchesSellOrderType && item.SELL_ORDER_TYPE !== "") {
+      Remove_nodes.push(item.Entity_1, item.Entity_2);
+    }
+
+    return matchesSellOrderType;
+  });
+
+  return filteredData;
 }
+
 function filterByN_SUPPLIER(data) {
-  return data.filter(item => (
-    (!nSupplier.COUNTRY || nSupplier.COUNTRY.length === 0 || nSupplier.COUNTRY.includes(item.COUNTRY_SUPPLIER) || item.COUNTRY_SUPPLIER ==="")
-  ));
+  const filteredData = data.filter(item => {
+    const matchesSupplierCountry = !item.COUNTRY_SUPPLIER || nSupplier.COUNTRY === undefined || nSupplier.COUNTRY.includes(item.COUNTRY_SUPPLIER) || item.COUNTRY_SUPPLIER === "";
+
+    // Add entities to Remove_nodes if they don't match criteria
+    if (!matchesSupplierCountry && item.COUNTRY_SUPPLIER !== "") {
+      Remove_nodes.push(item.Entity_1, item.Entity_2);
+    }
+
+    return matchesSupplierCountry;
+  });
+
+  return filteredData;
 }
+
 
 let nCustomer_file_filters = filterByNCustomer(filteredData);
 
@@ -219,7 +262,12 @@ console.log("Final filtered rows after initial filter:", finalFilteredRows, filt
 // Apply additional filters and update nodes in sequence
 
 // Filter by N_PARTNUMBER
+Remove_nodes = [] ;
 let N_PARTNUMBER_filter = filterByN_PARTNUMBER(finalFilteredRows);
+
+
+console.log('N_PARTNUMBER_filter' , N_PARTNUMBER_filter)
+
 filterFunctionResult = filterAndUpdateNodes(N_PARTNUMBER_filter, Remove_nodes);
 
 while (filterFunctionResult.removeNodes2.length > 0) {
@@ -230,6 +278,7 @@ finalFilteredRows = filterFunctionResult.filteredRows;
 console.log("Final filtered rows after N_PARTNUMBER:", finalFilteredRows ,finalFilteredRows );
 
 // Filter by N_PurchOrder
+Remove_nodes = [] ;
 let filteredData_PurchOrder = filterByN_PurchOrder(finalFilteredRows);
 filterFunctionResult = filterAndUpdateNodes(filteredData_PurchOrder, Remove_nodes);
 
@@ -241,6 +290,7 @@ finalFilteredRows = filterFunctionResult.filteredRows;
 console.log("Final filtered rows after N_PurchOrder:", finalFilteredRows);
 
 // Filter by N_Sellorder
+Remove_nodes = [] ;
 let nSellOrder_file_filter = filterByN_Sellorder(finalFilteredRows);
 filterFunctionResult = filterAndUpdateNodes(nSellOrder_file_filter, Remove_nodes);
 
@@ -252,6 +302,7 @@ finalFilteredRows = filterFunctionResult.filteredRows;
 console.log("Final filtered rows after N_Sellorder:", finalFilteredRows);
 
 // Filter by N_SUPPLIER
+Remove_nodes = [] ;
 let manSupplier_file_filter = filterByN_SUPPLIER(finalFilteredRows);
 filterFunctionResult = filterAndUpdateNodes(manSupplier_file_filter, Remove_nodes);
 
