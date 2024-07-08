@@ -166,7 +166,7 @@ const Visualize_filteration = () => {
       [filePath]: !prevState[filePath],
     }));
   };
-
+console.log(entityData , 'entity data')
   const handleEntityData = (filePath, header, item) => {
     const entityName = getEntityName(filePath);
     

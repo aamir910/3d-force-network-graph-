@@ -14,7 +14,6 @@ const ForceGraph2DComponent = () => {
 
   const location = useLocation();
   
-console.log(location.state ,"location.state")
 
   // Check if location.state exists before accessing its properties
   const checkedEntityNames = location.state?.checkedEntityNames || [];
@@ -97,21 +96,15 @@ console.log(location.state ,"location.state")
         );
         console.log(  "filteredData 222 " ,checkedEntityNames ,filteredData ) ; 
 
-
+        
 
         // Arrays to store main keys and sub-keys
-let mainKeys = [];
-let subKeys = [];
+
 
 // Iterate through the main keys
-for (let mainKey in checkedDropdownItems) {
-    mainKeys.push(mainKey); // Push the main key into the mainKeys array
-    
-    // Iterate through the sub-keys
-    for (let subKey in checkedDropdownItems[mainKey]) {
-        subKeys.push(subKey); // Push the sub-key into the subKeys array
-    }
-}
+
+
+
 let keyValuesArray = [];
 
 // Iterate through the main keys
@@ -124,117 +117,176 @@ for (let mainKey in checkedDropdownItems) {
 
 console.log("Key-Value Pairs Array:", keyValuesArray);
 
-
-console.log("Main Keys:", mainKeys);
-console.log("Sub Keys:", subKeys);
-
-const nCustomer_file = filteredData.filter(row => "N_CUSTOMER" === row.Entity_Type_1);
-
-const nPartNumber_file = filteredData.filter(row => "N_PARTNUMBER" === row.Entity_Type_1);
-
-const nPurchOrder_file = filteredData.filter(row => "N_PURCHORDER" === row.Entity_Type_1);
-
-const nSellOrder_file = filteredData.filter(row => "N_SELLORDER"  === row.Entity_Type_1);
-
-const manSupplier_file = filteredData.filter(row =>"N_SUPPLIER" === row.Entity_Type_1);
-
-
-
 const nCustomer = checkedDropdownItems["N_CUSTOMER"] || {};
 const nPartNumber = checkedDropdownItems["N_PARTNUMBER"] || {};
 const nPurchOrder = checkedDropdownItems["N_PURCHORDER"] || {};
 const nSellOrder = checkedDropdownItems["N_SELLORDER"] || {};
 const nSupplier = checkedDropdownItems["N_SUPPLIER"] || {};
 
-console.log("N_CUSTOMER:   ", nCustomer , nCustomer_file) ;
-console.log("N_PARTNUMBER:   ", nPartNumber ,nPartNumber_file);
-console.log("N_PURCHORDER:  ", nPurchOrder ,nPurchOrder_file);
-console.log("N_SELLORDER :", nSellOrder ,nSellOrder_file);
-console.log("N_SUPPLIER:"   , nSupplier ,manSupplier_file);
+// console.log("N_CUSTOMER:   ", nCustomer , nCustomer_file) ;
+// console.log("N_PARTNUMBER:   ", nPartNumber ,nPartNumber_file);
+// console.log("N_PURCHORDER:  ", nPurchOrder ,nPurchOrder_file);
+// console.log("N_SELLORDER :", nSellOrder ,nSellOrder_file);
+// console.log("N_SUPPLIER:"   , nSupplier ,manSupplier_file);
 
 
+let Remove_nodes = [];
 function filterByNCustomer(data) {
-  return data.filter(item =>
 
-    
-    (
-      (!item.COUNTRY ||nCustomer.COUNTRY === undefined || nCustomer.COUNTRY.includes(item.COUNTRY)) &&
-      (!item.MARKET  ||nCustomer.MARKET === undefined || nCustomer.MARKET.includes(item.MARKET)) &&
-      (!item.AREA    ||nCustomer.AREA   === undefined || nCustomer.AREA.includes(item.AREA)) &&
-      (!item.ZONE    ||nCustomer.ZONE  === undefined || nCustomer.ZONE.includes(item.ZONE))
-  ));
+  const filteredData = data.filter(item => {
+    const matchesCountry = !item.COUNTRY || nCustomer.COUNTRY === undefined || nCustomer.COUNTRY.includes(item.COUNTRY) || item.COUNTRY === "";
+    const matchesMarket = !item.MARKET || nCustomer.MARKET === undefined || nCustomer.MARKET.includes(item.MARKET) || item.MARKET === "";
+    const matchesArea = !item.AREA || nCustomer.AREA === undefined || nCustomer.AREA.includes(item.AREA) || item.AREA === "";
+    const matchesZone = !item.ZONE || nCustomer.ZONE === undefined || nCustomer.ZONE.includes(item.ZONE) || item.ZONE === "";
+
+    if (!matchesCountry && item.COUNTRY !== "") Remove_nodes.push(item.Entity_1);
+    if (!matchesMarket && item.MARKET !== "") Remove_nodes.push(item.Entity_1);
+    if (!matchesArea && item.AREA !== "") Remove_nodes.push(item.Entity_1);
+    if (!matchesZone && item.ZONE !== "") Remove_nodes.push(item.Entity_1);
+
+    if (!matchesCountry && item.COUNTRY !== "") Remove_nodes.push(item.Entity_2);
+    if (!matchesMarket && item.MARKET !== "") Remove_nodes.push(item.Entity_2);
+    if (!matchesArea && item.AREA !== "") Remove_nodes.push(item.Entity_2);
+    if (!matchesZone && item.ZONE !== "") Remove_nodes.push(item.Entity_2);
+
+    return matchesCountry && matchesMarket && matchesArea && matchesZone;
+  });
+
+  // Adding unique entities to the new array in item.entity
+  // Remove_nodes = [...new Set(Remove_nodes)]; // Remove duplicates
+
+
+  return filteredData;
 }
-
 
 
 function filterByN_PARTNUMBER(data) {
   return data.filter(item => (
-      (!nPartNumber.CLASS ||  nPartNumber.CLASS.length === 0 || nPartNumber.CLASS.includes(item.CLASS)) &&
-      (!nPartNumber.MOB ||    nPartNumber.MOB.length === 0 || nPartNumber.MOB.includes(item.MOB)) &&
-      (!nPartNumber.UM ||     nPartNumber.UM.length === 0 || nPartNumber.UM.includes(item.UM)) &&
-      (!nPartNumber.DEPT ||   nPartNumber.DEPT.length === 0 || nPartNumber.DEPT.includes(item.DEPT)) &&
-      (!nPartNumber.WOCE ||   nPartNumber.WOCE.length === 0 || nPartNumber.WOCE.includes(item.WOCE)) &&
-      (!nPartNumber.BOMLEV || nPartNumber.BOMLEV.length === 0 || nPartNumber.BOMLEV.includes(item.BOMLEV))
+      (!nPartNumber.CLASS ||  nPartNumber.CLASS.length === 0 || nPartNumber.CLASS.includes(item.CLASS) || item.CLASS === ""  ) &&
+      (!nPartNumber.MOB ||    nPartNumber.MOB.length === 0 || nPartNumber.MOB.includes(item.MOB) || item.MOB === "" ) &&
+      (!nPartNumber.UM ||     nPartNumber.UM.length === 0 || nPartNumber.UM.includes(item.UM)|| item.UM === "" ) &&
+      (!nPartNumber.DEPT ||   nPartNumber.DEPT.length === 0 || nPartNumber.DEPT.includes(item.DEPT)|| item.DEPT === "" ) &&
+      (!nPartNumber.WOCE ||   nPartNumber.WOCE.length === 0 || nPartNumber.WOCE.includes(item.WOCE)|| item.WOCE === "" ) &&
+      (!nPartNumber.BOMLEV || nPartNumber.BOMLEV.length === 0 || nPartNumber.BOMLEV.includes(item.BOMLEV)|| item.BOMLEV === "" )
   ));
 }
 
 function filterByN_PurchOrder(data) {
   return data.filter(item => (
-      (!nPurchOrder.PURCH_ORDER_TYPE || nPurchOrder.PURCH_ORDER_TYPE.length === 0 || nPurchOrder.PURCH_ORDER_TYPE.includes(item.PURCH_ORDER_TYPE))
+      (!nPurchOrder.PURCH_ORDER_TYPE || nPurchOrder.PURCH_ORDER_TYPE.length === 0 || nPurchOrder.PURCH_ORDER_TYPE.includes(item.PURCH_ORDER_TYPE) ||  item.PURCH_ORDER_TYPE ==="" )
   ));
 }
 
 function filterByN_Sellorder(data) {
   return data.filter(item => (
-      (!nSellOrder.SELL_ORDER_TYPE || nSellOrder.SELL_ORDER_TYPE.length === 0 || nSellOrder.SELL_ORDER_TYPE.includes(item.PURCH_ORDER_TYPE))
+      (!nSellOrder.SELL_ORDER_TYPE || nSellOrder.SELL_ORDER_TYPE.length === 0 || nSellOrder.SELL_ORDER_TYPE.includes(item.PURCH_ORDER_TYPE) || item.PURCH_ORDER_TYPE ==="" )
   ));
 }
 function filterByN_SUPPLIER(data) {
   return data.filter(item => (
-      (!nSupplier.COUNTRY || nSupplier.COUNTRY.length === 0 || nSupplier.PURCH_ORDER_TYPE.includes(item.COUNTRY_SUPPLIER))
+    (!nSupplier.COUNTRY || nSupplier.COUNTRY.length === 0 || nSupplier.COUNTRY.includes(item.COUNTRY_SUPPLIER) || item.COUNTRY_SUPPLIER ==="")
   ));
 }
 
+let nCustomer_file_filters = filterByNCustomer(filteredData);
 
+function filterAndUpdateNodes(data, removeNodes) {
+  let removeNodes2 = [];
 
+  const filteredRows = data.filter(row => {
+    const { Entity_1, Entity_2 } = row;
+    
+    if (removeNodes.includes(Entity_1) || removeNodes.includes(Entity_2)) {
+      removeNodes2.push(Entity_1, Entity_2);
+      return false; // Exclude this row
+    }
+    
+    return true; // Include this row
+  });
 
+  return { filteredRows, removeNodes2 };
+}
 
-//  let customer = filterByNCustomer_customer(nCustomer_file)
-// console.log("Filtered by nPurchOrder:", filteredData_PurchOrder);
+// Initial filter and update nodes
+let filterFunctionResult = filterAndUpdateNodes(nCustomer_file_filters, Remove_nodes);
 
-let N_PARTNUMBER_filter = filterByN_PARTNUMBER(nPartNumber_file);
-let nCustomer_file_filters = filterByNCustomer(nCustomer_file);
-let filteredData_PurchOrder = filterByN_PurchOrder(nPurchOrder_file);
+while (filterFunctionResult.removeNodes2.length > 0) {
+  filterFunctionResult = filterAndUpdateNodes(filterFunctionResult.filteredRows, filterFunctionResult.removeNodes2);
+}
 
-let nSellOrder_file_filter = filterByN_Sellorder(nSellOrder_file);
+let finalFilteredRows = filterFunctionResult.filteredRows;
+console.log("Final filtered rows after initial filter:", finalFilteredRows);
 
-let manSupplier_file_filter = filterByN_SUPPLIER(manSupplier_file);
+// Apply additional filters and update nodes in sequence
 
-console.log( 'nCustomer_file_filters' ,  nCustomer_file_filters   )
+// Filter by N_PARTNUMBER
+let N_PARTNUMBER_filter = filterByN_PARTNUMBER(finalFilteredRows);
+filterFunctionResult = filterAndUpdateNodes(N_PARTNUMBER_filter, Remove_nodes);
+
+while (filterFunctionResult.removeNodes2.length > 0) {
+  filterFunctionResult = filterAndUpdateNodes(filterFunctionResult.filteredRows, filterFunctionResult.removeNodes2);
+}
+
+finalFilteredRows = filterFunctionResult.filteredRows;
+console.log("Final filtered rows after N_PARTNUMBER:", finalFilteredRows);
+
+// Filter by N_PurchOrder
+let filteredData_PurchOrder = filterByN_PurchOrder(finalFilteredRows);
+filterFunctionResult = filterAndUpdateNodes(filteredData_PurchOrder, Remove_nodes);
+
+while (filterFunctionResult.removeNodes2.length > 0) {
+  filterFunctionResult = filterAndUpdateNodes(filterFunctionResult.filteredRows, filterFunctionResult.removeNodes2);
+}
+
+finalFilteredRows = filterFunctionResult.filteredRows;
+console.log("Final filtered rows after N_PurchOrder:", finalFilteredRows);
+
+// Filter by N_Sellorder
+let nSellOrder_file_filter = filterByN_Sellorder(finalFilteredRows);
+filterFunctionResult = filterAndUpdateNodes(nSellOrder_file_filter, Remove_nodes);
+
+while (filterFunctionResult.removeNodes2.length > 0) {
+  filterFunctionResult = filterAndUpdateNodes(filterFunctionResult.filteredRows, filterFunctionResult.removeNodes2);
+}
+
+finalFilteredRows = filterFunctionResult.filteredRows;
+console.log("Final filtered rows after N_Sellorder:", finalFilteredRows);
+
+// Filter by N_SUPPLIER
+let manSupplier_file_filter = filterByN_SUPPLIER(finalFilteredRows);
+filterFunctionResult = filterAndUpdateNodes(manSupplier_file_filter, Remove_nodes);
+
+while (filterFunctionResult.removeNodes2.length > 0) {
+  filterFunctionResult = filterAndUpdateNodes(filterFunctionResult.filteredRows, filterFunctionResult.removeNodes2);
+}
+
+finalFilteredRows = filterFunctionResult.filteredRows;
+console.log("Final filtered rows after N_SUPPLIER:", finalFilteredRows);
+
    
-console.log('N_PARTNUMBER_filter' , N_PARTNUMBER_filter );
+// console.log('N_PARTNUMBER_filter' , N_PARTNUMBER_filter );
 
    
-console.log('filteredData_PurchOrder' , filteredData_PurchOrder );
+// console.log('filteredData_PurchOrder' , filteredData_PurchOrder ); 
 
    
-console.log('nSellOrder_file_filter' , nSellOrder_file_filter );
+// console.log('nSellOrder_file_filter' , nSellOrder_file_filter );
 
    
-console.log('manSupplier_file_filter' , manSupplier_file_filter );
+// console.log('manSupplier_file_filter' , manSupplier_file_filter );
+
+ 
 
 
 
+// const filteredData_main = {};
 
+// // Iterate over mainKeys and filter data for each key
+// mainKeys.forEach((key, index) => {
+//   filteredData_main[`main_${index + 1}`] = result.data.filter(row => key === row.Entity_Type_1);
+// });
 
-const filteredData_main = {};
-
-// Iterate over mainKeys and filter data for each key
-mainKeys.forEach((key, index) => {
-  filteredData_main[`main_${index + 1}`] = result.data.filter(row => key === row.Entity_Type_1);
-});
-
-console.log(filteredData_main);
+// console.log(filteredData_main);
 // Logging the filtered data arrays
 // console.log("Filtered Data for main_1:", filteredData_main.main_1);
 // console.log("Filtered Data for main_2:", filteredData_main.main_2);
@@ -243,7 +295,7 @@ console.log(filteredData_main);
 
 
 
-  processCSV(filteredData);
+  processCSV(finalFilteredRows);
 
       },
       error: (error) => {
