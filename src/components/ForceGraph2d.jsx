@@ -130,9 +130,9 @@ const ForceGraph2DComponent = () => {
     const nodesMap = {};
     
     console.log("excludedTypes" ,excludedTypes) 
-    const links = data.slice(0, 5000).map((row) => {
+    // const links = data.slice(0, 5000).map((row) => {
       
-    // const links = data.map((row) => {
+    const links = data.map((row) => {
       const { Entity_1, Entity_2, Entity_Type_1, Entity_Type_2, Edge_Type } =
         row;
 
