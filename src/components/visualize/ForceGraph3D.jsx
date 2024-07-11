@@ -322,7 +322,7 @@ const Visualize_filteration = () => {
                                         </>
                                       ) : (
                                         <>
-                                          Enter Customer id:{" "}
+                                          Enter Value:{" "}
                                           <input
                                             type="text"
                                             id="customerId"
