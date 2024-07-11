@@ -17,7 +17,7 @@ const csvFiles = [
 const csvFiles2 = [
   "/NODES/N_CUSTOMER.csv",
   "/NODES/N_PARTNUMBER.csv",
-  "/NODES/N_PURCHORDER.csv",  
+  "/NODES/N_PURCHORDER.csv",
   "/NODES/N_SELLORDER.csv",
   "/NODES/N_SUPPLIER.csv",
 ];
@@ -32,7 +32,12 @@ const Visualize_filteration = () => {
   const [checkedLinkNames, setCheckedLinkNames] = useState([]);
   const navigate = useNavigate();
   const [checkedDropdownItems, setCheckedDropdownItems] = useState({});
-   
+  
+  const [inputData, setInputData] = useState({});
+
+
+
+
   useEffect(() => {
     const loadCSV = (filePath) => {
       return new Promise((resolve, reject) => {
@@ -62,6 +67,9 @@ const Visualize_filteration = () => {
         const entityHeadersArray = entityResults.map((result) => result.header);
         const linkHeadersArray = linkResults.map((result) => result.header);
         const entityDataArray = entityResults.map((result) => result.data);
+
+
+
 
         const newEntityHeaders = {};
         csvFiles2.forEach((file, index) => {
@@ -166,52 +174,46 @@ const Visualize_filteration = () => {
       [filePath]: !prevState[filePath],
     }));
   };
-console.log(entityData , 'entity data')
+  console.log(entityData, "entity data");
   const handleEntityData = (filePath, header, item) => {
     const entityName = getEntityName(filePath);
-    
+
     // Get the current state of the dropdown items for the specific entity and header
     const currentItems = checkedDropdownItems[entityName]?.[header] || [];
-  
+
     // Determine if the item should be added or removed
     const newItems = currentItems.includes(item)
-      ? currentItems.filter(i => i !== item)
+      ? currentItems.filter((i) => i !== item)
       : [...currentItems, item];
-  
-    // Create the updated checked items structure
+
+    // Create the updated checked items structure, including the customerId
     const newCheckedItems = {
       ...checkedDropdownItems,
       [entityName]: {
         ...checkedDropdownItems[entityName],
-        [header]: newItems,
+        [header]: newItems, // Add or update the customerId
       },
     };
-  
 
-    
     setCheckedDropdownItems(newCheckedItems);
-  
+
     if (!checkedEntityNames.includes(entityName)) {
-      // If entity is already checked, uncheck it
-      
       setCheckedEntityNames([...checkedEntityNames, entityName]);
-      } 
-    
+    }
   };
 
-  const  handleEntityData_main   = (filePath) => {
-    const entityName = getEntityName(filePath); 
-      if (checkedEntityNames.includes(entityName)) {
+  const handleEntityData_main = (filePath) => {
+    const entityName = getEntityName(filePath);
+    if (checkedEntityNames.includes(entityName)) {
       // If entity is already checked, uncheck it
-      setCheckedEntityNames(checkedEntityNames.filter(name => name !== entityName));
+      setCheckedEntityNames(
+        checkedEntityNames.filter((name) => name !== entityName)
+      );
     } else {
       // If entity is not checked, check it
       setCheckedEntityNames([...checkedEntityNames, entityName]);
     }
   };
-
-  
-
 
   const handleLinkData = (filePath) => {
     const linkName = getLinkName(filePath);
@@ -221,9 +223,18 @@ console.log(entityData , 'entity data')
     if (!checkedEntityNames.includes(linkName)) {
       setCheckedEntityNames((prevNames) => [...prevNames, linkName]);
     }
-    
   };
 
+ 
+  const handleInputData = (key, event) => {
+    const value = event.target.value || "";
+    setInputData(prevState => ({
+      ...prevState,
+      [key]: value
+    }));
+  };
+
+  console.log(inputData , 'here is the input data' )
   return (
     <>
       <Navbar image="newedgeintelligence.png" color="#f0f0f0" />
@@ -248,26 +259,24 @@ console.log(entityData , 'entity data')
                           ([filePath, headers], index) =>
                             headers.map((header, headerIndex) => {
                               if (uniqueData.length !== 0) {
-                                if (uniqueData[index][header].length < 100) {
+                                if (uniqueData[index][header].length < 150) {
                                   return (
                                     <tr key={`${index}-${headerIndex}`}>
                                       <td>
                                         {headerIndex === 0 ? (
                                           <>
-
-
-<input
-                                  type="checkbox"
-                                  name=""
-                                  id=""
-                                  onChange={() =>
-                                    handleEntityData_main(filePath)
-                                  }
-                                  checked={checkedEntityNames.includes(
-                                    getEntityName(filePath)
-                                  )}
-                                  value={getEntityName(filePath)}
-                                />
+                                            <input
+                                              type="checkbox"
+                                              name=""
+                                              id=""
+                                              onChange={() =>
+                                                handleEntityData_main(filePath)
+                                              }
+                                              checked={checkedEntityNames.includes(
+                                                getEntityName(filePath)
+                                              )}
+                                              value={getEntityName(filePath)}
+                                            />
                                             {getEntityName(filePath)}
                                           </>
                                         ) : (
@@ -311,7 +320,24 @@ console.log(entityData , 'entity data')
                                             </div>
                                           </td>
                                         </>
-                                      ) : null}
+                                      ) : (
+                                        <>
+                                          Enter Customer id:{" "}
+                                          <input
+                                            type="text"
+                                            id="customerId"
+                                            value={inputData[getEntityName(
+                                              filePath
+                                            )] || ""}
+                                            onChange={(e) =>
+                                              handleInputData(getEntityName(
+                                                filePath
+                                              ), e)
+                                            }
+
+                                          />
+                                        </>
+                                      )}
                                     </tr>
                                   );
                                 } else {
@@ -346,9 +372,7 @@ console.log(entityData , 'entity data')
                                   type="checkbox"
                                   name=""
                                   id=""
-                                  onChange={() =>
-                                    handleLinkData(filePath)
-                                  }
+                                  onChange={() => handleLinkData(filePath)}
                                   checked={checkedLinkNames.includes(
                                     getLinkName(filePath)
                                   )}
@@ -364,10 +388,14 @@ console.log(entityData , 'entity data')
                     <button
                       onClick={() =>
                         navigate("/3d_graph", {
-                          state: { checkedEntityNames, checkedLinkNames, checkedDropdownItems },
+                          state: {
+                            checkedEntityNames,
+                            checkedLinkNames,
+                            checkedDropdownItems,
+                            inputData 
+                          },
                         })
-                      }
-                    >
+                      }>
                       VISUALIZE
                     </button>
                   </div>
