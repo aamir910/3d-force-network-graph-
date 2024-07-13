@@ -257,7 +257,7 @@ const Visualize_filteration = () => {
   const handleToggle = (table) => {
     setShowTable1(table === "table1");
   };
-
+  console.log("inputData" , inputData) ; 
 
   return (
     <>
@@ -393,6 +393,7 @@ const Visualize_filteration = () => {
             value={inputValue}
             onChange={handleInputChange} 
           />
+          <button onClick={handleInputData} > Submit </button>
         </div>
       </td>
     </tr>
