@@ -367,56 +367,41 @@ const Visualize_filteration = () => {
                         <tbody>
                           <tr>
                             <td>
-                           
-                            <div className="dropdown">
-                                            <button className="dropbtn">
-                                              Select 
-                                            </button>
-                                            <div className="dropdown-content">
-                                         
-                                                  <label >
-                                                    <input
-                                                      type="checkbox"
-                                                      
-                                                    />
-                                                  N_CUSTOMER
-                                                  </label>
-                                                  <label >
-                                                    <input
-                                                      type="checkbox"
-                                                      
-                                                    />
-                                                  N_PARTNUMBER
-                                                  </label>
-                                                  <label >
-                                                    <input
-                                                      type="checkbox"
-                                                      
-                                                    />
-                                                  N_PURCHORDER
-                                                  </label>
-                                                  <label >
-                                                    <input
-                                                      type="checkbox"
-                                                      
-                                                    />
-                                                  N_SELLORDER
-                                                  </label>
-                                                  <label >
-                                                    <input
-                                                      type="checkbox"
-                                                      
-                                                    />
-                                                  N_SUPPLIER
-                                                  </label>
+                              <div className="dropdown">
+                                <button className="dropbtn">Select</button>
 
-                                            </div>
-                                                  <input type="text" name="" id="" />
-                                          </div>
+                                <div className="dropdown-content">
+                                  {Object.entries(entityHeaders).map(
+                                    ([filePath, headers], index) => {
+                                      if (uniqueData.length !== 0) {
+                                        return (
+                                          <>
+                                            <label>
+                                              <input
+                                                type="checkbox"
+                                                onChange={() =>
+                                                  handleEntityData_main(
+                                                    filePath
+                                                  )
+                                                }
+                                                checked={checkedEntityNames.includes(
+                                                  getEntityName(filePath)
+                                                )}
+                                                value={getEntityName(filePath)}
+                                              />
+                                              {getEntityName(filePath)}
+                                            </label>
+                                          </>
+                                        );
+                                      }
+                                      return null;
+                                    }
+                                  )}
+                                </div>
+                                <input type="text" name="" id="" />
+                              </div>
                             </td>
-                           
                           </tr>
-
 
                           {Object.entries(entityHeaders).map(
                             ([filePath, headers], index) => {
