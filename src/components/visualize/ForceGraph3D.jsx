@@ -249,10 +249,7 @@ const Visualize_filteration = () => {
     setShowTable1(table === "table1");
   };
 
-  const demoData = [
-    { name: "Demo 1", type: "Type A" },
-    { name: "Demo 2", type: "Type B" },
-  ];
+  const [selectedEntity, setSelectedEntity] = useState('');
 
   console.log(inputData, "here is the input data");
   return (
@@ -365,43 +362,29 @@ const Visualize_filteration = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>
-                              <div className="dropdown">
-                                <button className="dropbtn">Select</button>
-
-                                <div className="dropdown-content">
-                                  {Object.entries(entityHeaders).map(
-                                    ([filePath, headers], index) => {
-                                      if (uniqueData.length !== 0) {
-                                        return (
-                                          <>
-                                            <label>
-                                              <input
-                                                type="checkbox"
-                                                onChange={() =>
-                                                  handleEntityData_main(
-                                                    filePath
-                                                  )
-                                                }
-                                                checked={checkedEntityNames.includes(
-                                                  getEntityName(filePath)
-                                                )}
-                                                value={getEntityName(filePath)}
-                                              />
-                                              {getEntityName(filePath)}
-                                            </label>
-                                          </>
-                                        );
-                                      }
-                                      return null;
-                                    }
-                                  )}
-                                </div>
-                                <input type="text" name="" id="" />
-                              </div>
-                            </td>
-                          </tr>
+                        <tr>
+      <td>
+        <div className="custom-entity-dropdown">
+          <select
+            onChange={(e) => setSelectedEntity(e.target.value)}
+            value={selectedEntity}
+          >
+            <option value="" disabled>Select an entity</option>
+            {Object.entries(entityHeaders).map(([filePath]) => {
+              if (uniqueData.length !== 0) {
+                return (
+                  <option key={filePath} value={getEntityName(filePath)}>
+                    {getEntityName(filePath)}
+                  </option>
+                );
+              }
+              return null;
+            })}
+          </select>
+          <input type="text" />
+        </div>
+      </td>
+    </tr>
 
                           {Object.entries(entityHeaders).map(
                             ([filePath, headers], index) => {
