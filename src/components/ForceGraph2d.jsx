@@ -28,13 +28,7 @@ const ForceGraph2DComponent = () => {
 
   const SingleCheckCustomer = location.state?.inputData || [];
 
-  console.log(
-    "3d force graph",
-    checkedDropdownItems,
-    SingleCheckCustomer,
-    "3d force graph"
-  );
-
+ 
   const fgRef = useRef();
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
   const [tooltip, setTooltip] = useState({
@@ -80,7 +74,6 @@ const ForceGraph2DComponent = () => {
     }
   }
 
-  console.log("Key-Value Pairs Array:", keyValuesArray);
 
   const nCustomer = checkedDropdownItems["N_CUSTOMER"] || {};
   const nPartNumber = checkedDropdownItems["N_PARTNUMBER"] || {};
@@ -88,12 +81,7 @@ const ForceGraph2DComponent = () => {
   const nSellOrder = checkedDropdownItems["N_SELLORDER"] || {};
   const nSupplier = checkedDropdownItems["N_SUPPLIER"] || {};
 
-  console.log(
-    "nPartNumber",
-    checkedDropdownItems,
-    nPartNumber,
-    nCustomer.customerId
-  );
+ 
 
   function filterByNCustomer(data) {
     const filteredData = data.filter((item) => {
@@ -231,7 +219,6 @@ const ForceGraph2DComponent = () => {
   const processCSV = (data) => {
     const nodesMap = {};
 
-    console.log("excludedTypes", excludedTypes);
     // const links = data.slice(0, 50).map((row) => {
 
     const links = data.map((row) => {
@@ -251,7 +238,6 @@ const ForceGraph2DComponent = () => {
     const nodes = Object.values(nodesMap);
     setGraphData({ nodes, links });
 
-    console.log(links, "here is the links");
   };
 
   function filterByN_PurchOrder(data) {
@@ -355,7 +341,6 @@ const ForceGraph2DComponent = () => {
           row.Entity_Type_1 === "N_PARTNUMBER" &&
           row.Entity_Type_2 === "N_PARTNUMBER"
         ) {
-          console.log("check partnumber ");
           return false;
         } else {
           return true; // Include this row
@@ -369,7 +354,6 @@ const ForceGraph2DComponent = () => {
 
   // here is the code to add the nodes there
   let add_nodes = [];
-  console.log(SingleCheckCustomer, "SingleCheckCustomer");
   function filterByProperty(data, property) {
     const filteredData = data.filter((item) => {
       const matchesProperty =
@@ -423,9 +407,7 @@ const ForceGraph2DComponent = () => {
             checkedEntityNames.includes(row.Edge_Type)
         );
 
-        console.log(result.data, filteredData, "filteredData filteredData");
-
-        console.log("filteredData 222 ", checkedEntityNames, filteredData);
+      
 
         // Arrays to store main keys and sub-keys
 
@@ -440,11 +422,9 @@ const ForceGraph2DComponent = () => {
         ) {
           let nCustomer_file_filters = filterByNCustomer(filteredData);
 
-          console.log("nCustomer_file_filters", nCustomer_file_filters);
 
           // Initial filter and update nodes
 
-          // console.log(filteredRows5 ,'nCustomer_file_filters222222')
 
           let filterFunctionResult = filterAndUpdateNodes(
             nCustomer_file_filters,
@@ -457,17 +437,13 @@ const ForceGraph2DComponent = () => {
             );
           }
           let finalFilteredRows = filterFunctionResult.filteredRows;
-          console.log(
-            "Final filtered rows after initial filter:",
-            finalFilteredRows,
-            filterFunctionResult
-          );
+         
           // Apply additional filters and update nodes in sequence
           // Filter by N_PARTNUMBER
           Remove_nodes = [];
           let N_PARTNUMBER_filter = filterByN_PARTNUMBER(finalFilteredRows);
 
-          console.log("N_PARTNUMBER_filter", N_PARTNUMBER_filter);
+      
 
           filterFunctionResult = filterAndUpdateNodes(
             N_PARTNUMBER_filter,
@@ -482,11 +458,7 @@ const ForceGraph2DComponent = () => {
           }
 
           finalFilteredRows = filterFunctionResult.filteredRows;
-          console.log(
-            "Final filtered rows after N_PARTNUMBER:",
-            finalFilteredRows,
-            finalFilteredRows
-          );
+        
 
           // Filter by N_PurchOrder
           Remove_nodes = [];
@@ -504,10 +476,7 @@ const ForceGraph2DComponent = () => {
           }
 
           finalFilteredRows = filterFunctionResult.filteredRows;
-          console.log(
-            "Final filtered rows after N_PurchOrder:",
-            finalFilteredRows
-          );
+       
 
           // Filter by N_Sellorder
           Remove_nodes = [];
@@ -525,10 +494,7 @@ const ForceGraph2DComponent = () => {
           }
 
           finalFilteredRows = filterFunctionResult.filteredRows;
-          console.log(
-            "Final filtered rows after N_Sellorder:",
-            finalFilteredRows
-          );
+      
 
           // Filter by N_SUPPLIER
           Remove_nodes = [];
@@ -546,11 +512,7 @@ const ForceGraph2DComponent = () => {
           }
 
           finalFilteredRows = filterFunctionResult.filteredRows;
-          console.log(
-            "Final filtered rows after N_SUPPLIER:",
-            finalFilteredRows
-          );
-
+      
           processCSV(finalFilteredRows);
         } else {
           if (SingleCheckCustomer.N_CUSTOMER !== undefined) {
@@ -599,10 +561,7 @@ const ForceGraph2DComponent = () => {
 
           let finalFilteredRows = filterFunctionResult.filteredRows;
 
-          console.log(
-            "finalFilteredRows finalFilteredRows ",
-            finalFilteredRows
-          );
+     
 
           processCSV(finalFilteredRows);
         }
@@ -801,13 +760,7 @@ const ForceGraph2DComponent = () => {
             !excludedTypes.includes(row.Edge_Type)
         );
 
-        console.log(
-          "filteredData2",
-          checkedEntityNames,
-          filteredData,
-          filteredData2,
-          excludedTypes
-        );
+      
         // Arrays to store main keys and sub-keys
 
         // Iterate through the main keys
@@ -852,11 +805,7 @@ const ForceGraph2DComponent = () => {
         }
 
         let finalFilteredRows = filterFunctionResult.filteredRows;
-        console.log(
-          "Final filtered rows after initial filter:",
-          finalFilteredRows,
-          filterFunctionResult
-        );
+     
 
         // Apply additional filters and update nodes in sequence
 
@@ -875,11 +824,7 @@ const ForceGraph2DComponent = () => {
         }
 
         finalFilteredRows = filterFunctionResult.filteredRows;
-        console.log(
-          "Final filtered rows after N_PARTNUMBER:",
-          finalFilteredRows,
-          finalFilteredRows
-        );
+        
 
         // Filter by N_PurchOrder
         let filteredData_PurchOrder = filterByN_PurchOrder(finalFilteredRows);
@@ -896,10 +841,7 @@ const ForceGraph2DComponent = () => {
         }
 
         finalFilteredRows = filterFunctionResult.filteredRows;
-        console.log(
-          "Final filtered rows after N_PurchOrder:",
-          finalFilteredRows
-        );
+        
 
         // Filter by N_Sellorder
         let nSellOrder_file_filter = filterByN_Sellorder(finalFilteredRows);
@@ -916,10 +858,7 @@ const ForceGraph2DComponent = () => {
         }
 
         finalFilteredRows = filterFunctionResult.filteredRows;
-        console.log(
-          "Final filtered rows after N_Sellorder:",
-          finalFilteredRows
-        );
+      
 
         // Filter by N_SUPPLIER
         let manSupplier_file_filter = filterByN_SUPPLIER(finalFilteredRows);
@@ -935,7 +874,6 @@ const ForceGraph2DComponent = () => {
           );
         }
         finalFilteredRows = filterFunctionResult.filteredRows;
-        console.log("Final filtered rows after N_SUPPLIER:", finalFilteredRows);
 
         processCSV(finalFilteredRows);
         // processCSV(filteredData2);

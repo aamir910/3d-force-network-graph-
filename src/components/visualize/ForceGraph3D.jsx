@@ -169,7 +169,6 @@ const Visualize_filteration = () => {
       [filePath]: !prevState[filePath],
     }));
   };
-  console.log(entityData, "entity data");
   const handleEntityData = (filePath, header, item) => {
     const entityName = getEntityName(filePath);
 
@@ -260,7 +259,6 @@ const Visualize_filteration = () => {
   };
 
 
-  console.log(inputData, "here is the input data");
   return (
     <>
       <Navbar image="newedgeintelligence.png" color="#f0f0f0" />
