@@ -33,8 +33,9 @@ const Visualize_filteration = () => {
   const navigate = useNavigate();
   const [checkedDropdownItems, setCheckedDropdownItems] = useState({});
 
+  const [selectedEntity, setSelectedEntity] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const [inputData, setInputData] = useState({});
-
   useEffect(() => {
     const loadCSV = (filePath) => {
       return new Promise((resolve, reject) => {
@@ -235,21 +236,29 @@ const Visualize_filteration = () => {
     });
   };
 
-  const handleInputData = (key, event) => {
-    const value = event.target.value || "";
-    setInputData((prevState) => ({
-      ...prevState,
-      [key]: value,
-    }));
+  const handleInputData = () => {
+    if (selectedEntity) {
+      setInputData({ [selectedEntity]: inputValue }); // Save selectedEntity as key and inputValue as value
+    }
   };
 
+  const handleSelectChange = (e) => {
+    const entity = e.target.value;
+    setSelectedEntity(entity);
+    handleInputData(); // Update inputData whenever selection changes
+  };
+
+  const handleInputChange = (e) => {
+    const value = e.target.value || "";
+    setInputValue(value);
+    handleInputData(); // Update inputData whenever input changes
+  };
   const [showTable1, setShowTable1] = useState(true);
 
   const handleToggle = (table) => {
     setShowTable1(table === "table1");
   };
 
-  const [selectedEntity, setSelectedEntity] = useState('');
 
   console.log(inputData, "here is the input data");
   return (
@@ -366,7 +375,7 @@ const Visualize_filteration = () => {
       <td>
         <div className="custom-entity-dropdown">
           <select
-            onChange={(e) => setSelectedEntity(e.target.value)}
+            onChange={handleSelectChange}
             value={selectedEntity}
           >
             <option value="" disabled>Select an entity</option>
@@ -381,7 +390,11 @@ const Visualize_filteration = () => {
               return null;
             })}
           </select>
-          <input type="text" />
+          <input 
+            type="text" 
+            value={inputValue}
+            onChange={handleInputChange} 
+          />
         </div>
       </td>
     </tr>
