@@ -761,122 +761,161 @@ const ForceGraph2DComponent = () => {
         );
 
       
-        // Arrays to store main keys and sub-keys
-
+      
         // Iterate through the main keys
 
-        let Remove_nodes = [];
+        if (
+          SingleCheckCustomer.N_CUSTOMER === undefined &&
+          SingleCheckCustomer.N_PARTNUMBER === undefined &&
+          SingleCheckCustomer.N_PURCHORDER === undefined &&
+          SingleCheckCustomer.N_SELLORDER === undefined &&
+          SingleCheckCustomer.N_SUPPLIER === undefined
+        ) {
+          let nCustomer_file_filters = filterByNCustomer(filteredData2);
 
-        let nCustomer_file_filters = filterByNCustomer(filteredData2);
 
-        let removeNodes3 = [];
-        function filterAndUpdateNodes(data, removeNodes) {
-          let removeNodes2 = [];
-          const filteredRows = data.filter((row) => {
-            const { Entity_1, Entity_2 } = row;
+          // Initial filter and update nodes
 
-            if (
-              removeNodes.includes(Entity_1) ||
-              removeNodes.includes(Entity_2)
-            ) {
-              removeNodes2.push(Entity_1, Entity_2);
-              removeNodes3.push(Entity_1, Entity_2);
 
-              return false; // Exclude this row
-            }
-
-            return true; // Include this row
-          });
-
-          return { filteredRows, removeNodes2, removeNodes3 };
-        }
-
-        // Initial filter and update nodes
-        let filterFunctionResult = filterAndUpdateNodes(
-          nCustomer_file_filters,
-          Remove_nodes
-        );
-
-        while (filterFunctionResult.removeNodes2.length > 0) {
-          filterFunctionResult = filterAndUpdateNodes(
-            filterFunctionResult.filteredRows,
-            filterFunctionResult.removeNodes3
+          let filterFunctionResult = filterAndUpdateNodes(
+            nCustomer_file_filters,
+            Remove_nodes
           );
-        }
+          while (filterFunctionResult.removeNodes2.length > 0) {
+            filterFunctionResult = filterAndUpdateNodes(
+              filterFunctionResult.filteredRows,
+              filterFunctionResult.removeNodes3
+            );
+          }
+          let finalFilteredRows = filterFunctionResult.filteredRows;
+         
+          // Apply additional filters and update nodes in sequence
+          // Filter by N_PARTNUMBER
+          Remove_nodes = [];
+          let N_PARTNUMBER_filter = filterByN_PARTNUMBER(finalFilteredRows);
 
-        let finalFilteredRows = filterFunctionResult.filteredRows;
-     
-
-        // Apply additional filters and update nodes in sequence
-
-        // Filter by N_PARTNUMBER
-        let N_PARTNUMBER_filter = filterByN_PARTNUMBER(finalFilteredRows);
-        filterFunctionResult = filterAndUpdateNodes(
-          N_PARTNUMBER_filter,
-          Remove_nodes
-        );
-
-        while (filterFunctionResult.removeNodes2.length > 0) {
-          filterFunctionResult = filterAndUpdateNodes(
-            filterFunctionResult.filteredRows,
-            filterFunctionResult.removeNodes3
-          );
-        }
-
-        finalFilteredRows = filterFunctionResult.filteredRows;
-        
-
-        // Filter by N_PurchOrder
-        let filteredData_PurchOrder = filterByN_PurchOrder(finalFilteredRows);
-        filterFunctionResult = filterAndUpdateNodes(
-          filteredData_PurchOrder,
-          Remove_nodes
-        );
-
-        while (filterFunctionResult.removeNodes2.length > 0) {
-          filterFunctionResult = filterAndUpdateNodes(
-            filterFunctionResult.filteredRows,
-            filterFunctionResult.removeNodes3
-          );
-        }
-
-        finalFilteredRows = filterFunctionResult.filteredRows;
-        
-
-        // Filter by N_Sellorder
-        let nSellOrder_file_filter = filterByN_Sellorder(finalFilteredRows);
-        filterFunctionResult = filterAndUpdateNodes(
-          nSellOrder_file_filter,
-          Remove_nodes
-        );
-
-        while (filterFunctionResult.removeNodes2.length > 0) {
-          filterFunctionResult = filterAndUpdateNodes(
-            filterFunctionResult.filteredRows,
-            filterFunctionResult.removeNodes3
-          );
-        }
-
-        finalFilteredRows = filterFunctionResult.filteredRows;
       
 
-        // Filter by N_SUPPLIER
-        let manSupplier_file_filter = filterByN_SUPPLIER(finalFilteredRows);
-        filterFunctionResult = filterAndUpdateNodes(
-          manSupplier_file_filter,
-          Remove_nodes
-        );
-
-        while (filterFunctionResult.removeNodes2.length > 0) {
           filterFunctionResult = filterAndUpdateNodes(
-            filterFunctionResult.filteredRows,
-            filterFunctionResult.removeNodes3
+            N_PARTNUMBER_filter,
+            Remove_nodes
           );
-        }
-        finalFilteredRows = filterFunctionResult.filteredRows;
 
-        processCSV(finalFilteredRows);
-        // processCSV(filteredData2);
+          while (filterFunctionResult.removeNodes2.length > 0) {
+            filterFunctionResult = filterAndUpdateNodes(
+              filterFunctionResult.filteredRows,
+              filterFunctionResult.removeNodes3
+            );
+          }
+
+          finalFilteredRows = filterFunctionResult.filteredRows;
+        
+
+          // Filter by N_PurchOrder
+          Remove_nodes = [];
+          let filteredData_PurchOrder = filterByN_PurchOrder(finalFilteredRows);
+          filterFunctionResult = filterAndUpdateNodes(
+            filteredData_PurchOrder,
+            Remove_nodes
+          );
+
+          while (filterFunctionResult.removeNodes2.length > 0) {
+            filterFunctionResult = filterAndUpdateNodes(
+              filterFunctionResult.filteredRows,
+              filterFunctionResult.removeNodes3
+            );
+          }
+
+          finalFilteredRows = filterFunctionResult.filteredRows;
+       
+
+          // Filter by N_Sellorder
+          Remove_nodes = [];
+          let nSellOrder_file_filter = filterByN_Sellorder(finalFilteredRows);
+          filterFunctionResult = filterAndUpdateNodes(
+            nSellOrder_file_filter,
+            Remove_nodes
+          );
+
+          while (filterFunctionResult.removeNodes2.length > 0) {
+            filterFunctionResult = filterAndUpdateNodes(
+              filterFunctionResult.filteredRows,
+              filterFunctionResult.removeNodes3
+            );
+          }
+
+          finalFilteredRows = filterFunctionResult.filteredRows;
+      
+
+          // Filter by N_SUPPLIER
+          Remove_nodes = [];
+          let manSupplier_file_filter = filterByN_SUPPLIER(finalFilteredRows);
+          filterFunctionResult = filterAndUpdateNodes(
+            manSupplier_file_filter,
+            Remove_nodes
+          );
+
+          while (filterFunctionResult.removeNodes2.length > 0) {
+            filterFunctionResult = filterAndUpdateNodes(
+              filterFunctionResult.filteredRows,
+              filterFunctionResult.removeNodes3
+            );
+          }
+
+          finalFilteredRows = filterFunctionResult.filteredRows;
+      
+          processCSV(finalFilteredRows);
+        } else {
+          if (SingleCheckCustomer.N_CUSTOMER !== undefined) {
+            let nCustomer_file_filters = filterByProperty(
+              filteredData2,
+              "N_CUSTOMER"
+            );
+          } else if (SingleCheckCustomer.N_PARTNUMBER !== undefined) {
+            let nCustomer_file_filters = filterByProperty(
+              filteredData2,
+              "N_PARTNUMBER"
+            );
+          } else if (SingleCheckCustomer.N_PURCHORDER !== undefined) {
+            let nCustomer_file_filters = filterByProperty(
+              filteredData2,
+              "N_PURCHORDER"
+            );
+          } else if (SingleCheckCustomer.N_SELLORDER !== undefined) {
+            let nCustomer_file_filters = filterByProperty(
+              filteredData2,
+              "N_SELLORDER"
+            );
+          } else if (SingleCheckCustomer.N_SUPPLIER !== undefined) {
+            let nCustomer_file_filters = filterByProperty(
+              filteredData2,
+              "N_SUPPLIER"
+            );
+          }
+
+          let filterFunctionResult = filterAndUpdateNodes_input(
+            filteredData2,
+            add_nodes
+          );
+          filterFunctionResult = filterAndUpdateNodes_input(
+            filteredData2,
+            filterFunctionResult.addnodes2
+          );
+          filterFunctionResult = filterAndUpdateNodes_input(
+            filteredData2,
+            filterFunctionResult.addnodes2
+          );
+          filterFunctionResult = filterAndUpdateNodes_input(
+            filteredData2,
+            filterFunctionResult.addnodes2
+          );
+
+          let finalFilteredRows = filterFunctionResult.filteredRows;
+
+     
+
+          processCSV(finalFilteredRows);
+        }
       },
       error: (error) => {
         console.error("Error reading CSV file:", error);
