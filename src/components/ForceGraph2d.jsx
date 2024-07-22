@@ -320,7 +320,8 @@ const ForceGraph2DComponent = () => {
   function filterAndUpdateNodes_input(data, addnodestemp) {
     let addnodes2 = [];
 
-    const filteredRows = data.filter((row) => {
+    const filteredRows = data.filter((row ,key) => {
+      console.log(row , key ,'row')
       const { Entity_1, Entity_2 } = row;
 
       if (addnodestemp.includes(Entity_2)) {
@@ -373,25 +374,25 @@ const ForceGraph2DComponent = () => {
   }
 
   // Refactored functions
-  function filterByNCustomer_input(data) {
-    return filterByProperty(data, "N_CUSTOMER");
-  }
+  // function filterByNCustomer_input(data) {
+  //   return filterByProperty(data, "N_CUSTOMER");
+  // }
 
-  function filterByN_PARTNUMBER_input(data) {
-    return filterByProperty(data, "N_PARTNUMBER");
-  }
+  // function filterByN_PARTNUMBER_input(data) {
+  //   return filterByProperty(data, "N_PARTNUMBER");
+  // }
 
-  function filterByN_PURCHORDER_input(data) {
-    return filterByProperty(data, "N_PURCHORDER");
-  }
+  // function filterByN_PURCHORDER_input(data) {
+  //   return filterByProperty(data, "N_PURCHORDER");
+  // }
 
-  function filterByN_SELLORDER_input(data) {
-    return filterByProperty(data, "N_SELLORDER");
-  }
+  // function filterByN_SELLORDER_input(data) {
+  //   return filterByProperty(data, "N_SELLORDER");
+  // }
 
-  function filterByN_SUPPLIER_input(data) {
-    return filterByProperty(data, "N_SUPPLIER");
-  }
+  // function filterByN_SUPPLIER_input(data) {
+  //   return filterByProperty(data, "N_SUPPLIER");
+  // }
 
   useEffect(() => {
     Papa.parse("/Edeges_And_Nodes_with_Entity_1.csv", {
@@ -515,6 +516,7 @@ const ForceGraph2DComponent = () => {
       
           processCSV(finalFilteredRows);
         } else {
+
           if (SingleCheckCustomer.N_CUSTOMER !== undefined) {
             let nCustomer_file_filters = filterByProperty(
               filteredData,
