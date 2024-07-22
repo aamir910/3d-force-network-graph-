@@ -28,7 +28,6 @@ const ForceGraph2DComponent = () => {
 
   const SingleCheckCustomer = location.state?.inputData || [];
 
- 
   const fgRef = useRef();
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
   const [tooltip, setTooltip] = useState({
@@ -74,14 +73,11 @@ const ForceGraph2DComponent = () => {
     }
   }
 
-
   const nCustomer = checkedDropdownItems["N_CUSTOMER"] || {};
   const nPartNumber = checkedDropdownItems["N_PARTNUMBER"] || {};
   const nPurchOrder = checkedDropdownItems["N_PURCHORDER"] || {};
   const nSellOrder = checkedDropdownItems["N_SELLORDER"] || {};
   const nSupplier = checkedDropdownItems["N_SUPPLIER"] || {};
-
- 
 
   function filterByNCustomer(data) {
     const filteredData = data.filter((item) => {
@@ -237,7 +233,6 @@ const ForceGraph2DComponent = () => {
 
     const nodes = Object.values(nodesMap);
     setGraphData({ nodes, links });
-
   };
 
   function filterByN_PurchOrder(data) {
@@ -319,35 +314,51 @@ const ForceGraph2DComponent = () => {
 
   function filterAndUpdateNodes_input(data, addnodestemp) {
     let addnodes2 = [];
+    let Save_Entity_1 = null;
+    let Save_Entity_2 = null;
 
-    const filteredRows = data.filter((row ,key) => {
-      console.log(row , key ,'row')
+    const filteredRows = data.filter((row, key) => {
+      console.log(row, key, "row");
       const { Entity_1, Entity_2 } = row;
 
-      if (addnodestemp.includes(Entity_2)) {
-        addnodes2.push(Entity_1);
+      if (
+        row.Entity_Type_1 === "N_PARTNUMBER" &&
+        row.Entity_Type_2 === "N_PARTNUMBER"
+      ) {
+        if (Save_Entity_1 === null && addnodestemp.includes(Entity_2)) {
+          addnodes2.push(Entity_1);
+          Save_Entity_1 = Entity_1;
+          return true; // Include this row
+        }
+        if (Save_Entity_2 === null && addnodestemp.includes(Entity_1)) {
+          addnodes2.push(Entity_2);
+          Save_Entity_2 = Entity_1;
+          return true; // Include this row
+        }
 
-        if (
-          row.Entity_Type_1 === "N_PARTNUMBER" &&
-          row.Entity_Type_2 === "N_PARTNUMBER"
-        ) {
-          return false;
-        } else {
+        if (addnodestemp.includes(Entity_2) && Entity_2 === Save_Entity_1) {
+          addnodes2.push(Entity_1);
+          Save_Entity_1 = Entity_1;
           return true; // Include this row
         }
-      }
-      if (addnodestemp.includes(Entity_1)) {
-        addnodes2.push(Entity_2);
-        if (
-          row.Entity_Type_1 === "N_PARTNUMBER" &&
-          row.Entity_Type_2 === "N_PARTNUMBER"
-        ) {
-          return false;
-        } else {
+
+        if (addnodestemp.includes(Entity_1) && Entity_1 === Save_Entity_2) {
+          addnodes2.push(Entity_2);
+          Save_Entity_2 = Entity_1;
           return true; // Include this row
         }
+        return false; // Exclude this row
+      } else {
+        if (addnodestemp.includes(Entity_2)) {
+          addnodes2.push(Entity_1);
+          return true; // Include this row
+        }
+        if (addnodestemp.includes(Entity_1)) {
+          addnodes2.push(Entity_2);
+          return true; // Include this row
+        }
+        return false; // Exclude this row
       }
-      return false; // excludes this row
     });
 
     return { filteredRows, addnodes2 };
@@ -408,8 +419,6 @@ const ForceGraph2DComponent = () => {
             checkedEntityNames.includes(row.Edge_Type)
         );
 
-      
-
         // Arrays to store main keys and sub-keys
 
         // Iterate through the main keys
@@ -423,9 +432,7 @@ const ForceGraph2DComponent = () => {
         ) {
           let nCustomer_file_filters = filterByNCustomer(filteredData);
 
-
           // Initial filter and update nodes
-
 
           let filterFunctionResult = filterAndUpdateNodes(
             nCustomer_file_filters,
@@ -438,13 +445,11 @@ const ForceGraph2DComponent = () => {
             );
           }
           let finalFilteredRows = filterFunctionResult.filteredRows;
-         
+
           // Apply additional filters and update nodes in sequence
           // Filter by N_PARTNUMBER
           Remove_nodes = [];
           let N_PARTNUMBER_filter = filterByN_PARTNUMBER(finalFilteredRows);
-
-      
 
           filterFunctionResult = filterAndUpdateNodes(
             N_PARTNUMBER_filter,
@@ -459,7 +464,6 @@ const ForceGraph2DComponent = () => {
           }
 
           finalFilteredRows = filterFunctionResult.filteredRows;
-        
 
           // Filter by N_PurchOrder
           Remove_nodes = [];
@@ -477,7 +481,6 @@ const ForceGraph2DComponent = () => {
           }
 
           finalFilteredRows = filterFunctionResult.filteredRows;
-       
 
           // Filter by N_Sellorder
           Remove_nodes = [];
@@ -495,7 +498,6 @@ const ForceGraph2DComponent = () => {
           }
 
           finalFilteredRows = filterFunctionResult.filteredRows;
-      
 
           // Filter by N_SUPPLIER
           Remove_nodes = [];
@@ -513,10 +515,9 @@ const ForceGraph2DComponent = () => {
           }
 
           finalFilteredRows = filterFunctionResult.filteredRows;
-      
+
           processCSV(finalFilteredRows);
         } else {
-
           if (SingleCheckCustomer.N_CUSTOMER !== undefined) {
             let nCustomer_file_filters = filterByProperty(
               filteredData,
@@ -562,8 +563,6 @@ const ForceGraph2DComponent = () => {
           );
 
           let finalFilteredRows = filterFunctionResult.filteredRows;
-
-     
 
           processCSV(finalFilteredRows);
         }
@@ -762,8 +761,6 @@ const ForceGraph2DComponent = () => {
             !excludedTypes.includes(row.Edge_Type)
         );
 
-      
-      
         // Iterate through the main keys
 
         if (
@@ -775,9 +772,7 @@ const ForceGraph2DComponent = () => {
         ) {
           let nCustomer_file_filters = filterByNCustomer(filteredData2);
 
-
           // Initial filter and update nodes
-
 
           let filterFunctionResult = filterAndUpdateNodes(
             nCustomer_file_filters,
@@ -790,13 +785,11 @@ const ForceGraph2DComponent = () => {
             );
           }
           let finalFilteredRows = filterFunctionResult.filteredRows;
-         
+
           // Apply additional filters and update nodes in sequence
           // Filter by N_PARTNUMBER
           Remove_nodes = [];
           let N_PARTNUMBER_filter = filterByN_PARTNUMBER(finalFilteredRows);
-
-      
 
           filterFunctionResult = filterAndUpdateNodes(
             N_PARTNUMBER_filter,
@@ -811,7 +804,6 @@ const ForceGraph2DComponent = () => {
           }
 
           finalFilteredRows = filterFunctionResult.filteredRows;
-        
 
           // Filter by N_PurchOrder
           Remove_nodes = [];
@@ -829,7 +821,6 @@ const ForceGraph2DComponent = () => {
           }
 
           finalFilteredRows = filterFunctionResult.filteredRows;
-       
 
           // Filter by N_Sellorder
           Remove_nodes = [];
@@ -847,7 +838,6 @@ const ForceGraph2DComponent = () => {
           }
 
           finalFilteredRows = filterFunctionResult.filteredRows;
-      
 
           // Filter by N_SUPPLIER
           Remove_nodes = [];
@@ -865,7 +855,7 @@ const ForceGraph2DComponent = () => {
           }
 
           finalFilteredRows = filterFunctionResult.filteredRows;
-      
+
           processCSV(finalFilteredRows);
         } else {
           if (SingleCheckCustomer.N_CUSTOMER !== undefined) {
@@ -913,8 +903,6 @@ const ForceGraph2DComponent = () => {
           );
 
           let finalFilteredRows = filterFunctionResult.filteredRows;
-
-     
 
           processCSV(finalFilteredRows);
         }
