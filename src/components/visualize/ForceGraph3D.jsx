@@ -32,10 +32,13 @@ const Visualize_filteration = () => {
   const [checkedLinkNames, setCheckedLinkNames] = useState([]);
   const navigate = useNavigate();
   const [checkedDropdownItems, setCheckedDropdownItems] = useState({});
-
   const [selectedEntity, setSelectedEntity] = useState('');
   const [inputValue, setInputValue] = useState('');
   const [inputData, setInputData] = useState({});
+
+  const [SelectEntityNames, setSelectEntityNames] = useState(false);
+  const [SelectLinkNames, setSelectLinkNames] = useState(false);
+
   useEffect(() => {
     const loadCSV = (filePath) => {
       return new Promise((resolve, reject) => {
@@ -170,6 +173,7 @@ const Visualize_filteration = () => {
     }));
   };
   const handleEntityData = (filePath, header, item) => {
+   
     const entityName = getEntityName(filePath);
 
     // Get the current state of the dropdown items for the specific entity and header
@@ -244,13 +248,13 @@ const Visualize_filteration = () => {
   const handleSelectChange = (e) => {
     const entity = e.target.value;
     setSelectedEntity(entity);
-    handleInputData(); // Update inputData whenever selection changes
+    // handleInputData(); // Update inputData whenever selection changes
   };
 
   const handleInputChange = (e) => {
     const value = e.target.value || "";
     setInputValue(value);
-    handleInputData(); // Update inputData whenever input changes
+    // handleInputData(); // Update inputData whenever input changes
   };
   const [showTable1, setShowTable1] = useState(true);
 
@@ -268,10 +272,10 @@ const Visualize_filteration = () => {
             <h1> Filters</h1>
             <div>
               <button onClick={() => handleToggle("table1")}>
-                Show Table 1
+               Filter by entity 
               </button>
               <button onClick={() => handleToggle("table2")}>
-                Show Table 2
+                Filter by id
               </button>
             </div>
 
@@ -330,11 +334,15 @@ const Visualize_filteration = () => {
                                                       type="checkbox"
                                                       value={item}
                                                       onChange={() =>
+                                                      {
+
+                                                        setSelectEntityNames(true) ,
                                                         handleEntityData(
                                                           filePath,
                                                           header,
                                                           item
                                                         )
+                                                      }
                                                       }
                                                       checked={
                                                         checkedDropdownItems[
@@ -370,33 +378,39 @@ const Visualize_filteration = () => {
                         </thead>
                         <tbody>
                         <tr>
-      <td>
-        <div className="custom-entity-dropdown">
-          <select
-            onChange={handleSelectChange}
-            value={selectedEntity}
-          >
-            <option value="" disabled>Select an entity</option>
-            {Object.entries(entityHeaders).map(([filePath]) => {
-              if (uniqueData.length !== 0) {
-                return (
-                  <option key={filePath} value={getEntityName(filePath)}>
-                    {getEntityName(filePath)}
-                  </option>
-                );
-              }
-              return null;
-            })}
-          </select>
-          <input 
-            type="text" 
-            value={inputValue}
-            onChange={handleInputChange} 
-          />
-          <button onClick={handleInputData} > Submit </button>
+  <td>
+    <div className="custom-entity-container">
+      <div className="custom-entity-dropdown">
+        <select
+          onChange={handleSelectChange}
+          value={selectedEntity}
+        >
+          <option value="" disabled>Select an entity</option>
+          {Object.entries(entityHeaders).map(([filePath]) => {
+            if (uniqueData.length !== 0) {
+              return (
+                <option key={filePath} value={getEntityName(filePath)}>
+                  {getEntityName(filePath)}
+                </option>
+              );
+            }
+            return null;
+          })}
+        </select>
+        <input 
+          type="text" 
+          value={inputValue}
+          onChange={handleInputChange} 
+        />
+      </div>
+        <div className="SubmitDiv" >
+      <button className="Submit" onClick={handleInputData}>Submit</button>
+
         </div>
-      </td>
-    </tr>
+    </div>
+  </td>
+</tr>
+
 
                           {Object.entries(entityHeaders).map(
                             ([filePath, headers], index) => {
@@ -451,7 +465,13 @@ const Visualize_filteration = () => {
                                   type="checkbox"
                                   name=""
                                   id=""
-                                  onChange={() => handleLinkData(filePath)}
+                                  onChange={() => 
+                                  {
+
+                                    setSelectLinkNames(true);
+                                    handleLinkData(filePath)
+                                  }
+                                  }
                                   checked={checkedLinkNames.includes(
                                     getLinkName(filePath)
                                   )}
@@ -465,18 +485,29 @@ const Visualize_filteration = () => {
                       </tbody>
                     </table>
                     <button
-                      onClick={() =>
-                        navigate("/3d_graph", {
-                          state: {
-                            checkedEntityNames,
-                            checkedLinkNames,
-                            checkedDropdownItems,
-                            inputData,
-                          },
-                        })
-                      }>
-                      VISUALIZE
-                    </button>
+  onClick={() => {
+    if (!SelectEntityNames && !SelectLinkNames ) {
+
+      alert('Please select the file first');
+    } 
+    else {
+      handleInputData();
+        navigate("/3d_graph", {
+          state: {
+            checkedEntityNames,
+            checkedLinkNames,
+            checkedDropdownItems,
+            inputData,
+          },
+        });// You can adjust the delay time if necessary
+    }
+  }}
+>
+  VISUALIZE
+
+</button>
+
+
                   </div>
                 </div>
               </div>
