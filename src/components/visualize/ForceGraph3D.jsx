@@ -6,6 +6,7 @@ import Sidebar from "../Buttons/SIdeBar";
 import Navbar from "../NavBar/NavBar";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import InputNode from "three/examples/jsm/nodes/core/InputNode.js";
 
 const csvFiles = [
   "/EDGES/E_BOM.csv",
@@ -241,9 +242,12 @@ const Visualize_filteration = () => {
 
   const handleInputData = () => {
     if (selectedEntity) {
-      setInputData({ [selectedEntity]: inputValue }); // Save selectedEntity as key and inputValue as value
+      const upperCaseInputValue = inputValue.toUpperCase();
+      console.log(upperCaseInputValue, 'upperCaseInputValue');
+      setInputData({ [selectedEntity]: upperCaseInputValue }); // Save selectedEntity as key and inputValue as value
     }
   };
+  
 
   const handleSelectChange = (e) => {
     const entity = e.target.value;
