@@ -30,6 +30,30 @@ const ForceGraph2DComponent = () => {
 
   const fgRef = useRef();
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
+
+  const getRepeatingNodes = (nodes) => {
+    const seenIds = new Set();
+    const repeatingNodes = [];
+  
+    nodes.forEach(node => {
+      if (seenIds.has(node.id)) {
+        repeatingNodes.push(node);
+      } else {
+        seenIds.add(node.id);
+      }
+    });
+  
+    return repeatingNodes;
+  };
+  const repeatingNodes = getRepeatingNodes(graphData.nodes);
+
+if (repeatingNodes.length > 0) {
+  console.log('Repeating nodes:', repeatingNodes);
+} else {
+  console.log('All nodes are unique.');
+}
+
+
   const [tooltip, setTooltip] = useState({
     visible: false,
     x: 0,
@@ -231,6 +255,7 @@ const ForceGraph2DComponent = () => {
       return { source: Entity_1, target: Entity_2, type: Edge_Type };
     });
 
+
     const nodes = Object.values(nodesMap);
     setGraphData({ nodes, links });
   };
@@ -318,9 +343,9 @@ const ForceGraph2DComponent = () => {
     let Save_Entity_2 = null;
 
     const filteredRows = data.filter((row, key) => {
-      console.log(row, key, "row");
+  
       const { Entity_1, Entity_2 } = row;
-
+  
       if (
         row.Entity_Type_1 === "N_PARTNUMBER" &&
         row.Entity_Type_2 === "N_PARTNUMBER"
@@ -578,6 +603,7 @@ const ForceGraph2DComponent = () => {
     if (fg) {
       fg.d3Force("link").distance((link) => 100); // You can customize the distance
     }
+    
   }, [graphData]);
 
   const getNodeColor = (node) => nodeColors[node.group] || nodeColors.default;
