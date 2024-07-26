@@ -349,27 +349,34 @@ if (repeatingNodes.length > 0) {
       if (
         row.Entity_Type_1 === "N_PARTNUMBER" &&
         row.Entity_Type_2 === "N_PARTNUMBER"
+        // false     
       ) {
-        if (Save_Entity_1 === null && addnodestemp.includes(Entity_2)) {
+        if (Save_Entity_1 === null && (addnodestemp.includes(Entity_2) ||addnodestemp.includes(Entity_1) )) {
           addnodes2.push(Entity_1);
+          addnodes2.push(Entity_2);
           Save_Entity_1 = Entity_1;
           return true; // Include this row
         }
         if (Save_Entity_2 === null && addnodestemp.includes(Entity_1)) {
+          addnodes2.push(Entity_1);
           addnodes2.push(Entity_2);
           Save_Entity_2 = Entity_1;
           return true; // Include this row
         }
 
-        if (addnodestemp.includes(Entity_2) && Entity_2 === Save_Entity_1) {
+        if ((addnodestemp.includes(Entity_2) ||addnodestemp.includes(Entity_1) ) && (Entity_2 === Save_Entity_1||Entity_1 === Save_Entity_1)  ) {
           addnodes2.push(Entity_1);
+          addnodes2.push(Entity_2);
           Save_Entity_1 = Entity_1;
           return true; // Include this row
         }
 
-        if (addnodestemp.includes(Entity_1) && Entity_1 === Save_Entity_2) {
+        if (addnodestemp.includes(Entity_1)  && (Entity_1 === Save_Entity_2 || Entity_2 === Save_Entity_2) ) {
+          addnodes2.push(Entity_1);
           addnodes2.push(Entity_2);
+        
           Save_Entity_2 = Entity_1;
+
           return true; // Include this row
         }
         return false; // Exclude this row
