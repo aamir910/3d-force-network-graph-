@@ -34,25 +34,24 @@ const ForceGraph2DComponent = () => {
   const getRepeatingNodes = (nodes) => {
     const seenIds = new Set();
     const repeatingNodes = [];
-  
-    nodes.forEach(node => {
+
+    nodes.forEach((node) => {
       if (seenIds.has(node.id)) {
         repeatingNodes.push(node);
       } else {
         seenIds.add(node.id);
       }
     });
-  
+
     return repeatingNodes;
   };
   const repeatingNodes = getRepeatingNodes(graphData.nodes);
 
-if (repeatingNodes.length > 0) {
-  console.log('Repeating nodes:', repeatingNodes);
-} else {
-  console.log('All nodes are unique.');
-}
-
+  if (repeatingNodes.length > 0) {
+    console.log("Repeating nodes:", repeatingNodes);
+  } else {
+    console.log("All nodes are unique.");
+  }
 
   const [tooltip, setTooltip] = useState({
     visible: false,
@@ -255,7 +254,6 @@ if (repeatingNodes.length > 0) {
       return { source: Entity_1, target: Entity_2, type: Edge_Type };
     });
 
-
     const nodes = Object.values(nodesMap);
     setGraphData({ nodes, links });
   };
@@ -339,60 +337,53 @@ if (repeatingNodes.length > 0) {
 
   function filterAndUpdateNodes_input(data, addnodestemp) {
     let addnodes2 = [];
-    let Save_Entity_1 = null;
-    let Save_Entity_2 = null;
 
     const filteredRows = data.filter((row, key) => {
-  
       const { Entity_1, Entity_2 } = row;
-  
-      if (
-        row.Entity_Type_1 === "N_PARTNUMBER" &&
-        row.Entity_Type_2 === "N_PARTNUMBER"
-        // false     
-      ) {
-        if (Save_Entity_1 === null && (addnodestemp.includes(Entity_2) ||addnodestemp.includes(Entity_1) )) {
-          addnodes2.push(Entity_1);
-          addnodes2.push(Entity_2);
-          Save_Entity_1 = Entity_1;
-          return true; // Include this row
-        }
-        if (Save_Entity_2 === null && addnodestemp.includes(Entity_1)) {
-          addnodes2.push(Entity_1);
-          addnodes2.push(Entity_2);
-          Save_Entity_2 = Entity_1;
-          return true; // Include this row
-        }
 
-        if ((addnodestemp.includes(Entity_2) ||addnodestemp.includes(Entity_1) ) && (Entity_2 === Save_Entity_1||Entity_1 === Save_Entity_1)  ) {
-          addnodes2.push(Entity_1);
-          addnodes2.push(Entity_2);
-          Save_Entity_1 = Entity_1;
-          return true; // Include this row
+      if (addnodestemp.includes(Entity_2)) {
+        if (
+          row.Entity_Type_1 === "N_PARTNUMBER" &&
+          row.Entity_Type_2 === "N_PARTNUMBER"
+        ) {
+          if (addnodestemp.includes(Entity_1)) {
+          if (Entity_1 > Entity_2) {
+            
+            addnodes2.push(Entity_1);
+            return true; // Include this row
+          }
+          else{
+            return false
+          }
         }
-
-        if (addnodestemp.includes(Entity_1)  && (Entity_1 === Save_Entity_2 || Entity_2 === Save_Entity_2) ) {
-          addnodes2.push(Entity_1);
-          addnodes2.push(Entity_2);
-        
-          Save_Entity_2 = Entity_1;
-
-          return true; // Include this row
-        }
-        return false; // Exclude this row
-      } else {
-        if (addnodestemp.includes(Entity_2)) {
+        } else {
           addnodes2.push(Entity_1);
           return true; // Include this row
         }
-        if (addnodestemp.includes(Entity_1)) {
-          addnodes2.push(Entity_2);
-          return true; // Include this row
-        }
-        return false; // Exclude this row
       }
+      // change will be there 
+      if (addnodestemp.includes(Entity_1)) {
+        if (
+          row.Entity_Type_1 === "N_PARTNUMBER" &&
+          row.Entity_Type_2 === "N_PARTNUMBER"
+        ) {
+          if (Entity_1 < Entity_2) {
+            addnodes2.push(Entity_2);
+            return true; // Include this row
+          }
+          else{
+            return false
+          }
+        }
+         else {
+          addnodes2.push(Entity_2);
+          return true; // Include this row
+        }
+      }
+      
+      return false; // Exclude this row
     });
-
+console.log(addnodes2 , 'addnodes')
     return { filteredRows, addnodes2 };
   }
 
@@ -610,7 +601,6 @@ if (repeatingNodes.length > 0) {
     if (fg) {
       fg.d3Force("link").distance((link) => 100); // You can customize the distance
     }
-    
   }, [graphData]);
 
   const getNodeColor = (node) => nodeColors[node.group] || nodeColors.default;
