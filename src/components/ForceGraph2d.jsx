@@ -317,6 +317,7 @@ const ForceGraph2DComponent = () => {
   }
 
   let removeNodes3 = [];
+
   function filterAndUpdateNodes(data, removeNodes) {
     let removeNodes2 = [];
     const filteredRows = data.filter((row) => {
@@ -334,6 +335,10 @@ const ForceGraph2DComponent = () => {
 
     return { filteredRows, removeNodes2, removeNodes3 };
   }
+
+
+  let allnodes = [] ; 
+
 
   function filterAndUpdateNodes_input(data, addnodestemp) {
     let addnodes2 = [];
@@ -361,17 +366,25 @@ const ForceGraph2DComponent = () => {
           return true; // Include this row
         }
       }
+
       // change will be there 
       if (addnodestemp.includes(Entity_1)) {
+        
         if (
           row.Entity_Type_1 === "N_PARTNUMBER" &&
           row.Entity_Type_2 === "N_PARTNUMBER"
         ) {
           if (Entity_1 < Entity_2) {
+            if(Entity_1 === "B004709"){
+              alert(Entity_1);   
+              console.log(row , 'row')
+            }
+            console.log(Entity_2 , 'here is the entity 2 there ')
             addnodes2.push(Entity_2);
             return true; // Include this row
           }
-          else{
+          else
+          {
             return false
           }
         }
@@ -383,9 +396,14 @@ const ForceGraph2DComponent = () => {
       
       return false; // Exclude this row
     });
-console.log(addnodes2 , 'addnodes')
+    console.log(filteredRows , 'filteredRows')
+
+   allnodes = allnodes.concat(filteredRows) ; 
+
+
     return { filteredRows, addnodes2 };
   }
+
 
   // here is the code to add the nodes there
   let add_nodes = [];
@@ -567,27 +585,32 @@ console.log(addnodes2 , 'addnodes')
               "N_SUPPLIER"
             );
           }
-
           let filterFunctionResult = filterAndUpdateNodes_input(
             filteredData,
             add_nodes
           );
-          filterFunctionResult = filterAndUpdateNodes_input(
-            filteredData,
-            filterFunctionResult.addnodes2
-          );
-          filterFunctionResult = filterAndUpdateNodes_input(
-            filteredData,
-            filterFunctionResult.addnodes2
-          );
+
           filterFunctionResult = filterAndUpdateNodes_input(
             filteredData,
             filterFunctionResult.addnodes2
           );
 
+
+          filterFunctionResult = filterAndUpdateNodes_input(
+            filteredData,
+            filterFunctionResult.addnodes2
+          );
+          
+
+          filterFunctionResult = filterAndUpdateNodes_input(
+            filteredData,
+            filterFunctionResult.addnodes2
+          );
+          
+console.log("final fiter data is " , filterFunctionResult ,allnodes  )
           let finalFilteredRows = filterFunctionResult.filteredRows;
 
-          processCSV(finalFilteredRows);
+          processCSV(allnodes);
         }
       },
       error: (error) => {
