@@ -243,23 +243,25 @@ const Visualize_filteration = () => {
   const handleInputData = () => {
     if (selectedEntity) {
       const upperCaseInputValue = inputValue.toUpperCase();
-      console.log(upperCaseInputValue, 'upperCaseInputValue');
       setInputData({ [selectedEntity]: upperCaseInputValue }); // Save selectedEntity as key and inputValue as value
     }
   };
   
-
   const handleSelectChange = (e) => {
     const entity = e.target.value;
     setSelectedEntity(entity);
-    // handleInputData(); // Update inputData whenever selection changes
   };
-
+  
   const handleInputChange = (e) => {
     const value = e.target.value || "";
     setInputValue(value);
-    // handleInputData(); // Update inputData whenever input changes
   };
+  
+  // Using useEffect to handle data updates after state changes
+  useEffect(() => {
+    handleInputData();
+  }, [selectedEntity, inputValue]);
+  
   const [showTable1, setShowTable1] = useState(true);
 
   const handleToggle = (table) => {
@@ -407,10 +409,7 @@ const Visualize_filteration = () => {
           onChange={handleInputChange} 
         />
       </div>
-        <div className="SubmitDiv" >
-      <button className="Submit" onClick={handleInputData}>Submit</button>
-
-        </div>
+    
     </div>
   </td>
 </tr>

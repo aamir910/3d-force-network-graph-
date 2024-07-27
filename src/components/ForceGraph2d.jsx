@@ -376,7 +376,6 @@ const ForceGraph2DComponent = () => {
         ) {
           if (Entity_1 < Entity_2) {
             if(Entity_1 === "B004709"){
-              alert(Entity_1);   
               console.log(row , 'row')
             }
             console.log(Entity_2 , 'here is the entity 2 there ')
