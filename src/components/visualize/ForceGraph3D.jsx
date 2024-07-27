@@ -27,18 +27,20 @@ const Visualize_filteration = () => {
   const [entityHeaders, setEntityHeaders] = useState({});
   const [linkHeaders, setLinkHeaders] = useState({});
   const [entityData, setEnitityData] = useState({});
+  
   const [checkedEntities, setCheckedEntities] = useState({});
   const [checkedLinks, setCheckedLinks] = useState({});
-  const [checkedEntityNames, setCheckedEntityNames] = useState([]);
-  const [checkedLinkNames, setCheckedLinkNames] = useState([]);
+
+  const [checkedEntityNames, setCheckedEntityNames] = useState(['N_CUSTOMER' ,'N_PARTNUMBER',"N_PURCHORDER","N_SELLORDER", "N_SUPPLIER" ,"E_BOM", "E_ORDERCUST","E_ORDERSUPP" ,"E_PNSELLORD","E_PNSUPPORD" ]);
+  const [checkedLinkNames, setCheckedLinkNames] = useState(["E_BOM", "E_ORDERCUST","E_ORDERSUPP" ,"E_PNSELLORD","E_PNSUPPORD" ]);
   const navigate = useNavigate();
   const [checkedDropdownItems, setCheckedDropdownItems] = useState({});
   const [selectedEntity, setSelectedEntity] = useState('');
   const [inputValue, setInputValue] = useState('');
   const [inputData, setInputData] = useState({});
 
-  const [SelectEntityNames, setSelectEntityNames] = useState(false);
-  const [SelectLinkNames, setSelectLinkNames] = useState(false);
+  // const [SelectEntityNames, setSelectEntityNames] = useState(false);
+  // const [SelectLinkNames, setSelectLinkNames] = useState(false);
 
   useEffect(() => {
     const loadCSV = (filePath) => {
@@ -342,7 +344,7 @@ const Visualize_filteration = () => {
                                                       onChange={() =>
                                                       {
 
-                                                        setSelectEntityNames(true) ,
+                                                        // setSelectEntityNames(true) ,
                                                         handleEntityData(
                                                           filePath,
                                                           header,
@@ -471,7 +473,7 @@ const Visualize_filteration = () => {
                                   onChange={() => 
                                   {
 
-                                    setSelectLinkNames(true);
+                                    // setSelectLinkNames(true);
                                     handleLinkData(filePath)
                                   }
                                   }
@@ -489,12 +491,11 @@ const Visualize_filteration = () => {
                     </table>
                     <button
   onClick={() => {
-    if (!SelectEntityNames && !SelectLinkNames ) {
+    if (false ) {
 
       alert('Please select the file first');
     } 
     else {
-      handleInputData();
         navigate("/3d_graph", {
           state: {
             checkedEntityNames,
