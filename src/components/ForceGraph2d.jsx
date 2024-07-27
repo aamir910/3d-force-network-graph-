@@ -949,7 +949,7 @@ console.log("final fiter data is " , filterFunctionResult ,allnodes  )
 
           let finalFilteredRows = filterFunctionResult.filteredRows;
 
-          processCSV(finalFilteredRows);
+          processCSV(allnodes);
         }
       },
       error: (error) => {
