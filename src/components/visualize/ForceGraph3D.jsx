@@ -31,8 +31,8 @@ const Visualize_filteration = () => {
   const [checkedEntities, setCheckedEntities] = useState({});
   const [checkedLinks, setCheckedLinks] = useState({});
 
-  const [checkedEntityNames, setCheckedEntityNames] = useState(['N_CUSTOMER' ,'N_PARTNUMBER',"N_PURCHORDER","N_SELLORDER", "N_SUPPLIER" ,"E_BOM", "E_ORDERCUST","E_ORDERSUPP" ,"E_PNSELLORD","E_PNSUPPORD" ]);
-  const [checkedLinkNames, setCheckedLinkNames] = useState(["E_BOM", "E_ORDERCUST","E_ORDERSUPP" ,"E_PNSELLORD","E_PNSUPPORD" ]);
+  const [checkedEntityNames, setCheckedEntityNames] = useState([]);
+  const [checkedLinkNames, setCheckedLinkNames] = useState([]);
   const navigate = useNavigate();
   const [checkedDropdownItems, setCheckedDropdownItems] = useState({});
   const [selectedEntity, setSelectedEntity] = useState('');
@@ -279,10 +279,10 @@ const Visualize_filteration = () => {
           <div className="row">
             <h1> Filters</h1>
             <div>
-              <button onClick={() => handleToggle("table1")}>
+              <button className="custom-button"   onClick={() => handleToggle("table1")}>
                Filter by entity 
               </button>
-              <button onClick={() => handleToggle("table2")}>
+              <button  className="custom-button"  onClick={() => handleToggle("table2")}>
                 Filter by id
               </button>
             </div>

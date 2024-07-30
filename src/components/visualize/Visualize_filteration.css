@@ -182,7 +182,7 @@
 
 .Submit {
   margin-top: 5px;
-  background-color: #007bff;
+  background-color: #3cb9eb;
   color: white;
   border: none;
   padding: 5px 10px;
@@ -219,3 +219,19 @@
 }
 
 /* arrow button there  ended */
+
+.custom-button {
+  font-size: 16px; /* Adjust font size */
+  font-weight: bold; /* Make text bold */
+  background-color: #3cb9eb; /* Background color */
+  color: white; /* Text color */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Rounded corners */
+  padding: 10px 20px; /* Padding inside the button */
+  cursor: pointer; /* Pointer cursor on hover */
+  margin-right: 10px; /* Margin between buttons */
+}
+
+.custom-button:hover {
+  background-color: #0056b3; /* Darker background on hover */
+}
