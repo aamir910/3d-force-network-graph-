@@ -205,3 +205,17 @@
   justify-content: flex-end; /* Aligns items to the start (left) of the container */
   top: 5%;
 }
+/* arrow button there  */
+.arrow-button {
+  font-size: 24px; /* Make the arrows large */
+  font-weight: bold; /* Make the arrows bold */
+  background: none; /* Remove the button background */
+  border: none; /* Remove the button border */
+  cursor: pointer; /* Add a pointer cursor on hover */
+}
+
+.arrow-button:hover {
+  color: #007bff; /* Optional: Add a hover effect */
+}
+
+/* arrow button there  ended */

@@ -323,6 +323,7 @@ const Visualize_filteration = () => {
                                                 )}
                                                 value={getEntityName(filePath)}
                                               />
+                                          
                                               {getEntityName(filePath)}
                                             </>
                                           ) : (
@@ -416,33 +417,38 @@ const Visualize_filteration = () => {
   </td>
 </tr>
 
+{Object.entries(entityHeaders).map(
+  ([filePath, headers], index) => {
+    if (uniqueData.length !== 0) {
+      const entityName = getEntityName(filePath);
+      return (
+        <tr key={index}>
+          <td>
+            <>
+              <input
+                type="checkbox"
+                onChange={() => handleEntityData_main(filePath)}
+                checked={checkedEntityNames.includes(entityName)}
+                value={entityName}
+              />
+              {entityName === "N_PARTNUMBER" ? (
+                <>
+                  {entityName}
+                  <button  className="arrow-button">&uarr;</button> {/* Up arrow */}
+                  <button  className="arrow-button">&darr;</button> {/* Down arrow */}
+                </>
+              ) : (
+                entityName
+              )}
+            </>
+          </td>
+        </tr>
+      );
+    }
+    return null;
+  }
+)}
 
-                          {Object.entries(entityHeaders).map(
-                            ([filePath, headers], index) => {
-                              if (uniqueData.length !== 0) {
-                                return (
-                                  <tr key={index}>
-                                    <td>
-                                      <>
-                                        <input
-                                          type="checkbox"
-                                          onChange={() =>
-                                            handleEntityData_main(filePath)
-                                          }
-                                          checked={checkedEntityNames.includes(
-                                            getEntityName(filePath)
-                                          )}
-                                          value={getEntityName(filePath)}
-                                        />
-                                        {getEntityName(filePath)}
-                                      </>
-                                    </td>
-                                  </tr>
-                                );
-                              }
-                              return null;
-                            }
-                          )}
                         </tbody>
                       </table>
                     )}
