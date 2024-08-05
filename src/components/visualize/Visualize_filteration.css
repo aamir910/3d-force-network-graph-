@@ -208,15 +208,18 @@
 /* arrow button there  */
 .arrow-button {
   font-size: 24px; /* Make the arrows large */
-  font-weight: bold; /* Make the arrows bold */
+  /* font-weight: bold; Make the arrows bold */
   background: none; /* Remove the button background */
   border: none; /* Remove the button border */
   cursor: pointer; /* Add a pointer cursor on hover */
+  padding: 0px;
+  margin-left: 5px;
 }
 
 .arrow-button:hover {
   color: #007bff; /* Optional: Add a hover effect */
 }
+
 
 /* arrow button there  ended */
 

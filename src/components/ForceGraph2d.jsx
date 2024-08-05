@@ -27,7 +27,9 @@ const ForceGraph2DComponent = () => {
   const checkedDropdownItems = location.state?.checkedDropdownItems || [];
 
   const SingleCheckCustomer = location.state?.inputData || [];
+ 
 
+  const isAscending = location.state?.isAscending || false;
   const fgRef = useRef();
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
 
@@ -370,21 +372,36 @@ const ForceGraph2DComponent = () => {
       // change will be there 
       if (addnodestemp.includes(Entity_1)) {
         
+        if(row.Entity_Type_1 === "N_PURCHORDER" && row.Entity_Type_2 === "N_PARTNUMBER" ){
+            return false 
+        }
+
         if (
           row.Entity_Type_1 === "N_PARTNUMBER" &&
           row.Entity_Type_2 === "N_PARTNUMBER"
         ) {
-          if (Entity_1 < Entity_2) {
-            if(Entity_1 === "B004709"){
-              console.log(row , 'row')
+          if (isAscending) {
+            if (Entity_1 > Entity_2) {
+              if (Entity_1 === "B004709") {
+                console.log(row, 'row');
+              }
+              console.log(Entity_2, 'here is the entity 2 there');
+              addnodes2.push(Entity_2);
+              return true; // Include this row
+            } else {
+              return false;
             }
-            console.log(Entity_2 , 'here is the entity 2 there ')
-            addnodes2.push(Entity_2);
-            return true; // Include this row
-          }
-          else
-          {
-            return false
+          } else {
+            if (Entity_1 < Entity_2) {
+              if (Entity_1 === "B004709") {
+                console.log(row, 'row');
+              }
+              console.log(Entity_2, 'here is the entity 2 there');
+              addnodes2.push(Entity_2);
+              return true; // Include this row
+            } else {
+              return false;
+            }
           }
         }
          else {

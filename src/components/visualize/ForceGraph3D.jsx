@@ -39,6 +39,21 @@ const Visualize_filteration = () => {
   const [inputValue, setInputValue] = useState('');
   const [inputData, setInputData] = useState({});
 
+
+  const [isAscending, setIsAscending] = useState(false); 
+  
+
+
+  const handleUpArrowClick = () => {
+    setIsAscending(true);
+  };
+
+  const handleDownArrowClick = () => {
+    setIsAscending(false);
+  };
+
+
+
   // const [SelectEntityNames, setSelectEntityNames] = useState(false);
   // const [SelectLinkNames, setSelectLinkNames] = useState(false);
 
@@ -410,6 +425,7 @@ const Visualize_filteration = () => {
           type="text" 
           value={inputValue}
           onChange={handleInputChange} 
+          placeholder="ENTER ID"
         />
       </div>
     
@@ -434,8 +450,9 @@ const Visualize_filteration = () => {
               {entityName === "N_PARTNUMBER" ? (
                 <>
                   {entityName}
-                  <button  className="arrow-button">&uarr;</button> {/* Up arrow */}
-                  <button  className="arrow-button">&darr;</button> {/* Down arrow */}
+                 <button className="arrow-button" onClick={handleDownArrowClick}>&darr;</button> {/* Down arrow */}
+                   <button className="arrow-button" onClick={handleUpArrowClick}>&uarr;</button> {/* Up arrow */}
+     
                 </>
               ) : (
                 entityName
@@ -508,6 +525,7 @@ const Visualize_filteration = () => {
             checkedLinkNames,
             checkedDropdownItems,
             inputData,
+            isAscending
           },
         });// You can adjust the delay time if necessary
     }
