@@ -376,6 +376,12 @@ const ForceGraph2DComponent = () => {
             return false 
         }
 
+        
+        if(row.Entity_Type_1 === "N_SUPPLIER" && row.Entity_Type_2 === "N_PURCHORDER" ){
+          return false 
+      }
+
+
         if (
           row.Entity_Type_1 === "N_PARTNUMBER" &&
           row.Entity_Type_2 === "N_PARTNUMBER"
