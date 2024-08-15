@@ -27,7 +27,6 @@ const ForceGraph2DComponent = () => {
   const checkedDropdownItems = location.state?.checkedDropdownItems || [];
 
   const SingleCheckCustomer = location.state?.inputData || [];
- 
 
   const isAscending = location.state?.isAscending || false;
   const fgRef = useRef();
@@ -338,9 +337,7 @@ const ForceGraph2DComponent = () => {
     return { filteredRows, removeNodes2, removeNodes3 };
   }
 
-
-  let allnodes = [] ; 
-
+  let allnodes = [];
 
   function filterAndUpdateNodes_input(data, addnodestemp) {
     let addnodes2 = [];
@@ -354,44 +351,44 @@ const ForceGraph2DComponent = () => {
           row.Entity_Type_2 === "N_PARTNUMBER"
         ) {
           if (addnodestemp.includes(Entity_1)) {
-          if (Entity_1 > Entity_2) {
-            
-            addnodes2.push(Entity_1);
-            return true; // Include this row
+            if (Entity_1 > Entity_2) {
+              addnodes2.push(Entity_1);
+              return true; // Include this row
+            } else {
+              return false;
+            }
           }
-          else{
-            return false
-          }
-        }
         } else {
           addnodes2.push(Entity_1);
           return true; // Include this row
         }
       }
 
-      // change will be there 
+      // change will be there
       if (addnodestemp.includes(Entity_1)) {
-        
-        if(row.Entity_Type_1 === "N_PURCHORDER" && row.Entity_Type_2 === "N_PARTNUMBER" ){
-            return false 
+       
+      console.log(  Object.keys(SingleCheckCustomer)[0]  ,'Object.values(SingleCheckCustomer)[0]')
+
+if ( Object.keys(SingleCheckCustomer)[0] !== "N_SUPPLIER") {
+          if (
+            row.Entity_Type_1 === "N_PURCHORDER" &&
+            row.Entity_Type_2 === "N_PARTNUMBER"
+          ) {
+            return false;
+          }
+          if (
+            row.Entity_Type_1 === "N_SUPPLIER" &&
+            row.Entity_Type_2 === "N_PURCHORDER"
+          ) {
+            return false;
+          }
         }
-
-        
-        if(row.Entity_Type_1 === "N_SUPPLIER" && row.Entity_Type_2 === "N_PURCHORDER" ){
-          return false 
-      }
-
-
         if (
           row.Entity_Type_1 === "N_PARTNUMBER" &&
           row.Entity_Type_2 === "N_PARTNUMBER"
         ) {
           if (isAscending) {
             if (Entity_1 > Entity_2) {
-              if (Entity_1 === "B004709") {
-                console.log(row, 'row');
-              }
-              console.log(Entity_2, 'here is the entity 2 there');
               addnodes2.push(Entity_2);
               return true; // Include this row
             } else {
@@ -399,33 +396,26 @@ const ForceGraph2DComponent = () => {
             }
           } else {
             if (Entity_1 < Entity_2) {
-              if (Entity_1 === "B004709") {
-                console.log(row, 'row');
-              }
-              console.log(Entity_2, 'here is the entity 2 there');
               addnodes2.push(Entity_2);
               return true; // Include this row
             } else {
               return false;
             }
           }
-        }
-         else {
+        } else {
           addnodes2.push(Entity_2);
           return true; // Include this row
         }
       }
-      
+
       return false; // Exclude this row
     });
-    console.log(filteredRows , 'filteredRows')
+    console.log(filteredRows, "filteredRows");
 
-   allnodes = allnodes.concat(filteredRows) ; 
-
+    allnodes = allnodes.concat(filteredRows);
 
     return { filteredRows, addnodes2 };
   }
-
 
   // here is the code to add the nodes there
   let add_nodes = [];
@@ -446,27 +436,6 @@ const ForceGraph2DComponent = () => {
 
     return filteredData;
   }
-
-  // Refactored functions
-  // function filterByNCustomer_input(data) {
-  //   return filterByProperty(data, "N_CUSTOMER");
-  // }
-
-  // function filterByN_PARTNUMBER_input(data) {
-  //   return filterByProperty(data, "N_PARTNUMBER");
-  // }
-
-  // function filterByN_PURCHORDER_input(data) {
-  //   return filterByProperty(data, "N_PURCHORDER");
-  // }
-
-  // function filterByN_SELLORDER_input(data) {
-  //   return filterByProperty(data, "N_SELLORDER");
-  // }
-
-  // function filterByN_SUPPLIER_input(data) {
-  //   return filterByProperty(data, "N_SUPPLIER");
-  // }
 
   useEffect(() => {
     Papa.parse("/Edeges_And_Nodes_with_Entity_1.csv", {
@@ -607,6 +576,9 @@ const ForceGraph2DComponent = () => {
               "N_SUPPLIER"
             );
           }
+
+          add_nodes = [Object.values(SingleCheckCustomer)[0]];
+
           let filterFunctionResult = filterAndUpdateNodes_input(
             filteredData,
             add_nodes
@@ -617,21 +589,19 @@ const ForceGraph2DComponent = () => {
             filterFunctionResult.addnodes2
           );
 
+          filterFunctionResult = filterAndUpdateNodes_input(
+            filteredData,
+            filterFunctionResult.addnodes2
+          );
 
           filterFunctionResult = filterAndUpdateNodes_input(
             filteredData,
             filterFunctionResult.addnodes2
           );
-          
 
-          filterFunctionResult = filterAndUpdateNodes_input(
-            filteredData,
-            filterFunctionResult.addnodes2
-          );
-          
-console.log("final fiter data is " , filterFunctionResult ,allnodes  )
+          console.log("final fiter data is ", filterFunctionResult, allnodes);
           let finalFilteredRows = filterFunctionResult.filteredRows;
-
+          console.log("allnodes", allnodes);
           processCSV(allnodes);
         }
       },
@@ -923,7 +893,7 @@ console.log("final fiter data is " , filterFunctionResult ,allnodes  )
           }
 
           finalFilteredRows = filterFunctionResult.filteredRows;
-
+          console.log("allnodes", allnodes);
           processCSV(finalFilteredRows);
         } else {
           if (SingleCheckCustomer.N_CUSTOMER !== undefined) {
@@ -971,7 +941,7 @@ console.log("final fiter data is " , filterFunctionResult ,allnodes  )
           );
 
           let finalFilteredRows = filterFunctionResult.filteredRows;
-
+          console.log("allnodes", allnodes);
           processCSV(allnodes);
         }
       },

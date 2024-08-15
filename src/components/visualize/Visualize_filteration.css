@@ -205,23 +205,28 @@
   justify-content: flex-end; /* Aligns items to the start (left) of the container */
   top: 5%;
 }
-/* arrow button there  */
+/* arrow button styles */
 .arrow-button {
   font-size: 24px; /* Make the arrows large */
-  /* font-weight: bold; Make the arrows bold */
-  background: none; /* Remove the button background */
+  background: #c8e8f5; /* Button background */
   border: none; /* Remove the button border */
   cursor: pointer; /* Add a pointer cursor on hover */
   padding: 0px;
   margin-left: 5px;
+  width: 40px;
 }
 
-.arrow-button:hover {
-  color: #007bff; /* Optional: Add a hover effect */
+.arrow-button.active {
+  background-color: #007bff; /* Active background color */
+  color: white; /* Active text color */
 }
 
+/* Optional: styling for the non-active state */
+.arrow-button:not(.active) {
+  background: #c8e8f5; /* Button background */
+  color: black; /* Non-active text color */
+}
 
-/* arrow button there  ended */
 
 .custom-button {
   font-size: 16px; /* Adjust font size */
@@ -236,5 +241,5 @@
 }
 
 .custom-button:hover {
-  background-color: #0056b3; /* Darker background on hover */
+  background-color: #3cb9eb; /* Darker background on hover */
 }

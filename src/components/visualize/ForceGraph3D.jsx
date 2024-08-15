@@ -450,9 +450,18 @@ const Visualize_filteration = () => {
               {entityName === "N_PARTNUMBER" ? (
                 <>
                   {entityName}
-                 <button className="arrow-button" onClick={handleDownArrowClick}>&darr;</button> {/* Down arrow */}
-                   <button className="arrow-button" onClick={handleUpArrowClick}>&uarr;</button> {/* Up arrow */}
-     
+                  <button
+        className={`arrow-button ${!isAscending ? 'active' : ''}`}
+        onClick={handleDownArrowClick}
+      >
+        &darr;
+      </button>
+      <button
+        className={`arrow-button ${isAscending ? 'active' : ''}`}
+        onClick={handleUpArrowClick}
+      >
+        &uarr;
+      </button>
                 </>
               ) : (
                 entityName
