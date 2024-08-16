@@ -368,8 +368,7 @@ const ForceGraph2DComponent = () => {
       // change will be there
       if (addnodestemp.includes(Entity_1)) {
        
-      console.log(  Object.keys(SingleCheckCustomer)[0]  ,'Object.values(SingleCheckCustomer)[0]')
-
+  
     if (Object.keys(SingleCheckCustomer)[0] !== "N_SUPPLIER") {
           if (
             row.Entity_Type_1 === "N_PURCHORDER" &&
@@ -384,6 +383,9 @@ const ForceGraph2DComponent = () => {
             return false;
           }
         }
+
+
+        
         if (
           row.Entity_Type_1 === "N_PARTNUMBER" &&
           row.Entity_Type_2 === "N_PARTNUMBER"
@@ -404,6 +406,7 @@ const ForceGraph2DComponent = () => {
             }
           }
         } else {
+
           addnodes2.push(Entity_2);
           return true; // Include this row
         }
@@ -577,28 +580,49 @@ const ForceGraph2DComponent = () => {
               "N_SUPPLIER"
             );
           }
-
-          add_nodes = [Object.values(SingleCheckCustomer)[0]];
+            
+           if (Object.keys(SingleCheckCustomer)[0] === "N_PARTNUMBER") 
+           {
+             add_nodes = [Object.values(SingleCheckCustomer)[0]];
+           }
+              
 
           let filterFunctionResult = filterAndUpdateNodes_input(
             filteredData,
             add_nodes
           );
-
+// 1
+          filterFunctionResult = filterAndUpdateNodes_input(
+            filteredData,
+            filterFunctionResult.addnodes2
+          );
+// 2
+          filterFunctionResult = filterAndUpdateNodes_input(
+            filteredData,
+            filterFunctionResult.addnodes2
+          );
+// 3
+          filterFunctionResult = filterAndUpdateNodes_input(
+            filteredData,
+            filterFunctionResult.addnodes2
+          );
+// 4
+          filterFunctionResult = filterAndUpdateNodes_input(
+            filteredData,
+            filterFunctionResult.addnodes2
+          );
+ // 5
+          filterFunctionResult = filterAndUpdateNodes_input(
+            filteredData,
+            filterFunctionResult.addnodes2
+          );
+ // 6
           filterFunctionResult = filterAndUpdateNodes_input(
             filteredData,
             filterFunctionResult.addnodes2
           );
 
-          filterFunctionResult = filterAndUpdateNodes_input(
-            filteredData,
-            filterFunctionResult.addnodes2
-          );
 
-          filterFunctionResult = filterAndUpdateNodes_input(
-            filteredData,
-            filterFunctionResult.addnodes2
-          );
 
           console.log("final fiter data is ", filterFunctionResult, allnodes);
           let finalFilteredRows = filterFunctionResult.filteredRows;
@@ -928,18 +952,42 @@ const ForceGraph2DComponent = () => {
             filteredData2,
             add_nodes
           );
-          filterFunctionResult = filterAndUpdateNodes_input(
-            filteredData2,
-            filterFunctionResult.addnodes2
-          );
-          filterFunctionResult = filterAndUpdateNodes_input(
-            filteredData2,
-            filterFunctionResult.addnodes2
-          );
-          filterFunctionResult = filterAndUpdateNodes_input(
-            filteredData2,
-            filterFunctionResult.addnodes2
-          );
+     // 1
+     filterFunctionResult = filterAndUpdateNodes_input(
+      filteredData,
+      filterFunctionResult.addnodes2
+    );
+// 2
+    filterFunctionResult = filterAndUpdateNodes_input(
+      filteredData,
+      filterFunctionResult.addnodes2
+    );
+// 3
+    filterFunctionResult = filterAndUpdateNodes_input(
+      filteredData,
+      filterFunctionResult.addnodes2
+    );
+// 4
+    filterFunctionResult = filterAndUpdateNodes_input(
+      filteredData,
+      filterFunctionResult.addnodes2
+    );
+// 5
+    filterFunctionResult = filterAndUpdateNodes_input(
+      filteredData,
+      filterFunctionResult.addnodes2
+    );
+// 6
+    filterFunctionResult = filterAndUpdateNodes_input(
+      filteredData,
+      filterFunctionResult.addnodes2
+    );
+
+         
+
+
+
+
 
           let finalFilteredRows = filterFunctionResult.filteredRows;
           console.log("allnodes", allnodes);
