@@ -434,38 +434,37 @@ const Visualize_filteration = () => {
       const entityName = getEntityName(filePath);
       return (
         <tr key={index}>
-          <td>
-            <>
-              <input
-                type="checkbox"
-                onChange={() => handleEntityData_main(filePath)}
-                checked={checkedEntityNames.includes(entityName)}
-                value={entityName}
-              />
-             
-              {entityName === "N_PARTNUMBER" ? (
+        <td>
+          <div className="checkbox-label-container">
+            <input
+              className="inputcheck"
+              type="checkbox"
+              onChange={() => handleEntityData_main(filePath)}
+              checked={checkedEntityNames.includes(entityName)}
+              value={entityName}
+            />
+            <span className="entity-text">
+              {entityName}
+              {entityName === "N_PARTNUMBER" && (
                 <>
-             
-                  {entityName}
                   <button
-        className={`arrow-button ${!isAscending ? 'active' : ''}`}
-        onClick={handleDownArrowClick}
-      >
-        &darr;
-      </button>
-      <button
-        className={`arrow-button ${isAscending ? 'active' : ''}`}
-        onClick={handleUpArrowClick}
-      >
-        &uarr;
-      </button>
+                    className={`arrow-button ${!isAscending ? 'active' : ''}`}
+                    onClick={handleDownArrowClick}
+                  >
+                    &darr;
+                  </button>
+                  <button
+                    className={`arrow-button ${isAscending ? 'active' : ''}`}
+                    onClick={handleUpArrowClick}
+                  >
+                    &uarr;
+                  </button>
                 </>
-              ) : (
-                entityName
               )}
-            </>
-          </td>
-        </tr>
+            </span>
+          </div>
+        </td>
+      </tr>
       );
     }
     return null;
