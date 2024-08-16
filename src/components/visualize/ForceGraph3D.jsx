@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState , useCallback } from "react";
 import Papa from "papaparse";
 import "./Visualize_filteration.css";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
@@ -257,13 +257,23 @@ const Visualize_filteration = () => {
     });
   };
 
-  const handleInputData = () => {
-    if (selectedEntity) {
-      const upperCaseInputValue = inputValue.toUpperCase();
-      setInputData({ [selectedEntity]: upperCaseInputValue }); // Save selectedEntity as key and inputValue as value
-    }
-  };
-  
+
+  // const handleInputData = () => {
+  //   if (selectedEntity) {
+  //     const upperCaseInputValue = inputValue.toUpperCase();
+  //     setInputData({ [selectedEntity]: upperCaseInputValue }); // Save selectedEntity as key and inputValue as value
+  //   }
+  // };
+  const handleInputData = useCallback(() => {
+    const upperCaseInputValue = inputValue.toUpperCase();
+    setInputData({ [selectedEntity]: upperCaseInputValue }); // Save selectedEntity as key and inputValue as value
+     console.log("inputData" , inputData) ;
+  }, [selectedEntity, inputValue]);
+
+  useEffect(() => {
+    handleInputData();
+  }, [handleInputData]);
+
   const handleSelectChange = (e) => {
     const entity = e.target.value;
     setSelectedEntity(entity);
@@ -275,16 +285,18 @@ const Visualize_filteration = () => {
   };
   
   // Using useEffect to handle data updates after state changes
-  useEffect(() => {
-    handleInputData();
-  }, [selectedEntity, inputValue]);
+  // useEffect(() => {
+  //   handleInputData();
+    
+  // console.log("inputData" , inputData) ; 
+  // }, [selectedEntity, inputValue]);
+
   
   const [showTable1, setShowTable1] = useState(true);
 
   const handleToggle = (table) => {
     setShowTable1(table === "table1");
   };
-  console.log("inputData" , inputData) ; 
 
   return (
     <>
@@ -316,81 +328,64 @@ const Visualize_filteration = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {Object.entries(entityHeaders).map(
-                            ([filePath, headers], index) =>
-                              headers.map((header, headerIndex) => {
-                                if (uniqueData.length !== 0) {
-                                  if (uniqueData[index][header].length < 150) {
-                                    return (
-                                      <tr key={`${index}-${headerIndex}`}>
-                                        <td>
-                                          {headerIndex === 0 ? (
-                                            <>
-                                              <input
-                                                type="checkbox"
-                                                onChange={() =>
-                                                  handleEntityData_main(
-                                                    filePath
-                                                  )
-                                                }
-                                                checked={checkedEntityNames.includes(
-                                                  getEntityName(filePath)
-                                                )}
-                                                value={getEntityName(filePath)}
-                                              />
-                                          
-                                              {getEntityName(filePath)}
-                                            </>
-                                          ) : (
-                                            ""
-                                          )}
-                                        </td>
-                                        <td>
-                                          <div className="dropdown">
-                                            <button className="dropbtn">
-                                              {header}
-                                            </button>
-                                            <div className="dropdown-content">
-                                              {uniqueData[index][header].map(
-                                                (item, itemIndex) => (
-                                                  <label key={itemIndex}>
-                                                    <input
-                                                      type="checkbox"
-                                                      value={item}
-                                                      onChange={() =>
-                                                      {
+  {Object.entries(entityHeaders).map(([filePath, headers], index) =>
+    headers.map((header, headerIndex) => {
+      if (uniqueData.length !== 0) {
+        if (uniqueData[index][header].length < 150) {
+          return (
+            <tr key={`${index}-${headerIndex}`}>
+              <td>
+                {headerIndex === 0 ? (
+                  <>
+                    <input
+                      className="inputcheck"
+                      type="checkbox"
+                      onChange={() => handleEntityData_main(filePath)}
+                      checked={checkedEntityNames.includes(
+                        getEntityName(filePath)
+                      )}
+                      value={getEntityName(filePath)}
+                    />
+                    {getEntityName(filePath)}
+                  </>
+                ) : (
+                  ""
+                )}
+              </td>
+              <td>
+                <div className="dropdown">
+                  <button className="dropbtn">{header}</button>
+                  <div className="dropdown-content">
+                    {uniqueData[index][header].map((item, itemIndex) => (
+                      <label key={itemIndex}>
+                        <input
+                          className="inputcheck"
+                          type="checkbox"
+                          value={item}
+                          onChange={() => {
+                            handleEntityData(filePath, header, item);
+                          }}
+                          checked={
+                            checkedDropdownItems[getEntityName(filePath)]?.[
+                              header
+                            ]?.[item]
+                          }
+                        />
+                        {item}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              </td>
+            </tr>
+          );
+        }
+      }
+      return null;
+    })
+  )}
+</tbody>
 
-                                                        // setSelectEntityNames(true) ,
-                                                        handleEntityData(
-                                                          filePath,
-                                                          header,
-                                                          item
-                                                        )
-                                                      }
-                                                      }
-                                                      checked={
-                                                        checkedDropdownItems[
-                                                          getEntityName(
-                                                            filePath
-                                                          )
-                                                        ]?.[header]?.[item]
-                                                      }
-                                                    />
-                                                    {item}
-                                                  </label>
-                                                )
-                                              )}
-                                            </div>
-                                          </div>
-                                        </td>
-                                      </tr>
-                                    );
-                                  }
-                                }
-                                return null;
-                              })
-                          )}
-                        </tbody>
                       </table>
                     ) : (
                       <table className="table2">
@@ -447,8 +442,10 @@ const Visualize_filteration = () => {
                 checked={checkedEntityNames.includes(entityName)}
                 value={entityName}
               />
+             
               {entityName === "N_PARTNUMBER" ? (
                 <>
+             
                   {entityName}
                   <button
         className={`arrow-button ${!isAscending ? 'active' : ''}`}

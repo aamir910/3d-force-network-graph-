@@ -29,6 +29,7 @@ const ForceGraph2DComponent = () => {
   const SingleCheckCustomer = location.state?.inputData || [];
 
   const isAscending = location.state?.isAscending || false;
+  
   const fgRef = useRef();
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
 
@@ -369,7 +370,7 @@ const ForceGraph2DComponent = () => {
        
       console.log(  Object.keys(SingleCheckCustomer)[0]  ,'Object.values(SingleCheckCustomer)[0]')
 
-if ( Object.keys(SingleCheckCustomer)[0] !== "N_SUPPLIER") {
+    if (Object.keys(SingleCheckCustomer)[0] !== "N_SUPPLIER") {
           if (
             row.Entity_Type_1 === "N_PURCHORDER" &&
             row.Entity_Type_2 === "N_PARTNUMBER"
