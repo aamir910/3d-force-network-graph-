@@ -351,19 +351,37 @@ const ForceGraph2DComponent = () => {
 
       // }
       if (addnodestemp.includes(Entity_2)) {
+     
         if (
           row.Entity_Type_1 === "N_PARTNUMBER" &&
           row.Entity_Type_2 === "N_PARTNUMBER"
         ) {
-          if (addnodestemp.includes(Entity_1)) {
-            if (Entity_1 > Entity_2) {
-              addnodes2.push(Entity_1);
-              return true; // Include this row
-            } else {
-              return false;
-            }
-          }
+     if(isAscending){
+      if (addnodestemp.includes(Entity_2)) {
+       
+        if (Entity_1 < Entity_2) {
+          addnodes2.push(Entity_2);
+          return true; // Include this row
         } else {
+          return false;
+        }
+        
+      }
+     }else{
+      if (addnodestemp.includes(Entity_1)) {
+       
+        if (Entity_1 > Entity_2) {
+          addnodes2.push(Entity_2);
+          return true; // Include this row
+        } else {
+          return false;
+        }
+        
+      }
+     }
+        } 
+        else {
+          //    N_PARTNUMBER && N_PARTNUMBER ended here 
           addnodes2.push(Entity_1);
           return true; // Include this row
         }
@@ -383,6 +401,7 @@ const ForceGraph2DComponent = () => {
           } else {
             // upword
             if (Entity_1 < Entity_2) {
+
               // console.log("check " ,Entity_2 )
               addnodes2.push(Entity_2);
               return true; // Include this row
@@ -395,6 +414,13 @@ const ForceGraph2DComponent = () => {
           return true; // Include this row
         }
       }
+
+
+
+
+
+
+
 
       return false; // Exclude this row
     });
@@ -568,7 +594,7 @@ const ForceGraph2DComponent = () => {
           if (Object.keys(SingleCheckCustomer)[0] === "N_PARTNUMBER") {
             add_nodes = [Object.values(SingleCheckCustomer)[0]];
           }
-
+ console.log("add_nodes" , add_nodes ,  add_nodes)
           let filterFunctionResult = filterAndUpdateNodes_input(
             filteredData,
             add_nodes
