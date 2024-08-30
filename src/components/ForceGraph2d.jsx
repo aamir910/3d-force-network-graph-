@@ -29,7 +29,7 @@ const ForceGraph2DComponent = () => {
   const SingleCheckCustomer = location.state?.inputData || [];
 
   const isAscending = location.state?.isAscending || false;
-
+  
   const fgRef = useRef();
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
 
@@ -351,17 +351,20 @@ const ForceGraph2DComponent = () => {
           row.Entity_Type_1 === "N_PARTNUMBER" &&
           row.Entity_Type_2 === "N_PARTNUMBER"
         ) {
-          if (isAscending) {
-            if (addnodestemp.includes(Entity_1)) {
-              if (Entity_1 > Entity_2) {
-                addnodes2.push(Entity_1);
-                return true; // Include this row
-              } else {
-                return false;
-              }
+
+
+          
+          if (addnodestemp.includes(Entity_1)) {
+            if (Entity_1 > Entity_2) {
+              addnodes2.push(Entity_1);
+              return true; // Include this row
+            } else {
+              return false;
             }
-          } else {
-            if (addnodestemp.includes(Entity_2)) {
+          }
+
+          if (isAscending) {
+          if (addnodestemp.includes(Entity_2)) {
               if (Entity_1 < Entity_2) {
                 addnodes2.push(Entity_2);
                 return true; // Include this row
@@ -369,8 +372,26 @@ const ForceGraph2DComponent = () => {
                 return false;
               }
             }
+          } else {
+
+          if (addnodestemp.includes(Entity_1)) {
+            if (Entity_1 > Entity_2) {
+              addnodes2.push(Entity_1);
+              return true; // Include this row
+            } else {
+              return false;
+            }
           }
-        } else {
+   
+          }
+
+        }
+        
+        
+        
+        
+        
+        else {
           addnodes2.push(Entity_1);
           return true; // Include this row
         }
@@ -378,7 +399,9 @@ const ForceGraph2DComponent = () => {
 
       // change will be there
       if (addnodestemp.includes(Entity_1)) {
-        if (Object.keys(SingleCheckCustomer)[0] !== "N_SUPPLIER") {
+       
+  
+    if (Object.keys(SingleCheckCustomer)[0] !== "N_SUPPLIER") {
           if (
             row.Entity_Type_1 === "N_PURCHORDER" &&
             row.Entity_Type_2 === "N_PARTNUMBER"
@@ -393,12 +416,15 @@ const ForceGraph2DComponent = () => {
           }
         }
 
+
+        
         if (
           row.Entity_Type_1 === "N_PARTNUMBER" &&
           row.Entity_Type_2 === "N_PARTNUMBER"
         ) {
+          
           if (isAscending) {
-            // downward
+            // downward 
             if (Entity_1 > Entity_2) {
               addnodes2.push(Entity_2);
               return true; // Include this row
@@ -406,8 +432,10 @@ const ForceGraph2DComponent = () => {
               return false;
             }
           } else {
-            // upword
+
+            // upword 
             if (Entity_1 < Entity_2) {
+                      
               // console.log("check " ,Entity_2 )
               addnodes2.push(Entity_2);
               return true; // Include this row
@@ -416,6 +444,7 @@ const ForceGraph2DComponent = () => {
             }
           }
         } else {
+
           addnodes2.push(Entity_2);
           return true; // Include this row
         }
@@ -589,45 +618,49 @@ const ForceGraph2DComponent = () => {
               "N_SUPPLIER"
             );
           }
-
-          if (Object.keys(SingleCheckCustomer)[0] === "N_PARTNUMBER") {
-            add_nodes = [Object.values(SingleCheckCustomer)[0]];
-          }
+            
+           if (Object.keys(SingleCheckCustomer)[0] === "N_PARTNUMBER") 
+           {
+             add_nodes = [Object.values(SingleCheckCustomer)[0]];
+           }
+              
 
           let filterFunctionResult = filterAndUpdateNodes_input(
             filteredData,
             add_nodes
           );
-          // 1
+// 1
           filterFunctionResult = filterAndUpdateNodes_input(
             filteredData,
             filterFunctionResult.addnodes2
           );
-          // 2
+// 2
           filterFunctionResult = filterAndUpdateNodes_input(
             filteredData,
             filterFunctionResult.addnodes2
           );
-          // 3
+// 3
           filterFunctionResult = filterAndUpdateNodes_input(
             filteredData,
             filterFunctionResult.addnodes2
           );
-          // 4
+// 4
           filterFunctionResult = filterAndUpdateNodes_input(
             filteredData,
             filterFunctionResult.addnodes2
           );
-          // 5
+ // 5
           filterFunctionResult = filterAndUpdateNodes_input(
             filteredData,
             filterFunctionResult.addnodes2
           );
-          // 6
+ // 6
           filterFunctionResult = filterAndUpdateNodes_input(
             filteredData,
             filterFunctionResult.addnodes2
           );
+
+
 
           console.log("final fiter data is ", filterFunctionResult, allnodes);
           let finalFilteredRows = filterFunctionResult.filteredRows;
@@ -957,36 +990,42 @@ const ForceGraph2DComponent = () => {
             filteredData2,
             add_nodes
           );
-          // 1
-          filterFunctionResult = filterAndUpdateNodes_input(
-            filteredData,
-            filterFunctionResult.addnodes2
-          );
-          // 2
-          filterFunctionResult = filterAndUpdateNodes_input(
-            filteredData,
-            filterFunctionResult.addnodes2
-          );
-          // 3
-          filterFunctionResult = filterAndUpdateNodes_input(
-            filteredData,
-            filterFunctionResult.addnodes2
-          );
-          // 4
-          filterFunctionResult = filterAndUpdateNodes_input(
-            filteredData,
-            filterFunctionResult.addnodes2
-          );
-          // 5
-          filterFunctionResult = filterAndUpdateNodes_input(
-            filteredData,
-            filterFunctionResult.addnodes2
-          );
-          // 6
-          filterFunctionResult = filterAndUpdateNodes_input(
-            filteredData,
-            filterFunctionResult.addnodes2
-          );
+     // 1
+     filterFunctionResult = filterAndUpdateNodes_input(
+      filteredData,
+      filterFunctionResult.addnodes2
+    );
+// 2
+    filterFunctionResult = filterAndUpdateNodes_input(
+      filteredData,
+      filterFunctionResult.addnodes2
+    );
+// 3
+    filterFunctionResult = filterAndUpdateNodes_input(
+      filteredData,
+      filterFunctionResult.addnodes2
+    );
+// 4
+    filterFunctionResult = filterAndUpdateNodes_input(
+      filteredData,
+      filterFunctionResult.addnodes2
+    );
+// 5
+    filterFunctionResult = filterAndUpdateNodes_input(
+      filteredData,
+      filterFunctionResult.addnodes2
+    );
+// 6
+    filterFunctionResult = filterAndUpdateNodes_input(
+      filteredData,
+      filterFunctionResult.addnodes2
+    );
+
+         
+
+
+
+
 
           let finalFilteredRows = filterFunctionResult.filteredRows;
           console.log("allnodes", allnodes);
