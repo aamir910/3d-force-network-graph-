@@ -351,22 +351,23 @@ const ForceGraph2DComponent = () => {
           row.Entity_Type_1 === "N_PARTNUMBER" &&
           row.Entity_Type_2 === "N_PARTNUMBER"
         ) {
-
+     
 
           
-          if (addnodestemp.includes(Entity_1)) {
-            if (Entity_1 > Entity_2) {
-              addnodes2.push(Entity_1);
-              return true; // Include this row
-            } else {
-              return false;
-            }
-          }
+          // if (addnodestemp.includes(Entity_1)) {
+          //   if (Entity_1 > Entity_2) {
+          //     addnodes2.push(Entity_1);
+          //     return true; // Include this row
+          //   } else {
+          //     return false;
+          //   }
+          // }
+
 
           if (isAscending) {
           if (addnodestemp.includes(Entity_2)) {
               if (Entity_1 < Entity_2) {
-                addnodes2.push(Entity_2);
+                addnodes2.push(Entity_1);
                 return true; // Include this row
               } else {
                 return false;
@@ -386,11 +387,6 @@ const ForceGraph2DComponent = () => {
           }
 
         }
-        
-        
-        
-        
-        
         else {
           addnodes2.push(Entity_1);
           return true; // Include this row
@@ -434,6 +430,7 @@ const ForceGraph2DComponent = () => {
           } else {
 
             // upword 
+            
             if (Entity_1 < Entity_2) {
                       
               // console.log("check " ,Entity_2 )
