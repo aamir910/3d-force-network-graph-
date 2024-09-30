@@ -15,8 +15,10 @@ const FileUploadSection = () => {
   const [entityData, setEntityData] = useState([]); // State to hold parsed entity data
   const [linkData, setLinkData] = useState([]); // State to hold parsed link data
   const [iconData, setIconData] = useState([]); // State to hold uploaded icon file data
+console.log(entityData ,entityFiles , "entityFilesentityFiles" )
+ 
 
-  const beforeUpload = (file, files, setFiles, setData, index) => {
+const beforeUpload = (file, files, setFiles, setData, index) => {
     // Here we directly access the file and parse it if necessary
     const fileName = file.name;
     const updatedFiles = [...files];
@@ -85,7 +87,7 @@ const FileUploadSection = () => {
         <Card
           title="File Upload Sections"
           bordered={true}
-          style={{ width: '80%', padding: '20px', textAlign: 'center', background: "#f2f2f2" }}
+          style={{ width: '80%', padding: '10px', textAlign: 'center', background: "#f2f2f2" }}
         >
           <Row gutter={[24, 24]} justify="center">
             <Col xs={24} sm={12} md={8}>
@@ -121,6 +123,7 @@ const FileUploadSection = () => {
                 </Button>
               </Card>
             </Col>
+          <button> Submit</button>
           </Row>
         </Card>
       </div>
