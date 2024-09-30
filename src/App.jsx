@@ -6,6 +6,7 @@ import ForceGraph2DComponent from "./components/ForceGraph2d";
 import Sidebar from "./components/Buttons/SIdeBar";
 import MainContent from "./components/Maincontent/Maincontent";
 import './App.css'
+import FileUploadSection from "./components/FileUpload/FileUpload";
 const App = () => {
   return (
     <Router>
@@ -27,6 +28,7 @@ const App = () => {
                 <Route path="/visualize" element={<Visualize_filteration />} />
                 <Route path="/CONFIGURATION" element={<MainContent />} />
                 <Route path="/3d_graph" element={<ForceGraph2DComponent />} />
+                <Route path="/upload" element={<FileUploadSection/>  } />
 
               </Routes>
 

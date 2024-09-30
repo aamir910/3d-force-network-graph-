@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.5.1",
+    "antd": "^5.21.1",
     "bootstrap": "^5.3.3",
     "papaparse": "^5.4.1",
     "react": "^18.2.0",

@@ -240,6 +240,7 @@ const ForceGraph2DComponent = () => {
   const processCSV = (data) => {
     const nodesMap = {};
 
+  
     // const links = data.slice(0, 50).map((row) => {
 
     const links = data.map((row) => {
@@ -432,7 +433,12 @@ const ForceGraph2DComponent = () => {
             // upword 
             
             if (Entity_1 < Entity_2) {
-                      
+              
+               if( row.Entity_Type_1 === "N_SELLORDER" && row.Entity_Type_2 !== "N_PARTNUMBER"
+               ){
+                return false;
+               }
+                 
               // console.log("check " ,Entity_2 )
               addnodes2.push(Entity_2);
               return true; // Include this row
@@ -676,6 +682,7 @@ const ForceGraph2DComponent = () => {
     if (fg) {
       fg.d3Force("link").distance((link) => 100); // You can customize the distance
     }
+    console.log(graphData ," graphData graphData")
   }, [graphData]);
 
   const getNodeColor = (node) => nodeColors[node.group] || nodeColors.default;
