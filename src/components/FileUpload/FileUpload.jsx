@@ -29,10 +29,10 @@ const FileUploadSection = () => {
   };
 
   const renderFileList = (files, setFiles, acceptType) => (
-    <div     style={{ borderRadius: 0, height: 330, overflowY: 'auto' }}>
+    <div     style={{ borderRadius: 0, height: 300, overflowY: 'auto' }}>
       {files.map((file, index) => (
         <Row key={index} style={{ marginBottom: '10px' }}>
-          <Col span={16}>
+          <Col span={12}>
             <Text>{file.name}</Text>
           </Col>
           <Col span={8}>
