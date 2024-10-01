@@ -6,12 +6,15 @@ import ForceGraph2DComponent from "./components/ForceGraph2d";
 import Sidebar from "./components/Buttons/SIdeBar";
 import MainContent from "./components/Maincontent/Maincontent";
 import './App.css'
-import FileUploadSection from "./components/FileUpload/FileUpload";
+// import FileUploadSection from "./components/FileUpload/FileUpload";
+
+import FileUploadSection from "./components/FileUpload/uploadworking";
+
 const App = () => {
   return (
     <Router>
 
-      <div className="App">
+      <div className="App"> 
 
 {/* 
         <Sidebar className="App-header">
