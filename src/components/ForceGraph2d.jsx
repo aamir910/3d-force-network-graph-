@@ -483,7 +483,7 @@ const ForceGraph2DComponent = () => {
   }
 
   useEffect(() => {
-    Papa.parse("/Edeges_And_Nodes_with_Entity_1.csv", {
+    Papa.parse("https://entertainmentbuz.com//EDGE_INTELLIGENCE/Get_merge_file.php", {
       download: true,
       header: true,
       complete: (result) => {
@@ -848,7 +848,7 @@ const ForceGraph2DComponent = () => {
   };
 
   const applyFilters = () => {
-    Papa.parse("/Edeges_And_Nodes_with_Entity_1.csv", {
+    Papa.parse("https://entertainmentbuz.com//EDGE_INTELLIGENCE/Get_merge_file.php", {
       download: true,
       header: true,
       complete: (result) => {

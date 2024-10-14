@@ -65,7 +65,7 @@ const FileUploadSection = () => {
   
     // Append entity files
     entityFiles.forEach((file, index) => {
-      console.log(file ,"here is the file ")
+      console.log(file ,"here is the file entity file")
       if (file.file) {
         formData.append(`entityFiles_${index}`, file.file);
       }
@@ -73,6 +73,8 @@ const FileUploadSection = () => {
   
     // Append link files
     linkFiles.forEach((file, index) => {
+      
+      console.log(file ,"here is the file link file")
       if (file.file) {
         formData.append(`linkFiles_${index}`, file.file);
       }
@@ -87,7 +89,7 @@ const FileUploadSection = () => {
   
     // Log the formData
     try {
-      const response = await axios.post('http://localhost/React_php/edge.php', formData, {
+      const response = await axios.post('https://entertainmentbuz.com/EDGE_INTELLIGENCE/edge.php', formData, {
         headers: {  
           'Content-Type': 'multipart/form-data',
         },
