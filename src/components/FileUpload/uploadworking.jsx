@@ -4,6 +4,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios'; // Import Axios for HTTP requests
 import Navbar from "../NavBar/NavBar";
 import './FileUploadSection.css';
+import { useNavigate } from 'react-router-dom';
 
 const { Text } = Typography;
 
@@ -13,6 +14,7 @@ const FileUploadSection = () => {
   const [iconFiles, setIconFiles] = useState([{ file: null, name: 'Enter file', loaded: false }]);
   const [loading, setLoading] = useState(false); // Add loading state
 
+  const navigate = useNavigate();
   console.log(entityFiles , linkFiles , "linkFiles linkFiles");
 
   const beforeUpload = (file, files, setFiles, index) => {
@@ -99,6 +101,7 @@ const FileUploadSection = () => {
       message.error("Error uploading files");
     } finally {
       setLoading(false); // Stop loader after response
+      navigate('/visualize');
     }
   };
 

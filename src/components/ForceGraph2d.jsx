@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { ForceGraph3D } from "react-force-graph";
+import { Spin } from "antd";
 import Papa from "papaparse";
 import * as THREE from "three";
 import "./styles.css";
@@ -483,6 +484,7 @@ const ForceGraph2DComponent = () => {
   }
 
   useEffect(() => {
+    
     Papa.parse("https://entertainmentbuz.com//EDGE_INTELLIGENCE/Get_merge_file.php", {
       download: true,
       header: true,
