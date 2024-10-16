@@ -104,7 +104,7 @@ const FileUploadSection = () => {
 
   return (
     <>
-      <Navbar image="newedgeintelligence.png" color="#f0f0f0" />
+      <Navbar image="newedgeintelligence.png" color="transparent" />
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
         <Card
           title="File Upload Sections"
@@ -116,7 +116,7 @@ const FileUploadSection = () => {
               <Col xs={24} sm={12} md={8}>
                 {/* Entity Section */}
                 <Card
-                  title={<div style={{ backgroundColor: 'orange', padding: '1px', borderRadius: '4px' }}>ENTITY</div>}
+                  title={<div style={{ color: "white", backgroundColor: '#2a5594', padding: '1px', borderRadius: '4px' }}>ENTITY</div>}
                 >
                   {renderFileList(entityFiles, setEntityFiles, ".csv")}
                   <Button onClick={() => setEntityFiles([...entityFiles, { file: null, name: 'Enter file', loaded: false }])} type="dashed" block>
@@ -127,7 +127,7 @@ const FileUploadSection = () => {
               <Col xs={24} sm={12} md={8}>
                 {/* Link Section */}
                 <Card
-                  title={<div style={{ backgroundColor: 'yellow', padding: '1px', borderRadius: '4px' }}>LINK</div>}
+                  title={<div style={{  color: "white", backgroundColor: '#2a5594', padding: '1px', borderRadius: '4px' }}>LINK</div>}
                 >
                   {renderFileList(linkFiles, setLinkFiles, ".csv")}
                   <Button onClick={() => setLinkFiles([...linkFiles, { file: null, name: 'Enter file', loaded: false }])} type="dashed" block>
@@ -138,7 +138,7 @@ const FileUploadSection = () => {
               <Col xs={24} sm={12} md={8}>
                 {/* Icon Section */}
                 <Card
-                  title={<div style={{ backgroundColor: '#3cb9eb', padding: '1px', borderRadius: '4px' }}>ICON</div>}
+                  title={<div style={{ color: "white", backgroundColor: '#2a5594', padding: '1px', borderRadius: '4px' }}>ICON</div>}
                 >
                   {renderFileList(iconFiles, setIconFiles, ".png,.jpg,.jpeg")}
                   <Button onClick={() => setIconFiles([...iconFiles, { file: null, name: 'Enter file', loaded: false }])} type="dashed" block>
@@ -147,7 +147,7 @@ const FileUploadSection = () => {
                 </Card>
               </Col>
             </Row>
-            <Button type="primary" onClick={handleSubmit} style={{ marginTop: '20px' }}>
+            <Button type="primary" onClick={handleSubmit} style={{ marginTop: '20px' , backgroundColor: '#2a5594'}}>
               Submit
             </Button>
           </Spin>

@@ -172,7 +172,7 @@ console.log(uniquePlants ,'here are the unique plant ')
   
   return (
     <>                        
-    <Navbar image = "newedgeintelligence.png" color= "#f0f0f0"/>
+    <Navbar image = "newedgeintelligence.png" color= "transparent"/>
     <div className="flex coloum">
 <div className="col-2">
 

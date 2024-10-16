@@ -300,7 +300,7 @@ const Visualize_filteration = () => {
 
   return (
     <>
-      <Navbar image="newedgeintelligence.png" color="#f0f0f0" />
+      <Navbar image="newedgeintelligence.png" color="transparent" />
       <div className="flex coloum">
         <div className="main_visualize col-12">
           <div className="row">
@@ -518,6 +518,7 @@ const Visualize_filteration = () => {
                       </tbody>
                     </table>
                     <button
+                    style={{background: "#2a5594" ,color:"white"}}
   onClick={() => {
     if (false ) {
 

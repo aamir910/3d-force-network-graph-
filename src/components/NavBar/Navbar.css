@@ -32,3 +32,20 @@
     max-height: 40px; /* Limit the height of the logo */
     max-width: 100%; /* Ensure the logo doesn't exceed the navbar width */
 }
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Places one item on each side */
+    align-items: center;
+    padding: 10px 20px; /* Adjust padding as needed */
+  }
+  
+  .navbar-logo {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .navbar-logo img {
+    height: 50px; /* Adjust the height of the logos if necessary */
+  }
+  

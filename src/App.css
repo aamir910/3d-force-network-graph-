@@ -16,4 +16,6 @@ main {
 }
 body{
   overflow: hidden;
+  background: linear-gradient(to right, #ffffff, #add8e6);
+
 }
