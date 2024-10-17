@@ -484,7 +484,7 @@ const ForceGraph2DComponent = () => {
   }
 
   useEffect(() => {
-    
+
     Papa.parse("https://entertainmentbuz.com//EDGE_INTELLIGENCE/Get_merge_file.php", {
       download: true,
       header: true,
@@ -730,7 +730,7 @@ const ForceGraph2DComponent = () => {
 
   const renderLegend = () => (
     <>
-      <Navbar image="edge_white_text.png" color="black" />
+      <Navbar image="newedgeintelligence.png" color="white" />
       <div className="legend">
         <ul>
           <div class="container">

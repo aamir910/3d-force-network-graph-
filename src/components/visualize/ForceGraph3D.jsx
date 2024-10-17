@@ -300,7 +300,7 @@ const Visualize_filteration = () => {
 
   return (
     <>
-      <Navbar image="newedgeintelligence.png" color="transparent" />
+      <Navbar image="newedgeintelligence.png" color="white" />
       <div className="flex coloum">
         <div className="main_visualize col-12">
           <div className="row">
@@ -318,7 +318,7 @@ const Visualize_filteration = () => {
               <div className="table-container">
                 <div className="table-section1">
                   <h3 className="entity_class">ENTITY</h3>
-                  <div className="table-wrapper">
+                  <div className="table-wrapper"  style={{height:"450px"}}>
                     {showTable1 ? (
                       <table className="table2">
                         <thead>
@@ -418,7 +418,7 @@ const Visualize_filteration = () => {
         </select>
         <input 
           type="text" 
-          value={inputValue}
+          value={inputValue}    
           onChange={handleInputChange} 
           placeholder="ENTER ID"
         />

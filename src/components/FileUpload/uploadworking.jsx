@@ -107,7 +107,7 @@ const FileUploadSection = () => {
 
   return (
     <>
-      <Navbar image="newedgeintelligence.png" color="transparent" />
+      <Navbar image="newedgeintelligence.png" color="white" />
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
         <Card
           title="File Upload Sections"
@@ -138,8 +138,8 @@ const FileUploadSection = () => {
                   </Button>
                 </Card>
               </Col>
-              <Col xs={24} sm={12} md={8}>
-                {/* Icon Section */}
+              {/* <Col xs={24} sm={12} md={8}>
+              
                 <Card
                   title={<div style={{ color: "white", backgroundColor: '#2a5594', padding: '1px', borderRadius: '4px' }}>ICON</div>}
                 >
@@ -148,7 +148,8 @@ const FileUploadSection = () => {
                     Add More File
                   </Button>
                 </Card>
-              </Col>
+              </Col> */}
+
             </Row>
             <Button type="primary" onClick={handleSubmit} style={{ marginTop: '20px' , backgroundColor: '#2a5594'}}>
               Submit

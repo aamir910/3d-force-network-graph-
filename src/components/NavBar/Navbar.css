@@ -41,8 +41,9 @@
   
   .navbar-logo {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     width: 100%;
+    gap: 25rem;
   }
   
   .navbar-logo img {
