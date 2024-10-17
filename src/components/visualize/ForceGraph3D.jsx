@@ -155,7 +155,7 @@ const Visualize_filteration = () => {
       case "N_SUPPLIER.csv":
         return "N_SUPPLIER";
       default:
-        return "";
+        return fileName ; 
     }
   };
 
@@ -173,7 +173,7 @@ const Visualize_filteration = () => {
       case "E_PNSUPPORD.csv":
         return "E_PNSUPPORD";
       default:
-        return "";
+        return fileName;
     }
   };
 
@@ -318,7 +318,7 @@ const Visualize_filteration = () => {
               <div className="table-container">
                 <div className="table-section1">
                   <h3 className="entity_class">ENTITY</h3>
-                  <div className="table-wrapper"  style={{height:"450px"}}>
+                  <div className="table-wrapper"  style={{ height: "80%" }}>
                     {showTable1 ? (
                       <table className="table2">
                         <thead>

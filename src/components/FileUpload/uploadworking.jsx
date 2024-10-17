@@ -107,20 +107,22 @@ const FileUploadSection = () => {
 
   return (
     <>
+    <div style={{   height: '100%' }} >
+
       <Navbar image="newedgeintelligence.png" color="white" />
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90%' }}>
         <Card
           title="File Upload Sections"
           bordered={true}
-          style={{ width: '80%', padding: '10px', textAlign: 'center', background: "#f2f2f2" }}
+          style={{ width: '80%', padding: '10px', textAlign: 'center', background: "#f2f2f2",  height: '80%' }}
         >
           <Spin spinning={loading}> {/* Wrap content inside Spin */}
-            <Row gutter={[24, 24]} justify="center">
-              <Col xs={24} sm={12} md={8}>
+            <Row gutter={[24, 24]} justify="center" >
+              <Col xs={24} sm={12} md={8} >
                 {/* Entity Section */}
                 <Card
-                  title={<div style={{ color: "white", backgroundColor: '#2a5594', padding: '1px', borderRadius: '4px' }}>ENTITY</div>}
-                >
+                  title={<div style={{ color: "white", backgroundColor: '#2a5594', padding: '1px', borderRadius: '4px',  }}>ENTITY</div>}
+                   >
                   {renderFileList(entityFiles, setEntityFiles, ".csv")}
                   <Button onClick={() => setEntityFiles([...entityFiles, { file: null, name: 'Enter file', loaded: false }])} type="dashed" block>
                     Add More File
@@ -157,6 +159,7 @@ const FileUploadSection = () => {
           </Spin>
         </Card>
       </div>
+    </div>
     </>
   );
 };
