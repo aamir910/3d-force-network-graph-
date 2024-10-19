@@ -91,7 +91,7 @@ const Visualize_filteration = () => {
         csvFiles.forEach((file, index) => {
           newLinkHeaders[file] = linkHeadersArray[index];
         });
-
+console.log(newLinkHeaders ,newLinkHeaders ,"newLinkHeaders")
         // setEntityHeaders(newEntityHeaders);
         // setLinkHeaders(newLinkHeaders);
         // setEnitityData(entityDataArray);
@@ -136,7 +136,7 @@ const Visualize_filteration = () => {
 
         console.log(newEntityHeaders2, entityDataArray2, "newEntityHeaders2");
 
-        // setLinkHeaders(newLinkHeaders);
+        setLinkHeaders(linkFiles2);
 
         setEntityHeaders(newEntityHeaders2);
         setEnitityData(entityDataArray2);
@@ -184,6 +184,11 @@ const Visualize_filteration = () => {
       const result = entityData.map((subArray) => getUniqueValues(subArray));
       console.log( entityData,result ,'result of the uniquedata here ')
       setUniqueData(result);
+
+
+
+
+      
     }
   }, [entityData]);
 
@@ -379,10 +384,10 @@ const Visualize_filteration = () => {
                             ([filePath, headers], index) =>
                               headers.map((header, headerIndex) => {
                                 if (uniqueData.length !== 0) {
-                                  console.log(
-                                    "uniqueData uniqueData",
-                                    uniqueData
-                                  );
+                                  // console.log(
+                                  //   "uniqueData uniqueData",
+                                  //   uniqueData
+                                  // );
 
                                   if (uniqueData[index][header].length < 150) {
                                     return (
@@ -500,6 +505,7 @@ const Visualize_filteration = () => {
 
                           {Object.entries(entityHeaders).map(
                             ([filePath, headers], index) => {
+                              console.log(linkHeaders , "linkFiles2 linkFiles2linkFiles2linkFiles2linkFiles2")
                               if (uniqueData.length !== 0) {
                                 const entityName = getEntityName(filePath);
                                 return (
@@ -565,29 +571,27 @@ const Visualize_filteration = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {Object.entries(linkHeaders).map(
-                          ([filePath, headers], index) => (
-                            <tr key={index}>
-                              <td>
-                                <input
-                                  type="checkbox"
-                                  name=""
-                                  id=""
-                                  onChange={() => {
-                                    // setSelectLinkNames(true);
-                                    handleLinkData(filePath);
-                                  }}
-                                  checked={checkedLinkNames.includes(
-                                    getLinkName(filePath)
-                                  )}
-                                  value={getLinkName(filePath)}
-                                />{" "}
-                                {getLinkName(filePath)}
-                              </td>
-                            </tr>
-                          )
-                        )}
-                      </tbody>
+  {linkHeaders && linkHeaders.length > 0 ? (
+    linkHeaders.map((filePath, index) => (
+      <tr key={index}>
+        <td>
+          <input
+            type="checkbox"
+            onChange={() => handleLinkData(filePath)}
+            checked={checkedLinkNames.includes(getLinkName(filePath))}
+            value={getLinkName(filePath)}
+          />{" "}
+          {getLinkName(filePath)}
+        </td>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td>No files available</td>
+    </tr>
+  )}
+</tbody>
+
                     </table>
                     <button
                       style={{ background: "#2a5594", color: "white" }}
