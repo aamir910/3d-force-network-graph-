@@ -1,4 +1,4 @@
-import React, { useEffect, useState , useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Papa from "papaparse";
 import "./Visualize_filteration.css";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
@@ -27,7 +27,7 @@ const Visualize_filteration = () => {
   const [entityHeaders, setEntityHeaders] = useState({});
   const [linkHeaders, setLinkHeaders] = useState({});
   const [entityData, setEnitityData] = useState({});
-  
+
   const [checkedEntities, setCheckedEntities] = useState({});
   const [checkedLinks, setCheckedLinks] = useState({});
 
@@ -35,14 +35,11 @@ const Visualize_filteration = () => {
   const [checkedLinkNames, setCheckedLinkNames] = useState([]);
   const navigate = useNavigate();
   const [checkedDropdownItems, setCheckedDropdownItems] = useState({});
-  const [selectedEntity, setSelectedEntity] = useState('');
-  const [inputValue, setInputValue] = useState('');
+  const [selectedEntity, setSelectedEntity] = useState("");
+  const [inputValue, setInputValue] = useState("");
   const [inputData, setInputData] = useState({});
 
-
-  const [isAscending, setIsAscending] = useState(false); 
-  
-
+  const [isAscending, setIsAscending] = useState(false);
 
   const handleUpArrowClick = () => {
     setIsAscending(true);
@@ -51,8 +48,6 @@ const Visualize_filteration = () => {
   const handleDownArrowClick = () => {
     setIsAscending(false);
   };
-
-
 
   // const [SelectEntityNames, setSelectEntityNames] = useState(false);
   // const [SelectLinkNames, setSelectLinkNames] = useState(false);
@@ -79,10 +74,10 @@ const Visualize_filteration = () => {
       try {
         const entityHeaderPromises = csvFiles2.map((file) => loadCSV(file));
         const linkHeaderPromises = csvFiles.map((file) => loadCSV(file));
-
+        console.log(entityHeaderPromises, "entityHeaderPromises  ");
         const entityResults = await Promise.all(entityHeaderPromises);
         const linkResults = await Promise.all(linkHeaderPromises);
-
+        console.log(entityResults, "entityResults");
         const entityHeadersArray = entityResults.map((result) => result.header);
         const linkHeadersArray = linkResults.map((result) => result.header);
         const entityDataArray = entityResults.map((result) => result.data);
@@ -97,9 +92,58 @@ const Visualize_filteration = () => {
           newLinkHeaders[file] = linkHeadersArray[index];
         });
 
-        setEntityHeaders(newEntityHeaders);
-        setLinkHeaders(newLinkHeaders);
-        setEnitityData(entityDataArray);
+        // setEntityHeaders(newEntityHeaders);
+        // setLinkHeaders(newLinkHeaders);
+        // setEnitityData(entityDataArray);
+
+        console.log(newEntityHeaders, entityDataArray, "newEntityHeaders");
+
+        const entityResponse = await fetch(
+          "https://entertainmentbuz.com/EDGE_INTELLIGENCE/get_nodes_edges_csv.php?type=entity-files"
+        );
+        const linkResponse = await fetch(
+          "https://entertainmentbuz.com/EDGE_INTELLIGENCE/get_nodes_edges_csv.php?type=link-files"
+        );
+
+        if (!entityResponse.ok || !linkResponse.ok) {
+          throw new Error("Failed to fetch files from the backend");
+        }
+
+        // Read and log the response body
+        const entityBody = await entityResponse.text(); // Read the body as text
+        const linkBody = await linkResponse.text(); // Read the body as text
+
+        // Parse the responses as JSON
+        const entityFiles2 = JSON.parse(entityBody);
+        const linkFiles2 = JSON.parse(linkBody);
+
+        console.log("Entity response body:", entityFiles2);
+        console.log("Link response body:", linkFiles2);
+
+        const newEntityHeaders2 = {};
+
+        let entityDataArray2 = [];
+
+        entityFiles2.forEach((file) => {
+          newEntityHeaders2[file.fileName] = file.header;
+        });
+
+        entityFiles2.forEach((file) => {
+          if (file.data) {
+            entityDataArray2.push(file.data);
+          }
+        });
+
+        console.log(newEntityHeaders2, entityDataArray2, "newEntityHeaders2");
+
+        // setLinkHeaders(newLinkHeaders);
+
+        setEntityHeaders(newEntityHeaders2);
+        setEnitityData(entityDataArray2);
+
+        // setEntityHeaders(newEntityHeaders);
+        // setEnitityData(entityDataArray);
+
       } catch (error) {
         console.error("Error loading CSV files:", error);
       }
@@ -112,6 +156,7 @@ const Visualize_filteration = () => {
 
   useEffect(() => {
     // Function to extract unique values from an array of objects for all keys
+
     const getUniqueValues = (array) => {
       const uniqueValues = {};
 
@@ -137,13 +182,14 @@ const Visualize_filteration = () => {
     if (entityData.length > 0) {
       // Loop through each array in entityData
       const result = entityData.map((subArray) => getUniqueValues(subArray));
+      console.log( entityData,result ,'result of the uniquedata here ')
       setUniqueData(result);
     }
   }, [entityData]);
 
   const getEntityName = (filePath) => {
-    const fileName = filePath.split("/").pop();
-    switch (fileName) {
+    // const fileName = filePath.split("/").pop();
+    switch (filePath) {
       case "N_CUSTOMER.csv":
         return "N_CUSTOMER";
       case "N_PARTNUMBER.csv":
@@ -155,13 +201,13 @@ const Visualize_filteration = () => {
       case "N_SUPPLIER.csv":
         return "N_SUPPLIER";
       default:
-        return fileName ; 
+        return filePath;
     }
   };
 
   const getLinkName = (filePath) => {
-    const fileName = filePath.split("/").pop();
-    switch (fileName) {
+    // const fileName = filePath.split("/").pop();
+    switch (filePath) {
       case "E_BOM.csv":
         return "E_BOM";
       case "E_ORDERCUST.csv":
@@ -173,7 +219,7 @@ const Visualize_filteration = () => {
       case "E_PNSUPPORD.csv":
         return "E_PNSUPPORD";
       default:
-        return fileName;
+        return filePath;
     }
   };
 
@@ -191,7 +237,6 @@ const Visualize_filteration = () => {
     }));
   };
   const handleEntityData = (filePath, header, item) => {
-   
     const entityName = getEntityName(filePath);
 
     // Get the current state of the dropdown items for the specific entity and header
@@ -257,7 +302,6 @@ const Visualize_filteration = () => {
     });
   };
 
-
   // const handleInputData = () => {
   //   if (selectedEntity) {
   //     const upperCaseInputValue = inputValue.toUpperCase();
@@ -267,7 +311,7 @@ const Visualize_filteration = () => {
   const handleInputData = useCallback(() => {
     const upperCaseInputValue = inputValue.toUpperCase();
     setInputData({ [selectedEntity]: upperCaseInputValue }); // Save selectedEntity as key and inputValue as value
-     console.log("inputData" , inputData) ;
+    console.log("inputData", inputData);
   }, [selectedEntity, inputValue]);
 
   useEffect(() => {
@@ -278,20 +322,19 @@ const Visualize_filteration = () => {
     const entity = e.target.value;
     setSelectedEntity(entity);
   };
-  
+
   const handleInputChange = (e) => {
     const value = e.target.value || "";
     setInputValue(value);
   };
-  
+
   // Using useEffect to handle data updates after state changes
   // useEffect(() => {
   //   handleInputData();
-    
-  // console.log("inputData" , inputData) ; 
+
+  // console.log("inputData" , inputData) ;
   // }, [selectedEntity, inputValue]);
 
-  
   const [showTable1, setShowTable1] = useState(true);
 
   const handleToggle = (table) => {
@@ -306,10 +349,14 @@ const Visualize_filteration = () => {
           <div className="row">
             <h1> Filters</h1>
             <div>
-              <button className="custom-button"   onClick={() => handleToggle("table1")}>
-               Filter by entity 
+              <button
+                className="custom-button"
+                onClick={() => handleToggle("table1")}>
+                Filter by entity
               </button>
-              <button  className="custom-button"  onClick={() => handleToggle("table2")}>
+              <button
+                className="custom-button"
+                onClick={() => handleToggle("table2")}>
                 Filter by id
               </button>
             </div>
@@ -318,7 +365,7 @@ const Visualize_filteration = () => {
               <div className="table-container">
                 <div className="table-section1">
                   <h3 className="entity_class">ENTITY</h3>
-                  <div className="table-wrapper"  style={{ height: "80%" }}>
+                  <div className="table-wrapper" style={{ height: "80%" }}>
                     {showTable1 ? (
                       <table className="table2">
                         <thead>
@@ -328,64 +375,83 @@ const Visualize_filteration = () => {
                           </tr>
                         </thead>
                         <tbody>
-  {Object.entries(entityHeaders).map(([filePath, headers], index) =>
-    headers.map((header, headerIndex) => {
-      if (uniqueData.length !== 0) {
-        if (uniqueData[index][header].length < 150) {
-          return (
-            <tr key={`${index}-${headerIndex}`}>
-              <td>
-                {headerIndex === 0 ? (
-                  <>
-                    <input
-                      className="inputcheck"
-                      type="checkbox"
-                      onChange={() => handleEntityData_main(filePath)}
-                      checked={checkedEntityNames.includes(
-                        getEntityName(filePath)
-                      )}
-                      value={getEntityName(filePath)}
-                    />
-                    {getEntityName(filePath)}
-                  </>
-                ) : (
-                  ""
-                )}
-              </td>
-              <td>
-                <div className="dropdown">
-                  <button className="dropbtn">{header}</button>
-                  <div className="dropdown-content">
-                    {uniqueData[index][header].map((item, itemIndex) => (
-                      <label key={itemIndex}>
-                        <input
-                          className="inputcheck"
-                          type="checkbox"
-                          value={item}
-                          onChange={() => {
-                            handleEntityData(filePath, header, item);
-                          }}
-                          checked={
-                            checkedDropdownItems[getEntityName(filePath)]?.[
-                              header
-                            ]?.[item]
-                          }
-                        />
-                        {item}
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              </td>
-            </tr>
-          );
-        }
-      }
-      return null;
-    })
-  )}
-</tbody>
+                          {Object.entries(entityHeaders).map(
+                            ([filePath, headers], index) =>
+                              headers.map((header, headerIndex) => {
+                                if (uniqueData.length !== 0) {
+                                  console.log(
+                                    "uniqueData uniqueData",
+                                    uniqueData
+                                  );
 
+                                  if (uniqueData[index][header].length < 150) {
+                                    return (
+                                      <tr key={`${index}-${headerIndex}`}>
+                                        <td>
+                                          {headerIndex === 0 ? (
+                                            <>
+                                              <input
+                                                className="inputcheck"
+                                                type="checkbox"
+                                                onChange={() =>
+                                                  handleEntityData_main(
+                                                    filePath
+                                                  )
+                                                }
+                                                checked={checkedEntityNames.includes(
+                                                  getEntityName(filePath)
+                                                )}
+                                                value={getEntityName(filePath)}
+                                              />
+                                              {getEntityName(filePath)}
+                                            </>
+                                          ) : (
+                                            ""
+                                          )}
+                                        </td>
+                                        <td>
+                                          <div className="dropdown">
+                                            <button className="dropbtn">
+                                              {header}
+                                            </button>
+                                            <div className="dropdown-content">
+                                              {uniqueData[index][header].map(
+                                                (item, itemIndex) => (
+                                                  <label key={itemIndex}>
+                                                    <input
+                                                      className="inputcheck"
+                                                      type="checkbox"
+                                                      value={item}
+                                                      onChange={() => {
+                                                        handleEntityData(
+                                                          filePath,
+                                                          header,
+                                                          item
+                                                        );
+                                                      }}
+                                                      checked={
+                                                        checkedDropdownItems[
+                                                          getEntityName(
+                                                            filePath
+                                                          )
+                                                        ]?.[header]?.[item]
+                                                      }
+                                                    />
+                                                    {item}
+                                                  </label>
+                                                )
+                                              )}
+                                            </div>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    );
+                                  }
+                                }
+                                return null;
+                              })
+                          )}
+                        </tbody>
                       </table>
                     ) : (
                       <table className="table2">
@@ -396,81 +462,90 @@ const Visualize_filteration = () => {
                           </tr>
                         </thead>
                         <tbody>
-                        <tr>
-  <td>
-    <div className="custom-entity-container">
-      <div className="custom-entity-dropdown">
-        <select
-          onChange={handleSelectChange}
-          value={selectedEntity}
-        >
-          <option value="" disabled>Select an entity</option>
-          {Object.entries(entityHeaders).map(([filePath]) => {
-            if (uniqueData.length !== 0) {
-              return (
-                <option key={filePath} value={getEntityName(filePath)}>
-                  {getEntityName(filePath)}
-                </option>
-              );
-            }
-            return null;
-          })}
-        </select>
-        <input 
-          type="text" 
-          value={inputValue}    
-          onChange={handleInputChange} 
-          placeholder="ENTER ID"
-        />
-      </div>
-    
-    </div>
-  </td>
-</tr>
+                          <tr>
+                            <td>
+                              <div className="custom-entity-container">
+                                <div className="custom-entity-dropdown">
+                                  <select
+                                    onChange={handleSelectChange}
+                                    value={selectedEntity}>
+                                    <option value="" disabled>
+                                      Select an entity
+                                    </option>
+                                    {Object.entries(entityHeaders).map(
+                                      ([filePath]) => {
+                                        if (uniqueData.length !== 0) {
+                                          return (
+                                            <option
+                                              key={filePath}
+                                              value={getEntityName(filePath)}>
+                                              {getEntityName(filePath)}
+                                            </option>
+                                          );
+                                        }
+                                        return null;
+                                      }
+                                    )}
+                                  </select>
+                                  <input
+                                    type="text"
+                                    value={inputValue}
+                                    onChange={handleInputChange}
+                                    placeholder="ENTER ID"
+                                  />
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
 
-{Object.entries(entityHeaders).map(
-  ([filePath, headers], index) => {
-    if (uniqueData.length !== 0) {
-      const entityName = getEntityName(filePath);
-      return (
-        <tr key={index}>
-        <td>
-          <div className="checkbox-label-container">
-            <input
-              className="inputcheck"
-              type="checkbox"
-              onChange={() => handleEntityData_main(filePath)}
-              checked={checkedEntityNames.includes(entityName)}
-              value={entityName}
-            />
-            <span className="entity-text">
-              {entityName}
-              {entityName === "N_PARTNUMBER" && (
-                <>
-                  <button
-                    className={`arrow-button ${!isAscending ? 'active' : ''}`}
-                    onClick={handleDownArrowClick}
-                  >
-                    &darr;
-                  </button>
-                  <button
-                    className={`arrow-button ${isAscending ? 'active' : ''}`}
-                    onClick={handleUpArrowClick}
-                  >
-                    &uarr;
-                  </button>
-                </>
-              )}
-            </span>
-          </div>
-        </td>
-      </tr>
-      );
-    }
-    return null;
-  }
-)}
-
+                          {Object.entries(entityHeaders).map(
+                            ([filePath, headers], index) => {
+                              if (uniqueData.length !== 0) {
+                                const entityName = getEntityName(filePath);
+                                return (
+                                  <tr key={index}>
+                                    <td>
+                                      <div className="checkbox-label-container">
+                                        <input
+                                          className="inputcheck"
+                                          type="checkbox"
+                                          onChange={() =>
+                                            handleEntityData_main(filePath)
+                                          }
+                                          checked={checkedEntityNames.includes(
+                                            entityName
+                                          )}
+                                          value={entityName}
+                                        />
+                                        <span className="entity-text">
+                                          {entityName}
+                                          {entityName === "N_PARTNUMBER" && (
+                                            <>
+                                              <button
+                                                className={`arrow-button ${
+                                                  !isAscending ? "active" : ""
+                                                }`}
+                                                onClick={handleDownArrowClick}>
+                                                &darr;
+                                              </button>
+                                              <button
+                                                className={`arrow-button ${
+                                                  isAscending ? "active" : ""
+                                                }`}
+                                                onClick={handleUpArrowClick}>
+                                                &uarr;
+                                              </button>
+                                            </>
+                                          )}
+                                        </span>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                );
+                              }
+                              return null;
+                            }
+                          )}
                         </tbody>
                       </table>
                     )}
@@ -498,13 +573,10 @@ const Visualize_filteration = () => {
                                   type="checkbox"
                                   name=""
                                   id=""
-                                  onChange={() => 
-                                  {
-
+                                  onChange={() => {
                                     // setSelectLinkNames(true);
-                                    handleLinkData(filePath)
-                                  }
-                                  }
+                                    handleLinkData(filePath);
+                                  }}
                                   checked={checkedLinkNames.includes(
                                     getLinkName(filePath)
                                   )}
@@ -518,30 +590,24 @@ const Visualize_filteration = () => {
                       </tbody>
                     </table>
                     <button
-                    style={{background: "#2a5594" ,color:"white"}}
-  onClick={() => {
-    if (false ) {
-
-      alert('Please select the file first');
-    } 
-    else {
-        navigate("/3d_graph", {
-          state: {
-            checkedEntityNames,
-            checkedLinkNames,
-            checkedDropdownItems,
-            inputData,
-            isAscending
-          },
-        });// You can adjust the delay time if necessary
-    }
-  }}
->
-  VISUALIZE
-
-</button>
-
-
+                      style={{ background: "#2a5594", color: "white" }}
+                      onClick={() => {
+                        if (false) {
+                          alert("Please select the file first");
+                        } else {
+                          navigate("/3d_graph", {
+                            state: {
+                              checkedEntityNames,
+                              checkedLinkNames,
+                              checkedDropdownItems,
+                              inputData,
+                              isAscending,
+                            },
+                          }); // You can adjust the delay time if necessary
+                        }
+                      }}>
+                      VISUALIZE
+                    </button>
                   </div>
                 </div>
               </div>
