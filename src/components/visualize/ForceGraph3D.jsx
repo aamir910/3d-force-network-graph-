@@ -2,7 +2,10 @@ import React, { useEffect, useState, useCallback } from "react";
 import Papa from "papaparse";
 import "./Visualize_filteration.css";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
-import Sidebar from "../Buttons/SIdeBar";
+import Sidebar from "../Buttons/SIdeBar" ;
+
+import { Spin } from 'antd'; 
+
 import Navbar from "../NavBar/NavBar";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -24,6 +27,8 @@ const csvFiles2 = [
 ];
 
 const Visualize_filteration = () => {
+
+  const [loading, setLoading] = useState(true);
   const [entityHeaders, setEntityHeaders] = useState({});
   const [linkHeaders, setLinkHeaders] = useState({});
   const [entityData, setEnitityData] = useState({});
@@ -140,7 +145,7 @@ console.log(newLinkHeaders ,newLinkHeaders ,"newLinkHeaders")
 
         setEntityHeaders(newEntityHeaders2);
         setEnitityData(entityDataArray2);
-
+        setLoading(false);
         // setEntityHeaders(newEntityHeaders);
         // setEnitityData(entityDataArray);
 
@@ -193,40 +198,24 @@ console.log(newLinkHeaders ,newLinkHeaders ,"newLinkHeaders")
   }, [entityData]);
 
   const getEntityName = (filePath) => {
-    // const fileName = filePath.split("/").pop();
-    switch (filePath) {
-      case "N_CUSTOMER.csv":
-        return "N_CUSTOMER";
-      case "N_PARTNUMBER.csv":
-        return "N_PARTNUMBER";
-      case "N_PURCHORDER.csv":
-        return "N_PURCHORDER";
-      case "N_SELLORDER.csv":
-        return "N_SELLORDER";
-      case "N_SUPPLIER.csv":
-        return "N_SUPPLIER";
-      default:
-        return filePath;
+    // Check if the filePath ends with ".csv"
+    if (filePath.endsWith('.csv')) {
+        // Remove the ".csv" extension and return the filename
+        return filePath.slice(0, -4);
     }
-  };
+    // Return the original filePath if it doesn't end with ".csv"
+    return filePath;
+};
 
-  const getLinkName = (filePath) => {
-    // const fileName = filePath.split("/").pop();
-    switch (filePath) {
-      case "E_BOM.csv":
-        return "E_BOM";
-      case "E_ORDERCUST.csv":
-        return "E_ORDERCUST";
-      case "E_ORDERSUPP.csv":
-        return "E_ORDERSUPP";
-      case "E_PNSELLORD.csv":
-        return "E_PNSELLORD";
-      case "E_PNSUPPORD.csv":
-        return "E_PNSUPPORD";
-      default:
-        return filePath;
+const getLinkName = (filePath) => {
+    // Check if the filePath ends with ".csv"
+    if (filePath.endsWith('.csv')) {
+        // Remove the ".csv" extension and return the filename
+        return filePath.slice(0, -4);
     }
-  };
+    // Return the original filePath if it doesn't end with ".csv"
+    return filePath;
+};
 
   const handleEntityCheckboxChange = (filePath, headerIndex) => {
     setCheckedEntities((prevState) => ({
@@ -349,7 +338,11 @@ console.log(newLinkHeaders ,newLinkHeaders ,"newLinkHeaders")
   return (
     <>
       <Navbar image="newedgeintelligence.png" color="white" />
-      <div className="flex coloum">
+
+      {loading ? (
+        <Spin size="large" style={{ textAlign: 'center', padding: '50px' , display:"flex" ,justifyContent:"center" , alignItems:"center"}} />
+      ) : (
+        <div className="flex coloum">
         <div className="main_visualize col-12">
           <div className="row">
             <h1> Filters</h1>
@@ -619,6 +612,14 @@ console.log(newLinkHeaders ,newLinkHeaders ,"newLinkHeaders")
           </div>
         </div>
       </div>
+      )}
+    
+
+
+
+
+     
+      
     </>
   );
 };

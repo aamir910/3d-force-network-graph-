@@ -28,9 +28,9 @@ const ForceGraph2DComponent = () => {
   const checkedDropdownItems = location.state?.checkedDropdownItems || [];
 
   const SingleCheckCustomer = location.state?.inputData || [];
-console.log(SingleCheckCustomer ,"SingleCheckCustomer")
+
   const isAscending = location.state?.isAscending || false;
-  
+  console.log(checkedLinkNames , "checkedDropdownItems")
   const fgRef = useRef();
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
 
@@ -68,20 +68,50 @@ console.log(SingleCheckCustomer ,"SingleCheckCustomer")
     y: 0,
     type: "",
   });
-  const [nodeColors, setNodeColors] = useState({
-    N_CUSTOMER: "white",
-    N_PARTNUMBER: "lightblue",
-    N_PURCHORDER: "orange",
-    N_SELLORDER: "cyan",
-    N_SUPPLIER: "lime",
-  });
-  const [linkColors, setLinkColors] = useState({
-          E_BOM: "white",
-    E_ORDERCUST: "lightblue",
-    E_ORDERSUPP: "orange",
-    E_PNSELLORD: "cyan",
-    E_PNSUPPORD: "lime",
-  });
+
+
+  // const [nodeColors, setNodeColors] = useState({
+  //   N_CUSTOMER1: "white",
+  //   N_PARTNUMBER1: "lightblue",
+  //   N_PURCHORDER1: "orange",
+  //   N_SELLORDER1: "cyan",
+  //   N_SUPPLIER1: "lime",
+  // });
+
+
+  // const [linkColors, setLinkColors] = useState({
+  //   E_BOM1: "white",
+  //   E_ORDERCUST1: "lightblue",
+  //   E_ORDERSUPP1: "orange",
+  //   E_PNSELLORD1: "cyan",
+  //   E_PNSUPPORD1: "lime",
+  // });
+
+  const assignColors = (keys, colors) => {
+    return keys.reduce((acc, key, index) => {
+      acc[key] = colors[index % colors.length];  // Cycle through colors if keys exceed the array length
+      return acc;
+    }, {});
+  };
+  
+  // Set initial colors for node and link keys
+  const [nodeColors, setNodeColors] = useState({});
+  const [linkColors, setLinkColors] = useState({});
+  
+  useEffect(() => {
+    // Assign colors to node keys
+    console.log(checkedEntityNames ,"checkedEntityNames")
+    const newNodeColors = assignColors(checkedEntityNames, predefinedColors);
+    setNodeColors(newNodeColors);
+  
+    // Assign colors to link keys
+    const newLinkColors = assignColors(checkedLinkNames, predefinedColors);
+    setLinkColors(newLinkColors);
+  }, [checkedEntityNames, checkedLinkNames]);
+  
+  console.log('Node Colors:', nodeColors);
+  console.log('Link Colors:', linkColors);
+
 
   const [selectedLinkType, setSelectedLinkType] = useState("");
   const [excludedTypes, setExcludedTypes] = useState([]);
@@ -98,12 +128,12 @@ console.log(SingleCheckCustomer ,"SingleCheckCustomer")
       });
     }
   }
-
-  const nCustomer = checkedDropdownItems["N_CUSTOMER"] || {};
-  const nPartNumber = checkedDropdownItems["N_PARTNUMBER"] || {};
-  const nPurchOrder = checkedDropdownItems["N_PURCHORDER"] || {};
-  const nSellOrder = checkedDropdownItems["N_SELLORDER"] || {};
-  const nSupplier = checkedDropdownItems["N_SUPPLIER"] || {};
+console.log(checkedDropdownItems , "checkedDropdownItems") ;
+  const nCustomer = checkedDropdownItems["N_CUSTOMER1"] || {};
+  const nPartNumber = checkedDropdownItems["N_PARTNUMBER1"] || {};
+  const nPurchOrder = checkedDropdownItems["N_PURCHORDER1"] || {};
+  const nSellOrder = checkedDropdownItems["N_SELLORDER1"] || {};
+  const nSupplier = checkedDropdownItems["N_SUPPLIER1"] || {};
 
   function filterByNCustomer(data) {
     const filteredData = data.filter((item) => {
@@ -417,8 +447,10 @@ console.log(SingleCheckCustomer ,"SingleCheckCustomer")
 
         
         if (
-          row.Entity_Type_1 === "N_PARTNUMBER" &&
-          row.Entity_Type_2 === "N_PARTNUMBER"
+
+          row.Entity_Type_1  ===  row.Entity_Type_2
+          // row.Entity_Type_1 === "N_PARTNUMBER" &&
+          // row.Entity_Type_2 === "N_PARTNUMBER"
         ) {
           
           if (isAscending) {
