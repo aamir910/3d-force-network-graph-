@@ -23,7 +23,9 @@ const App = () => {
           <div>
             <div>
               <Routes>
-                <Route path="/" element={<Sidebar />} />
+                {/* <Route path="/" element={<Sidebar />} /> */}
+
+                <Route path="/" element={<Visualize_filteration />} />
                 <Route path="/visualize" element={<Visualize_filteration />} />
                 {/* <Route path="/CONFIGURATION" element={<MainContent />} /> */}
                 <Route path="/3d_graph" element={<ForceGraph2DComponent />} />
