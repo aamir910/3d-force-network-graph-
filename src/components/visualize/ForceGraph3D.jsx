@@ -342,9 +342,14 @@ const getLinkName = (filePath) => {
       {loading ? (
         <Spin size="large" style={{ textAlign: 'center', padding: '50px' , display:"flex" ,justifyContent:"center" , alignItems:"center"}} />
       ) : (
-        <div className="flex coloum">
-        <div className="main_visualize col-12">
-          <div className="row">
+      
+        <div className="row main_visualize col-10"   style={{
+    // background: "red",
+    height: "89vh", // Fill the entire viewport height
+    // position: "fixed", // Make it fixed
+    width: "100%", // Fill the entire viewport width
+    // overflowY: "auto", // Allow vertical scrolling if content overflows
+  }}>
             <h1> Filters</h1>
             <div>
               <button
@@ -610,8 +615,8 @@ const getLinkName = (filePath) => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+     
+      
       )}
     
 

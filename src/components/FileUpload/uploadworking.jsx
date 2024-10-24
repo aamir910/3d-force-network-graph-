@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Upload, Button, Card, Row, Col, Typography, message, Spin } from 'antd';
+import { Upload, Button, Card, Row, Col, Typography, message, Spin, Flex } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios'; // Import Axios for HTTP requests
 import Navbar from "../NavBar/NavBar";
 import './FileUploadSection.css';
 import { useNavigate } from 'react-router-dom';
-
+import Sidebar from '../Buttons/SIdeBar';
+import { Link } from 'react-router-dom';
+import DeleteFilesButton from './DeleteFilesButton';
 const { Text } = Typography;
 
 const FileUploadSection = () => {
@@ -108,8 +110,16 @@ const FileUploadSection = () => {
   return (
     <>
     <div style={{   height: '100%' }} >
-
       <Navbar image="newedgeintelligence.png" color="white" />
+
+<button style={{ backgroundColor: '#2a5594', color: 'white', marginTop: '5rem', marginLeft:"1rem", padding: '10px 20px', border: 'none', cursor: 'pointer' }}>
+  <Link to="/visualize" style={{ color: 'white', textDecoration: 'none' }}>
+    VISUALIZE
+  </Link>
+</button>   
+    
+    
+    
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90%' }}>
         <Card
           title="File Upload Sections"
@@ -153,9 +163,13 @@ const FileUploadSection = () => {
               </Col> */}
 
             </Row>
+            <div style={{gap:"50px", display:"flex" ,  justifyContent: "center"}}>
+
+            <DeleteFilesButton/>
             <Button type="primary" onClick={handleSubmit} style={{ marginTop: '20px' , backgroundColor: '#2a5594'}}>
-              Submit
+             Submit
             </Button>
+            </div>
           </Spin>
         </Card>
       </div>

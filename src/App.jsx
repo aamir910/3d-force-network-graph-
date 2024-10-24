@@ -5,19 +5,15 @@ import Visualize_filteration from "./components/visualize/ForceGraph3D";
 import ForceGraph2DComponent from "./components/ForceGraph2d";
 import Sidebar from "./components/Buttons/SIdeBar";
 import MainContent from "./components/Maincontent/Maincontent";
-import './App.css'
-
+import "./App.css";
 // import FileUploadSection from "./components/FileUpload/FileUpload";
-
 import FileUploadSection from "./components/FileUpload/uploadworking";
 
 const App = () => {
   return (
-    <Router>
-
+    <Router>  
       <div className="App"> 
-
-{/* 
+        {/* 
         <Sidebar className="App-header">
 
              <Sidebar/>
@@ -27,16 +23,12 @@ const App = () => {
           <div>
             <div>
               <Routes>
-                
-              <Route path="/" element={<MainContent />} />
+                <Route path="/" element={<Sidebar />} />
                 <Route path="/visualize" element={<Visualize_filteration />} />
-                <Route path="/CONFIGURATION" element={<MainContent />} />
+                {/* <Route path="/CONFIGURATION" element={<MainContent />} /> */}
                 <Route path="/3d_graph" element={<ForceGraph2DComponent />} />
-                <Route path="/upload" element={<FileUploadSection/>  } />
-
+                <Route path="/upload" element={<FileUploadSection />} />
               </Routes>
-
-
             </div>
           </div>
         </main>

@@ -6,6 +6,7 @@ import * as THREE from "three";
 import "./styles.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./NavBar/NavBar";
+import { Link } from "react-router-dom";
 const predefinedColors = [
   "white",
   "lightblue",
@@ -838,6 +839,11 @@ console.log(SingleCheckCustomer ,"SingleCheckCustomer")
               )
           )}
         </ul>
+        <button className="btn btn-primary" style={{ color: 'white', marginTop: '1rem', marginLeft:"5rem",marginBottom:"1rem", padding: '10px 20px', border: 'none', cursor: 'pointer' }}>
+  <Link to="/visualize" style={{ color: 'white', textDecoration: 'none' }}>
+    Back
+  </Link>
+</button> 
       </div>
     </>
   );
@@ -1116,6 +1122,7 @@ console.log(SingleCheckCustomer ,"SingleCheckCustomer")
                     onClick={() => handleColorSelect(color)}
                   />
                 ))}
+                <button>Back</button>
               </div>
             )}
             {tooltip.visible && (
