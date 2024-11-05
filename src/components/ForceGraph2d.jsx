@@ -6,6 +6,7 @@ import * as THREE from "three";
 import "./styles.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./NavBar/NavBar";
+
 import { Link } from "react-router-dom";
 const predefinedColors = [
   "white",

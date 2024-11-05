@@ -584,7 +584,7 @@ let arrays
                                         />
                                         <span className="entity-text">
                                           {entityName}
-                                          {entityName === sameType && (
+                                          {entityName === sameType  && (
                                             <>
                                               <button
                                                 className={`arrow-button ${
