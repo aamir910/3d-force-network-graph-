@@ -517,7 +517,7 @@ console.log(checkedDropdownItems , "checkedDropdownItems") ;
 
   useEffect(() => {
 
-    Papa.parse("https://entertainmentbuz.com//EDGE_INTELLIGENCE/Get_merge_file.php", {
+    Papa.parse("https://213.21.189.116//EDGE_INTELLIGENCE/Get_merge_file.php", {
       download: true,
       header: true,
       complete: (result) => {
@@ -882,7 +882,7 @@ console.log(checkedDropdownItems , "checkedDropdownItems") ;
   };
 
   const applyFilters = () => {
-    Papa.parse("https://entertainmentbuz.com//EDGE_INTELLIGENCE/Get_merge_file.php", {
+    Papa.parse("https://213.21.189.116//EDGE_INTELLIGENCE/Get_merge_file.php", {
       download: true,
       header: true,
       complete: (result) => {

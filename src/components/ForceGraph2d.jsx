@@ -513,9 +513,9 @@ const ForceGraph2DComponent = () => {
   useEffect(() => {
    // Set loading to true at the start of data parsing
    setLoading(true);
-
+s
     Papa.parse(
-      "https://entertainmentbuz.com//EDGE_INTELLIGENCE/Get_merge_file.php",
+      "https://213.21.189.116//EDGE_INTELLIGENCE/Get_merge_file.php",
       {
         download: true,
         header: true,
@@ -817,7 +817,7 @@ const getNodeShape = (node) => {
 
   const applyFilters = () => {
     Papa.parse(
-      "https://entertainmentbuz.com//EDGE_INTELLIGENCE/Get_merge_file.php",
+      "https://213.21.189.116//EDGE_INTELLIGENCE/Get_merge_file.php",
       {
         download: true,
         header: true,

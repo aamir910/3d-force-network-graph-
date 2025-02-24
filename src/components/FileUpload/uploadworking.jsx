@@ -91,7 +91,7 @@ const FileUploadSection = () => {
     });
 
     try {
-      const response = await axios.post('https://entertainmentbuz.com/EDGE_INTELLIGENCE/edge.php', formData, {
+      const response = await axios.post('https://213.21.189.116/EDGE_INTELLIGENCE/edge.php', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
